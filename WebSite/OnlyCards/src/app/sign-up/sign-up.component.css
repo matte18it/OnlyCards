@@ -1,0 +1,99 @@
+#sign-up {
+  width: 100%;
+  height: auto;
+}
+
+#internalLogin{
+  width: 40%;
+  margin: 130px auto;
+  padding: 30px;
+  background-color: var(--seconday-component-color);
+  border-radius: 20px;
+  height: auto;
+  box-shadow: 0 0 10px var(--shadow-color);
+}
+
+#usernameContainer, #emailContainer, #phoneNumberContainer, #profilePicContainer, #passwordContainer, #passwordConfirmContainer, #buttonContainer {
+  margin-top: 20px;
+}
+
+/* Rimuove il focus ring di bootstrap dall'input di ricerca */
+.form-control:focus {
+  box-shadow: none !important;
+}
+
+#buttonContainer {
+  text-align: center;
+}
+
+#passwordField, #passwordConfirmField {
+  border-right: transparent;
+}
+
+#loginButton {
+  background-color: var(--accent-color);
+  color: var(--seconday-component-color);
+  border-color: var(--accent-color);
+  font-weight: bold;
+}
+
+#signUptext {
+  margin-top: 20px;
+  text-align: center;
+}
+
+#signUptext a {
+  text-decoration: none;
+  color: var(--accent-color);
+}
+
+#divideButton {
+  width: 100%;
+  display: flex;
+  margin-top: 10px;
+  align-items: center;
+}
+
+#divideButton hr {
+  width: 40%;
+}
+
+#divideButton span {
+  margin-left: 2%;
+  width: 16%;
+  margin-right: 2%;
+  text-align: center;
+}
+
+.otherLogin {
+  margin-top: 10px;
+  width: 100%;
+  text-align: center;
+  display: block;
+}
+
+#googleLogin, #facebookLogin {
+  width: 60%;
+  background-color: var(--accent-color);
+  color: var(--component-color);
+  border-color: var(--accent-color);
+}
+
+/* RESPONSIVE */
+@media (max-width: 1027px) {
+  #internalLogin {
+    width: 60%;
+  }
+}
+
+@media (max-width: 684px) {
+  #internalLogin {
+    width: 80%;
+  }
+}
+
+@media (max-width: 513px) {
+  #internalLogin {
+    width: 100%;
+  }
+}

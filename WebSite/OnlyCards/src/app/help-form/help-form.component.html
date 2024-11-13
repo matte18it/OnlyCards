@@ -1,0 +1,30 @@
+<div style="height: 20px"></div>
+
+<div>
+  <div class="container">
+    <div id="titleContainer">
+      <h1>Supporto</h1>
+    </div>
+
+    <div id="helpContainer" class="container">
+      <form [formGroup]="helpForm" style="margin-top: 10px;">
+        <div class="mb-3">
+          <label for="object">Oggetto<span [ngbTooltip]="'Obbligatorio'" style="color: red;">*</span></label>
+          <input type="text" [maxLength]="100" id="object" formControlName="object" class="form-control customComponent" placeholder="Inserisci l'oggetto della mail">
+        </div>
+
+        <div class="mb-3" style="margin-top: 10px;">
+          <label for="description">Descrizione<span [ngbTooltip]="'Obbligatorio'" style="color: red;">*</span></label>
+          <textarea [maxLength]="500" class="form-control customComponent" placeholder="Inserisci la descrizione del problema" formControlName="description" id="description" style="height: 100px"></textarea>
+        </div>
+
+        <div class="mb-3" style="text-align: right;">
+          <button type="button" class="btn btn-info" [disabled]="helpForm.invalid" (click)="sendHelpRequest()"><strong>Invia</strong></button>
+          <button type="button" class="btn btn-danger" style="margin-left: 10px;" (click)="resetForm()"><strong>Annulla</strong></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 70px;"></div>

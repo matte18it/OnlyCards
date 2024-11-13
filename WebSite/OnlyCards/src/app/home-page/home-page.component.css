@@ -1,0 +1,125 @@
+/* Stili di base del body */
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  margin: 0;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  text-align: center;
+}
+
+/* Stili per l'header */
+#header {
+  padding: 5%;
+ 
+}
+
+/* Stili per il container del logo */
+.logoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 5%;
+  color: var(--text-color);
+}
+
+/* Stili per il titolo */
+.titolo {
+  font-size: 10vh;
+}
+
+/* Media query per schermi più grandi */
+@media (min-width: 860px) {
+  .titolo {
+    font-size: 20vh;
+  }
+}
+
+/* Stili per il sottotitolo */
+.sottoTitolo {
+  font-size: 4vh;
+}
+
+#scrollDownArrow {
+  background-color: var(--button-color);
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 0;
+  margin-bottom: 5%;
+  cursor: pointer;
+  font-size: 200%;
+  border: none; /* Rimuove il bordo */
+  outline: none; /* Rimuove l'outline al focus */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombra standard */
+}
+
+/* Effetto di rilievo al passaggio del mouse */
+#scrollDownArrow:hover {
+  transform: translateY(-3px); /* Sposta il bottone leggermente verso l'alto */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1); /* Ombra più pronunciata */
+}
+
+/* Stili per l'icona della freccia di scorrimento */
+.fa-arrow-down {
+  font-size: 30px;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Animazione di zoom dell'icona al passaggio del mouse */
+#scrollDownArrow:hover .fa-arrow-down {
+  transform: scale(1.2);
+}
+#grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 20px;
+
+
+  padding: 20px; /* Padding esterno */
+}
+
+
+.gioco {
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  width: 30vw;
+  font-size: 60px;
+  background-color: var(--component-color);
+  cursor: pointer;
+  color: var(--text-color);
+  border-radius: 10px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.gioco:hover {
+  background-color: var(--seconday-component-color); /* Scurisce il colore del 10% al passaggio del mouse */
+}
+a {
+  text-decoration: none; /* Rimuove il sottolineato */
+  color: inherit; /* Usa il colore ereditato */
+  outline: none; /* Rimuove l'outline di default al focus */
+}
+@media  (max-width: 981px) {
+  #grid-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Allinea gli elementi al centro */
+    gap: 50px;
+  }
+  .gioco {
+    width: 80vw;
+    height: 200px;
+  }
+
+}

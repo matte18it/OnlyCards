@@ -1,0 +1,86 @@
+#titleContainer {
+  border-bottom: 1px solid gray;
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+}
+
+#pathOfCard {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+#pathOfCard nav ol li {
+  color: var(--text-color);
+}
+
+#pathOfCard nav ol li+li::before {
+  content: var(--bs-breadcrumb-divider, '/');
+  color: var(--text-color);
+}
+
+#navbarPagination, #navbarPagination > ul, #navbarPagination > ul > li, #navbarPagination > ul > li > span {
+  outline: none;
+  box-shadow: none;
+  background: none;
+}
+
+#navbarPagination > ul > li > span {
+  background: var(--accent-color);
+  border-color: var(--navbar-primary-color);
+  color: var(--navbar-primary-color);
+}
+
+.page-active {
+  background-color: var(--navbar-primary-color) !important;
+  color: white var(--text-color) !important;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  background: none;
+  border: none;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.card-img-top {
+  width: 100%;
+  height: auto;
+}
+
+.card-body {
+  padding: 10px;
+  text-align: center;
+  color: var(--text-color);
+}
+
+/* Media Queries per dispositivi più piccoli */
+@media (max-width: 1200px) {
+  .card-container {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* 4 carte per riga */
+  }
+}
+
+@media (max-width: 992px) {
+  .card-container {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* 3 carte per riga */
+  }
+}
+
+@media (max-width: 768px) {
+  .card-container {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* 2 carte per riga */
+  }
+}
+
+@media (max-width: 576px) {
+  .card-container {
+    grid-template-columns: 1fr; /* 1 carta per riga */
+  }
+}

@@ -1,0 +1,26 @@
+.address-label {
+  font-weight: bold;
+  font-size: 1rem;  /* Font leggermente più grande per i label */
+  color: #ddd;  /* Colore più chiaro per i label */
+}
+
+.address-value {
+  font-size: 1rem;  /* Font uguale per i valori */
+  color: #fff;  /* Colore bianco per i valori */
+  margin-left: 5px;  /* Piccolo margine tra label e valore */
+}
+
+.mb-2 {
+  margin-bottom: 10px;  /* Spazio tra le righe */
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem;  /* Più spazio tra i blocchi di indirizzi */
+}
+
+hr {
+  border: none;
+  border-bottom: 1px solid #444;  /* Linea leggera per separare gli indirizzi */
+  margin: 16px 0;
+}
+

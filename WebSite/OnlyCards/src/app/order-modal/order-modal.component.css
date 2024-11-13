@@ -1,0 +1,13 @@
+.container{
+    background-color: var(--background-color);
+}
+.list-group, li{
+    background: transparent;
+    color: var(--text-color);
+    border:none;
+}
+.btn-primary{
+    background-color: var(--button-color);
+    border-color: var(--button-color);
+    color: var(--text-color);
+}

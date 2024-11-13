@@ -1,0 +1,256 @@
+<div id="backgroundContainer">
+  <!-- Questa sezione contiene il carosello del sito -->
+  <section id="cardCarousel" *ngIf="isTopGamePage()">
+    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img [src]="categoryCarousel[0]" class="d-block w-100" alt="Carousel Image">
+          <div class="carousel-caption d-none d-md-block carousel-caption-right">
+            <h2 class="carouselTitle">Ultime Aggiunte</h2>
+            <p class="carouselDescription">Scopri le ultime carte {{ carouselGame }} pubblicate <br> dai nostri venditori.</p>
+            <button class="btn btn-primary carouselButton" (click)="scrollToElement(recentProductContainer)">Scopri</button>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img [src]="categoryCarousel[1]" class="d-block w-100" alt="Carousel Image">
+          <div class="carousel-caption d-none d-md-block carousel-caption-right">
+            <h2 class="carouselTitle">Top Vendite</h2>
+            <p class="carouselDescription">Scopri le carte {{ carouselGame }} più amate dagli <br> utenti del nostro sito!</p>
+            <button class="btn btn-primary carouselButton" (click)="scrollToElement(topSellerSection)">Scopri</button>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img [src]="categoryCarousel[2]" class="d-block w-100" alt="Carousel Image">
+          <div class="carousel-caption d-none d-md-block carousel-caption-right">
+            <h2 class="carouselTitle">Miglior Prezzo</h2>
+            <p class="carouselDescription">Scopri le carte {{ carouselGame }} messe in vendita <br> al miglior prezzo!</p>
+            <button class="btn btn-primary carouselButton" (click)="scrollToElement(bestPriceSection)">Scopri</button>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Questa sezione contiene lo sfondo in caso di dimensioni ridotte -->
+  <section id="imageSection" style="margin-top: 100px;" *ngIf="isTopGamePage()">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <img src="assets/bannerImage/{{ game }}.png" alt="Background Image" class="img-fluid">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div *ngIf="!isTopGamePage()" style="height: 10px;"></div>
+
+  <!-- Sezione dei prodotti più recenti (data di pubblicazione) -->
+  <section id="recentProductContainer" #recentProductContainer>
+    <div class="container">
+      <!-- Contenitore con dentro il titolo e l'icona delle novità -->
+      <div class="titleContainer">
+        <div class="containerIcon"><i class="fa-solid fa-calendar-plus"></i></div>
+        <div class="containerHeader">Novità<div class="infoSection"><i class="fa-solid fa-circle-question" [ngbTooltip]="'Questa sezione contiene gli ultimi prodotti pubblicati (ordinati per data).'" placement="right"></i></div></div>
+      </div>
+
+      <ng-container *ngIf="lastProducts.length > 0; else noProductsAvailable">
+        <!-- Contenitore che contiene le carte in evidenzia -->
+        <div id="mostRecentCard">
+          <div class="container-fluid">
+            <div class="row" id="cardRowMostRecent">
+              <div class="col-lg-3 col-md-4 col-sm-6 col-12 cardsContainer" *ngFor="let card of lastProductsVisible; let i = index">
+                <div class="card singleCard">
+                  <a [routerLink]="['/sale-product', card.id]"><img [src]="card.productType.photo" class="card-img-top" [alt]="card.productType.name"></a>
+                  <div class="cardPosition" [ngClass]="{'magic-style-1': game === 'magic', 'yugioh-style-1' : game === 'yu-gi-oh'}">{{i + 1}}</div>
+                  <div class="card-body">
+                    <h5 class="card-title" style="text-align: center;">{{card.productType.name}}</h5>
+                    <div class="card-text" style="width: 100%; display: flex; flex-direction: column;">
+                    <span style="text-align: center; font-size: 12px;">
+                      <i class="fa-solid fa-calendar-days"></i>
+                      {{ card.releaseDate }}
+                    </span>
+                      <span style="text-align: center; font-size: 20px;">
+                      <i class="fa-solid fa-tag" style="margin-right: 1%;"></i>
+                        {{card.price.amount}}
+                        <ng-container *ngIf="card.productType.minPrice.currency === 'EUR'; else null">€</ng-container>
+                    </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contenitore che contiene le altre carte, quelle non in evidenzia -->
+        <div class="otherSellerCard">
+          <div class="container-fluid">
+            <div class="inMatrixCard" *ngFor="let card of lastProductsNotVisible; let i = index;">
+              <ng-template #tooltipContent><img [src]="card.productType.photo" [alt]="card.productType.name" style="width: 180px;"></ng-template>
+              <ul class="list-group list-group-horizontal groupCards">
+                <li class="list-group-item" style="width: 5%;">{{ indexTopSeller + i }}</li>
+                <li class="list-group-item" style="width: 5%;"><i class="fa-solid fa-camera" [ngbTooltip]="tooltipContent" container="body"></i></li>
+                <li class="list-group-item" style="width: 25%;"><a [routerLink]="['/sale-product', card.id]" style="text-decoration: none; color: var(--text-color);">{{ card.productType.name }}</a></li>
+                <li class="list-group-item" style="width: 20%;"><i class="fa-solid fa-calendar-days"></i> {{card.releaseDate}}</li>
+                <li class="list-group-item" style="width: 45%; text-align: right;">
+                  {{card.price.amount}}
+                  <ng-container *ngIf="card.price.currency === 'EUR'; else null">€</ng-container>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </section>
+
+  <!-- Questa sezione contiene, invece, le carte più vendute -->
+  <section id="topSellerContainer" #topSellerSection>
+    <div class="container">
+      <!-- Contenitore con dentro il titolo e l'icona delle più vendute -->
+      <div class="titleContainer">
+        <div class="containerIcon"><i class="fa-solid fa-chart-line"></i></div>
+        <div class="containerHeader">Le più vendute<div class="infoSection"><i class="fa-solid fa-circle-question" [ngbTooltip]="topSellerTooltip" placement="right"></i></div></div>
+      </div>
+
+      <ng-container *ngIf="topCard.length > 0; else noProductsAvailable">
+        <!-- Contenitore che contiene le carte in evidenzia -->
+        <div id="topSellerCard">
+          <div class="container-fluid">
+            <div class="row" id="cardRowTopSeller">
+              <div class="col-lg-3 col-md-4 col-sm-6 col-12 cardsContainer" *ngFor="let card of visibleCards; let i = index">
+                <div class="card singleCard">
+                  <a href="cards/{{this.game}}/card/{{card.id}}"><img [src]="card.photo" class="card-img-top" [alt]="card.name" [ngClass]="{'glow-effect-1': i === 0, 'glow-effect-2': i === 1, 'glow-effect-3': i === 2}"></a>
+                  <div class="cardPosition" [ngClass]="{'yugioh-style-1' : game === 'yu-gi-oh'}">{{i + 1}}</div>
+                  <div class="card-body">
+                    <h5 class="card-title" style="text-align: center;">{{card.name}}</h5>
+                    <div class="card-text" style="width: 100%; display: flex; flex-direction: column;">
+                    <span style="text-align: center; font-size: 12px;">
+                      <i class="fa-solid fa-fire" style="margin-right: 1%;"></i>
+                      {{card.numSell}}
+                    </span>
+                      <span style="text-align: center; font-size: 20px;">
+                      <i class="fa-solid fa-tag" style="margin-right: 1%;"></i>
+                        {{card.minPrice.amount}}
+                        <ng-container *ngIf="card.minPrice.currency === 'EUR'; else null">€</ng-container>
+                    </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contenitore che contiene le altre carte, quelle non in evidenzia -->
+        <div class="otherSellerCard">
+          <div class="container-fluid">
+            <div class="inMatrixCard" *ngFor="let card of nonVisibleCards; let i = index;">
+              <ng-template #tooltipContent><img [src]="card.photo" [alt]="card.name" style="width: 180px;"></ng-template>
+              <ul class="list-group list-group-horizontal groupCards">
+                <li class="list-group-item" style="width: 5%;">{{ indexTopSeller + i }}</li>
+                <li class="list-group-item" style="width: 5%;"><i class="fa-solid fa-camera" [ngbTooltip]="tooltipContent" container="body"></i></li>
+                <li class="list-group-item" style="width: 25%;"><a href="cards/{{this.game}}/card/{{card.id}}" style="text-decoration: none; color: var(--text-color);">{{ card.name }}</a></li>
+                <li class="list-group-item" style="width: 20%;"><i class="fa-solid fa-fire"></i> {{card.numSell}}</li>
+                <li class="list-group-item" style="width: 45%; text-align: right;">
+                  {{card.minPrice.amount}}
+                  <ng-container *ngIf="card.minPrice.currency === 'EUR'; else null">€</ng-container>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </section>
+
+  <!-- Sezione che contiene le carte al miglior prezzo -->
+  <section id="bestPurchasesContainer" #bestPriceSection>
+    <div class="container">
+      <!-- Contenitore con dentro il titolo e l'icona dei migliori acquisti -->
+      <div class="titleContainer">
+        <div class="containerIcon"><i class="fa-solid fa-money-bill-wave"></i></div>
+        <div class="containerHeader">Miglior Prezzo<div class="infoSection"><i class="fa-solid fa-circle-question" [ngbTooltip]="bestPurchasesTooltip" placement="right"></i></div></div>
+      </div>
+
+      <ng-container *ngIf="bestPurchases.length > 0; else noProductsAvailable">
+        <!-- Contenitore che contiene le carte in evidenzia -->
+        <div id="topBestPurchases">
+          <div class="container-fluid">
+            <div class="row" id="cardRowBestPurchases">
+              <div class="col-lg-3 col-md-4 col-sm-6 col-12 cardsContainer" *ngFor="let card of visibleCardsBestPrice; let i = index">
+                <div class="card singleCard">
+                  <a href="cards/{{this.game}}/card/{{card.id}}"><img [src]="card.photo" class="card-img-top" [alt]="card.name" [ngClass]="{'glow-effect-1': i === 0, 'glow-effect-2': i === 1, 'glow-effect-3': i === 2}"></a>
+                  <div class="cardPosition" [ngClass]="{'magic-style-1': game === 'magic', 'yugioh-style-1' : game === 'yu-gi-oh'}">{{i + 1}}</div>
+                  <div class="card-body">
+                    <h5 class="card-title" style="text-align: center;">{{card.name}}</h5>
+                    <div id="priceTotal" style="width: 100%; display: flex; flex-direction: column;">
+                    <span id="higherPrice" class="card-text" style="text-align: center; font-size: 12px;">
+                      <i class="fa-solid fa-square-caret-up" style="margin-right: 1%;"></i>
+                      {{card.price.amount}}
+                      <ng-container *ngIf="card.price.currency === 'EUR'; else null">€</ng-container>
+                    </span>
+                      <span id="lowerPrice" class="card-text" style="text-align: center; font-size: 20px;">
+                      <i class="fa-solid fa-square-caret-down" style="margin-right: 1%;"></i>
+                        {{card.minPrice.amount}}
+                        <ng-container *ngIf="card.minPrice.currency === 'EUR'; else null">€</ng-container>
+                    </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contenitore che contiene le altre carte, quelle non in evidenzia -->
+        <div class="otherSellerCard">
+          <div class="container-fluid">
+            <div class="inMatrixCard" *ngFor="let card of nonVisibleCardsBestPrice; let i = index;">
+              <ng-template #tooltipContent><img [src]="card.photo" [alt]="card.name" style="width: 180px;"></ng-template>
+              <ul class="list-group list-group-horizontal groupCards">
+                <li class="list-group-item centered-item" style="width: 5%; vertical-align: center;">{{ indexBestPurchases + i }}</li>
+                <li class="list-group-item centered-item" style="width: 5%;"><i class="fa-solid fa-camera" [ngbTooltip]="tooltipContent" container="body"></i></li>
+                <li class="list-group-item centered-item" style="width: 45%;"><a href="cards/{{this.game}}/card/{{card.id}}" style="text-decoration: none; color: var(--text-color);">{{ card.name }}</a></li>
+                <li class="list-group-item centered-item" style="width: 45%; text-align: right">
+                  <div style="width: 100%; display: flex; flex-direction: column;">
+                  <span style="font-size: 12px;">
+                    <i class="fa-solid fa-square-caret-up" style="margin-right: 1%;"></i>
+                    {{card.price.amount}}
+                    <ng-container *ngIf="card.price.currency === 'EUR'; else null">€</ng-container>
+                  </span>
+                    <span style="font-size: 20px;">
+                    <i class="fa-solid fa-square-caret-down" style="margin-right: 1%;"></i>
+                      {{card.minPrice.amount}}
+                      <ng-container *ngIf="card.minPrice.currency === 'EUR'; else null">€</ng-container>
+                  </span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </section>
+</div>
+
+<!-- Messaggio Nessun prodotto disponibile -->
+<ng-template #noProductsAvailable>
+  <div style="text-align: center; padding: 20px;">
+    <h3>Nessun prodotto disponibile</h3>
+  </div>
+</ng-template>

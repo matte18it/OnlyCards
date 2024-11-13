@@ -1,0 +1,50 @@
+.container{
+    background-color: var(--background-color);
+}
+.form-select, .form-control{
+    background-color: var(--component-color);
+    color:var(--text-color);
+}
+.btn-primary{
+    background-color: var(--button-color);
+    color: var(--text-color);
+    border: none;
+}
+::placeholder{
+    color: var(--text-color);
+}
+
+#add-card{
+    background-color: lightgreen ;
+    align-items: center;
+    cursor: pointer;
+    height: 100%;
+  
+  }
+  #add-card:hover {
+    animation: bounce 0.5s;
+  }
+  .fixed-size {
+    width: 150px;  /* Larghezza fissa */
+    height: 200px; /* Altezza fissa */
+    object-fit: cover; /* Mantiene il rapporto di aspetto e riempie il contenitore */
+    border-radius: 8px; /* Aggiunge bordi arrotondati opzionali */
+  }
+  
+  .card-body {
+    display: flex;
+    align-items: center;
+  }
+  
+  .btn {
+    margin-left: auto;
+  }
+  .file-name {
+    word-wrap: break-word; 
+    overflow-wrap: break-word;
+    
+    white-space: normal; 
+    margin: 0;
+    font-size: 12px; 
+  }
+  

@@ -1,0 +1,76 @@
+<div class="container-fluid mt-5 min-vh-100  py-5">
+    <div class="row justify-content-center">
+      <!-- Colonna sinistra: immagine del profilo e username -->
+      <div class="col-md-4 text-center border-end">
+        <div class="profile-section p-4">
+            <img [src]="userInfo.profileImage ? userInfo.profileImage : 'assets/img/profile.png'"
+            class="img-fluid rounded-circle shadow-lg mb-3"
+            style="width: 150px; height: 150px; object-fit: cover;">
+       
+            <h3 class="text username-text">{{ userInfo.username }}</h3>
+            <!-- Bottone per visualizzare le wishlist -->
+            <button class="btn btn-outline-primary mt-3" [routerLink]="['/users', userInfo.username, 'wishlists']">
+            Visualizza le sue wishlist
+          </button>
+          
+         
+        </div>
+      </div>
+  
+      <!-- Colonna destra: lista dei prodotti venduti -->
+      <div class="col-md-8">
+        <div class="products-section p-4">
+          <h4 class="mb-4 text">Prodotti in vendita</h4>
+          <div class="row">
+            <!-- Ciclo sui prodotti -->
+            <div class="col-12 col-sm-6 col-md-6 col-lg-4 p-3" *ngFor="let product of products.content">
+              <div class="card h-100 shadow-sm">
+                <!-- Immagini del prodotto con carousel -->
+                <div class="card-img-top">
+                  <ngb-carousel *ngIf="product.images.length > 0" [showNavigationIndicators]="true">
+                    <ng-template ngbSlide *ngFor="let image of product.images">
+                        <div class="image-container">
+                            <img [src]="image" alt="Product image">
+                          </div>
+                          
+                    </ng-template>
+                  </ngb-carousel>
+                  <img *ngIf="product.images.length === 0" src="assets/img/default-product.png" alt="Default product image" class="d-block w-100" style="height: 200px; object-fit: cover;">
+                </div>
+      
+                <!-- Corpo della card con informazioni -->
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <a class="text-decoration-none" routerLink="/sale-product/{{product.id}}">
+                      {{ product.name }}
+                    </a>
+                  </h5>
+                  <p class="card-text"><b>Prezzo:</b> {{ product.price.amount }}€</p>
+                  <p class="card-text"><b>Lingua:</b> {{ product.language.toLowerCase() }}</p>
+                  <p class="card-text"><b>Condizione:</b> {{ product.condition.toLowerCase() }}</p>
+                  <p class="card-text"><b>Gioco:</b> {{ product.game.toLowerCase() }}</p>
+                </div>
+      
+                <!-- Footer con pulsante -->
+                <div class="card-footer bg-transparent">
+                  <button type="button" class="btn btn-warning w-100" (click)="addToCart(product.id)">
+                    Aggiungi nel carrello
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <ngb-pagination [(page)]="currentPagination"
+                [pageSize]="size"
+                          [collectionSize]="products.totalElements"
+                             (pageChange)="this.updatePage()"/>
+              </div>
+          </div>
+        </div>
+      </div>
+      
+      
+    </div>
+  </div>
+  
+  

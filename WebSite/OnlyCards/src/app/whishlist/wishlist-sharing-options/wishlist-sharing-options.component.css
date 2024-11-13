@@ -1,0 +1,190 @@
+.container{
+  background-color: var(--background-color);
+}
+.btn-primary{
+  background-color: var(--button-color);
+  border-color: var(--button-color);
+  color: var(--text-color);
+
+}
+#wishlistLink{
+  background-color: var(--seconday-component-color);
+}
+
+.form-control{
+  background-color: var(--component-color);
+  color: var(--text-color);
+}
+.btn-primary:hover{
+  background-color: var(--accent-color);
+  border-color: var(--component-color);
+}
+
+.wishlist-container {
+  padding: 1rem;
+}
+
+.account-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.account-item {
+  border-bottom: 1px solid #ddd;
+  padding: 0.5rem 0;
+}
+
+
+
+
+.account-info {
+  display: flex;
+  flex-direction: column;
+  padding-left: 5px;
+}
+
+.username {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: 0;
+
+}
+.account-item:hover {
+  background-color: var(--background-color);
+  cursor: pointer;
+}
+
+
+
+.ownership {
+  margin: 0;
+}
+
+.owner {
+  color: #28a745; /* Verde per proprietà */
+}
+
+.shared_with {
+  color: #ff9800; /* Arancione per condiviso */
+}
+.text-white{
+  text-align: center;
+}
+.fa-circle-info{
+  margin-top: 2px;
+}
+
+#add-card{
+  background-color: lightgreen ;
+  align-items: center;
+  cursor: pointer;
+  height: 100%;
+
+}
+#add-card:hover {
+  animation: bounce 0.5s;
+}
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+.remove-button{
+  float: right;
+}
+.account-name{
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+.list-accounts{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+.body-plus{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.form {
+  display: grid;
+  grid-template-columns: 80% 20%;
+  margin-bottom: 5px;
+  border-bottom: 1px solid var(--background-color);
+}
+@media (max-width: 996px) {
+  .form {
+    grid-template-columns: 60% 40%;
+  }
+
+}
+.card {
+  height: 100%;
+  background-color: var(--component-color);
+}
+.card-color{
+  width: 100%;
+  background-color: var(--component-color);
+  color: var(--text-color);
+
+}
+.red-border {
+  border: red 1px solid;
+  box-shadow: red 0px 0px 3px;
+}
+.error-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.delete-zone{
+  border-top: 1px solid var(--background-color);
+  display: flex;
+flex-direction: column;
+  height: 100%;
+}
+.shared-users{
+  margin-bottom: 20px;
+}
+.collapseUrl{
+  background-color: var(--component-color);
+
+}
+.copy-button:hover{
+  background-color: var(--seconday-component-color);
+  border-color: var(--seconday-component-color);
+}
+.deleteLink{
+  padding-top: 20px;
+}
+.custom-select {
+  background-color: var(--component-color);
+  color: var(--text-color);
+  border: 1px solid var(--text-color);
+  border-radius: 4px;
+  padding: 8px;
+}
+.text{
+  color: var(--text-color);
+}
+
+
+.custom-select>option {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+}
+

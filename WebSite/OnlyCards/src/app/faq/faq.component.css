@@ -1,0 +1,28 @@
+.faq-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+.faq-container h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  color: var(--text-color);
+}
+
+.faq-item {
+  margin-bottom: 30px;
+}
+
+.faq-item h2 {
+  font-size: 1.5em;
+  color: var(--accent-color);
+  margin-bottom: 10px;
+}
+
+.faq-item p {
+  font-size: 1.1em;
+  color: var(--text-color);
+}

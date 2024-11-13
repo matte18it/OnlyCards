@@ -1,0 +1,55 @@
+<div style="height: 20px"></div>
+
+<div>
+  <div class="container">
+    <!-- Sezione del titolo -->
+    <div id="titleContainer">
+      <h1>Modifica Prodotto</h1>
+    </div>
+
+    <!-- Sezione del form -->
+    <form [formGroup]="productModifyForm" style="margin-top: 10px;">
+      <div class="mb-3" *ngIf="productEdit.condition != undefined">
+        <label for="condition">Stato Carta<span [ngbTooltip]="'Obbligatorio'" style="color: red;">*</span></label>
+        <select class="form-select customComponent" id="condition" formControlName="condition">
+          <option *ngFor="let item of getConditionArray()" [value]="item">{{ item }}</option>
+        </select>
+      </div>
+
+      <div class="mb-3" style="margin-top: 10px;" *ngIf="productEdit.stateDescription != undefined">
+        <label for="stateDescription">Descrizione<span [ngbTooltip]="'Obbligatorio'" style="color: red;">*</span></label>
+        <textarea [maxLength]="200" class="form-control customComponent" placeholder="Inserisci la descrizione" formControlName="stateDescription" id="stateDescription" style="height: 100px"></textarea>
+      </div>
+
+      <div class="mb-3" *ngIf="productEdit.price != undefined">
+        <label for="price">Prezzo Carta<span [ngbTooltip]="'Obbligatorio'" style="color: red;">*</span></label>
+        <div class="input-group">
+          <input type="text" formControlName="price" id="price" class="form-control customComponent" placeholder="Inserisci il prezzo della carta">
+          <span class="input-group-text customComponent">€</span>
+        </div>
+      </div>
+
+      <!-- Sezione per caricare e visualizzare le immagini -->
+      <div class="mb-3">
+        <label>Immagini (min 1, max 5)<span [ngbTooltip]="'Obbligatorio'" style="color: red;">*</span></label>
+        <div class="input-group">
+          <button type="button" class="btn btn-secondary customComponent" (click)="fileInput.click()" [disabled]="uploadedImages.length >= 5">Sfoglia...</button>
+          <input type="text" class="form-control customComponent" [value]="getFileNames()" placeholder="Nessun file selezionato" disabled>
+        </div>
+        <input #fileInput type="file" (change)="onImageUpload($event)" accept="image/*" multiple class="d-none" [disabled]="uploadedImages.length >= 5">
+        <small *ngIf="uploadedImages.length >= 5" class="text-danger">Hai raggiunto il numero massimo di immagini.</small>
+        <div class="image-preview-container">
+          <div class="image-preview" *ngFor="let image of uploadedImages; let i = index">
+            <img [src]="image.url" alt="Uploaded Image">
+            <button type="button" class="btn btn-sm btn-danger" (click)="removeImage(i)">Rimuovi</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3" style="text-align: right;">
+        <button type="button" class="btn btn-info" [disabled]="productModifyForm.invalid || uploadedImages.length == 0" (click)="saveProduct()"><strong>Salva</strong></button>
+        <button type="button" class="btn btn-danger" style="margin-left: 10px;" (click)="goBack()"><strong>Annulla</strong></button>
+      </div>
+    </form>
+  </div>
+</div>

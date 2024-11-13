@@ -1,0 +1,72 @@
+#titleContainer {
+  border-bottom: 1px solid gray;
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+}
+
+.customComponent {
+  background-color: var(--component-color);
+  color: var(--text-color);
+  border-color: var(--seconday-component-color);
+  box-shadow: none;
+}
+
+.customComponent::placeholder {
+  color: var(--text-color);
+  opacity: 0.6;
+}
+
+#formContainer {
+  width: 60%;
+}
+
+#requestProductContainer {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 5%;
+}
+
+#imageContainer {
+  width: 35%;
+}
+
+.image-preview {
+  max-width: 80%;
+  max-height: 80%;
+  width: auto;
+  height: auto;
+  padding: 5px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+#cardImage::file-selector-button {
+  background-color: var(--component-color);
+  color: var(--text-color);
+  border-color: var(--seconday-component-color);
+}
+
+#gameType::placeholder {
+  opacity: 0.7;
+}
+
+/* Media query per schermi piccoli */
+@media (max-width: 768px) {
+  #requestProductContainer {
+    margin-top: 10px;
+    flex-direction: column;
+  }
+
+  #formContainer {
+    width: 100%;
+    order: 1; /* Il form viene visualizzato dopo l'immagine */
+  }
+
+  #imageContainer {
+    width: 100%;
+    order: 0; /* L'immagine viene visualizzata prima del form */
+  }
+}

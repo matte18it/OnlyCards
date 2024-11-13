@@ -1,0 +1,226 @@
+#backgroundContainer {
+  height: 100%;
+  width: 100%;
+}
+
+#topSellerContainer, #bestPurchasesContainer, #recentProductContainer {
+  margin-top: 30px;
+}
+
+.titleContainer {
+  border-bottom: 1px solid gray;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.containerIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--text-color);
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+}
+
+.infoSection {
+  font-size: 15px;
+  margin-left: 5px;
+  color: var(--text-color);
+  margin-top: -10px;
+}
+
+.containerIcon i {
+  font-size: 15px;
+  color: var(--background-color) !important;
+}
+
+.containerHeader {
+  height: 100%;
+  font-size: 30px;
+  font-weight: 600;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+}
+
+#topSellerCard, #topBestPurchases, #mostRecentCard {
+  margin-top: 30px;
+}
+
+.cardsContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.singleCard {
+  width: 14rem;
+  background-color: transparent;
+  color: var(--text-color);
+  border-color: transparent;
+  position: relative;
+}
+
+.cardPosition {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 23%;
+  background-color: var(--seconday-component-color);
+  font-size: 25px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+#singleCard img {
+  border-radius: 3px;
+}
+
+#cardRowTopSeller, #cardRowBestPurchases, #cardRowMostRecent {
+  display: flex;
+  justify-content: center;
+}
+
+.inMatrixCard {
+  border-bottom: 1px solid #40454f;
+  border-top: 1px solid #40454f;
+  padding: 10px;
+}
+
+.groupCards {
+  width: 100%;
+}
+
+.groupCards li {
+  background-color: transparent;
+  color: var(--text-color);
+  border-color: transparent;
+}
+
+.carousel-caption-right {
+  top: 20%;
+  right: auto;
+  text-align: left;
+}
+
+@keyframes glow-border-1 {
+  0% {
+    box-shadow: 0 0 5px #ffd700, 0 0 10px #ffd700, 0 0 15px #ffd700, 0 0 20px #ffd700;
+  }
+  50% {
+    box-shadow: 0 0 10px #ffd700, 0 0 15px #ffd700, 0 0 20px #ffd700, 0 0 25px #ffd700;
+  }
+  100% {
+    box-shadow: 0 0 5px #ffd700, 0 0 10px #ffd700, 0 0 15px #ffd700, 0 0 20px #ffd700;
+  }
+}
+@keyframes glow-border-2 {
+  0% {
+    box-shadow: 0 0 5px #c0c0c0, 0 0 10px #c0c0c0, 0 0 15px #c0c0c0, 0 0 20px #c0c0c0;
+  }
+  50% {
+    box-shadow: 0 0 10px #c0c0c0, 0 0 15px #c0c0c0, 0 0 20px #c0c0c0, 0 0 25px #c0c0c0;
+  }
+  100% {
+    box-shadow: 0 0 5px #c0c0c0, 0 0 10px #c0c0c0, 0 0 15px #c0c0c0, 0 0 20px #c0c0c0;
+  }
+}
+@keyframes glow-border-3 {
+  0% {
+    box-shadow: 0 0 5px #cd7f32, 0 0 10px #cd7f32, 0 0 15px #cd7f32, 0 0 20px #cd7f32;
+  }
+  50% {
+    box-shadow: 0 0 10px #cd7f32, 0 0 15px #cd7f32, 0 0 20px #cd7f32, 0 0 25px #cd7f32;
+  }
+  100% {
+    box-shadow: 0 0 5px #cd7f32, 0 0 10px #cd7f32, 0 0 15px #cd7f32, 0 0 20px #cd7f32;
+  }
+}
+
+.glow-effect-1 {
+  animation: glow-border-1 5s infinite;
+  border-radius: 10px;
+}
+
+.glow-effect-2 {
+  animation: glow-border-2 5s infinite;
+  border-radius: 10px;
+}
+
+.glow-effect-3 {
+  animation: glow-border-3 5s infinite;
+  border-radius: 10px;
+}
+
+.centered-item {
+  display: flex;
+  align-items: center;
+}
+
+.carouselButton {
+  background-color: var(--button-color);
+  color: var(--text-color);
+  border: var(--button-color);
+  padding: 10px;
+}
+
+.carouselButton:hover {
+  background-color: var(--accent-color);
+  color: var(--button-color);
+  border: var(--accent-color);
+}
+
+.magic-style-1 {
+  bottom: 27%;
+}
+
+.yugioh-style-1 {
+  bottom: 27%;
+}
+
+/* Gestione del responsive sul carosello */
+@media (max-width: 991px) {
+  #cardCarousel {
+    display: none;
+  }
+
+  #imageSection {
+    display: block;
+  }
+}
+
+@media (min-width: 992px) {
+  #imageSection {
+    display: none;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .carouselTitle {
+    font-size: 20px;
+  }
+
+  .carouselDescription {
+    font-size: 15px;
+  }
+
+  .carouselButton {
+    font-size: 12px;
+    padding: 7px;
+  }
+}
+
+@media (max-width: 400px) {
+  #topSellerContainer .otherSellerCard .list-group-item:nth-child(4),
+  #recentProductContainer .otherSellerCard .list-group-item:nth-child(4) {
+    display: none;
+  }
+}
+

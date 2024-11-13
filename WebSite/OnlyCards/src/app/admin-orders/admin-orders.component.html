@@ -1,0 +1,101 @@
+<div style="height: 20px">
+</div>
+
+<div>
+  <div class="container">
+    <div id="titleContainer">
+      <h1>Gestione Utenti</h1>
+      <h6><a href="/support" id="help">Hai bisogno di aiuto?</a></h6>
+    </div>
+
+    <div class="contentContainer">
+      <div id="sidebar">
+        <div id="profileInfo">
+          <a href="user/profile" [ngClass]="{'active': type === 'profile'}">
+            <div class="link-content">
+              <span><i class="fa-solid fa-circle-user"></i> Profilo</span>
+            </div>
+          </a>
+          <a href="user/address" [ngClass]="{'active': type === 'address'}" *ngIf="hasRole('ROLE_BUYER') || hasRole('ROLE_SELLER')">
+            <div class="link-content">
+              <span><i class="fa-solid fa-location-dot"></i> Indirizzi</span>
+            </div>
+          </a>
+        </div>
+
+        <div id="adminSection" style="padding-top: 10px;" *ngIf="hasRole('ROLE_ADMIN')">
+          <a href="admin/orders" [ngClass]="{'active': type === 'admin-orders'}">
+            <div class="link-content">
+              <span><i class="fa-solid fa-box-open"></i> Gestione Ordini</span>
+            </div>
+          </a>
+          <a href="admin/users" [ngClass]="{'active': type === 'admin-users'}">
+            <div class="link-content">
+              <span><i class="fa-solid fa-users"></i> Gestione Utenti</span>
+            </div>
+          </a>
+        </div>
+        <hr style="border-top: 1px solid #ccc; margin: 10px 0;">
+        <div id="otherInfo" style="padding-top: 10px;">
+            <a href="user/settings" [ngClass]="{'active': type === 'settings'}"><div class="link-content"><span><i class="fa-solid fa-gear"></i> Impostazioni</span></div></a>
+          </div>
+        </div>
+        <div id="content">
+<!--    <Questo è il vero contenuto della pagina -->
+  <form [formGroup]="this.form" >
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" formControlName="buyer" placeholder="ricerca per acquirente" aria-label="Ricerca per acquirente">
+    <input type="text" class="form-control" formControlName="seller"  placeholder="ricerca per venditore" aria-label="Ricerca per venditore">
+
+  </div>
+
+</form>
+      <table class="table table-striped table-hover">
+        <thead >
+          <tr>
+            <th scope="col" (click)="sort('created-date')" class="  clicklable-column" >
+              Creazione
+              <i *ngIf="sortColumn === 'created-date-desc'" class="mx-2 fa-solid fa-arrow-down"></i>
+              <i *ngIf="sortColumn === 'created-date-asc'" class="mx-2 fa-solid fa-arrow-up"></i>
+            </th>
+            <th scope="col" (click)="sort('customer-username')" class="clicklable-column">
+              Acquirente
+              <i *ngIf="sortColumn === 'customer-username-desc'" class="mx-2 fa-solid fa-arrow-down"></i>
+              <i *ngIf="sortColumn === 'customer-username-asc'" class="mx-2 fa-solid fa-arrow-up"></i>
+            </th>
+            <th scope="col" (click)="sort('seller-email')" class="clicklable-column">
+              Venditore
+              <i *ngIf="sortColumn === 'seller-email-desc'" class="mx-2 fa-solid fa-arrow-down"></i>
+              <i *ngIf="sortColumn === 'seller-email-asc'" class="mx-2 fa-solid fa-arrow-up"></i>
+            </th>
+            <th scope="col" (click)="sort('status')" class="clicklable-column">
+              Stato
+              <i *ngIf="sortColumn === 'status-desc'" class="mx-2 fa-solid fa-arrow-down"></i>
+              <i *ngIf="sortColumn === 'status-asc'" class="mx-2 fa-solid fa-arrow-up"></i>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of this.orders" class="  clicklable-column" (click)="openModalOrder(order.id)">
+            <td>{{ order.addDate| date: 'dd/MM/yyyy' }}</td>
+            <td>{{ order.buyer }}</td>
+            <td>{{ order.seller }}</td>
+            <td>
+              <span *ngIf="order.status.toString() === 'SHIPPED'" class="badge bg-primary">Shipped</span>
+              <span *ngIf="order.status.toString() === 'PENDING'" class="badge bg-warning text-dark">Pending</span>
+              <span *ngIf="order.status.toString() === 'DELIVERED'" class="badge bg-success">Delivered</span>
+              <span *ngIf="order.status.toString() === 'CANCELLED'" class="badge bg-danger">Cancelled</span>
+            </td>
+
+
+          </tr>
+      </table>
+      <div class="d-flex justify-content-center">
+      <ngb-pagination [(page)]="page"
+                [pageSize]="pageSize"
+                [collectionSize]="totalElements"
+                  [boundaryLinks]="true"  (pageChange)="this.getOrders();"/>
+    </div></div>
+    </div>
+</div>
+</div>

@@ -1,0 +1,72 @@
+.custom-modal{
+  background-color: var(--background-color);
+}
+.modal-header, .modal-footer{
+  background-color: var(--component-color);
+}
+.modal-body{
+  background-color: var(--background-color);
+}
+.fa-circle-info{
+  padding-right: 5px;
+
+}
+.bottoneAggiunta{
+  background-color: var(--button-color);
+  color: var(--text-color);
+  border: none;
+  width: 100%;
+}
+.bottoneAggiunta:hover{
+  background-color: var(--accent-color);
+}
+.full{
+  height: 85vh;
+  overflow-y: auto;
+  align-items: center;
+}
+::placeholder {
+  color: var(--text-color);
+ 
+}
+#photo::file-selector-button {
+  background-color: var(--button-color);
+  color: var(--text-color);
+}
+#photo:hover::file-selector-button {
+  background-color: var(--accent-color);
+  color: var(--text-color);
+}
+.list-group-item{
+  background-color: var(--component-color);
+  color : var(--text-color);
+}
+.list-group-item:hover{
+  background-color: var(--button-color) !important;
+  color : var(--text-color) !important;
+}
+
+
+
+
+
+::ng-deep .dropdown-menu.show { color:var(--text-color) ; background:var(--component-color)}
+::ng-deep .dropdown-item { color:var(--text-color) }
+::ng-deep .dropdown-item:hover { background:var(--button-color) ; color:var(--text-color) ;}
+::ng-deep .dropdown-item.active { background:var(--button-color) ; color:var(--text-color) ;}
+
+.photo{
+  background-color: var(--component-color);
+}
+.bottoneModifica:hover{
+  background-color: lightgray;
+  cursor: pointer;
+
+}
+.divider{
+  border-top: 2px solid var(--text-color);
+}
+.form-control{
+  background-color: var(--component-color);
+  color: var(--text-color);
+}

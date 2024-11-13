@@ -1,0 +1,106 @@
+<nav class="navbar">
+  <div class="container">
+    <!-- Logo del sito -->
+    <a class="navbar-brand" href="">
+      <img src="/assets/img/simbolo.png" alt="Only Cards" width="73" height="63">
+    </a>
+
+    <!-- Scelta per cambiare la sezione delle carte -->
+    <div class="d-flex dropdown sectionButton" id="sectionNavbar" *ngIf="showComponent() && games.size !== 0 && isProductPage()">
+      <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">{{ getActiveGame() }}</button>
+
+      <ul class="dropdown-menu">
+        <li *ngFor="let game of navbarGame" (click)="gotToPage($event)" class="hoverText" style="cursor: pointer;">{{ game }}</li>
+      </ul>
+    </div>
+
+    <!-- Contenitore per barra di ricerca -->
+    <div *ngIf="showComponent()" class="d-flex mx-auto containerForm" id="researchNavbar">
+      <form class="d-flex" role="search" (ngSubmit)="effettuaRicerca(searchInput.value)">
+        <input #searchInput class="form-control me-2 findComponent" type="search" placeholder="Cerca Prodotti" aria-label="Cerca Prodotti">
+        <button class="btn findButton" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </form>
+    </div>
+
+    <!-- Bottone per aprire l'offcanvas menu -->
+    <div class="d-flex">
+      <button class="btn btn-primary d-block d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu" id="offCanvasButton">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+
+    <!-- Contenitore per bottoni utente -->
+    <div class="d-flex" id="iconContainer">
+      <!-- Bottone per entrare nel profilo -->
+      <button class="btn" *ngIf="this.login.isAuthenticated()" (click)="redirect('user/profile')"><i class="fa-solid fa-circle-user" title="Profilo"></i></button>
+      <!-- Bottone per venditori -->
+      <button class="btn" *ngIf="this.login.isAuthenticated() && this.login.userIsSeller()" (click)="redirect('seller')" title="Vendi"><i class="fa-solid fa-sack-dollar"></i></button>
+      <button class="btn" *ngIf="this.login.isAuthenticated() && this.login.userIsSeller()" (click)="redirect('seller/products')" title="I tuoi prodotti"><i class="fa-solid fa-list"></i></button>
+      <!-- Bottoni per admin -->
+      <button class="btn" *ngIf="this.login.userHasRole('ROLE_ADMIN')" (click)="redirect('admin/orders')" title="Gestione Ordini">
+        <i class="fa-solid fa-box-open"></i>
+      </button>
+      <button class="btn" *ngIf="this.login.userHasRole('ROLE_ADMIN')" (click)="redirect('admin/users')" title="Gestione Utenti">
+        <i class="fa-solid fa-users"></i>
+      </button>
+
+      <!-- Bottone per login o registrazione -->
+      <button class="btn" *ngIf="!this.login.isAuthenticated()" (click)="redirect('login')"><i class="fa-solid fa-circle-user" title="Accedi o Registrati"></i></button>
+      <!-- Bottone per la whishlit -->
+      <button *ngIf="this.login.isAuthenticated() && this.login.userIsBuyer()" class="btn" style="margin-right: 5px;" (click)="redirect('whishlists')"><i class="fa-solid fa-heart" title="Lista dei desideri"></i></button>
+      <!-- Bottone per il carrello -->
+      <button class="btn" style="margin-right: 5px;" *ngIf="this.login.isAuthenticated() && this.login.userHasRole('ROLE_BUYER')" (click)="redirect('cart')"><i class="fa-solid fa-cart-shopping" title="Carrello"></i></button>
+      <!-- Bottone logout -->
+      <button class="btn" *ngIf="this.login.isAuthenticated()" (click)="logout()"><i class="fa-solid fa-circle-xmark" title="Logout"></i></button>
+    </div>
+  </div>
+</nav>
+
+<!-- Offcanvas menu -->
+<div class="offcanvas offcanvas-start" id="offcanvasMenu">
+  <div class="offcanvas-header">
+    <h3 class="offcanvas-title">Menu</h3>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" style="outline: none; box-shadow: none;"></button>
+  </div>
+  <div class="offcanvas-body">
+    <!-- Contenuto dell'offcanvas menu -->
+    <div class="d-flex" id="offcanvasContainer">
+      <!-- Contenitore per barra di ricerca -->
+      <div class="d-flex containerForm" id="researchOffCanvas" style="width: 100%;">
+        <form class="d-flex" role="search" (ngSubmit)="effettuaRicerca(searchInput.value)">
+          <input #searchInput class="form-control me-2 findComponent" type="search" placeholder="Cerca Prodotti" aria-label="Cerca Prodotti" style="width: 80%;">
+          <button class="btn findButton" type="submit" style="width: 20%; text-align: center;"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
+      </div>
+      <!-- Bottone per login o registrazione -->
+      <button class="btn btnMenu" *ngIf="!login.isAuthenticated()" (click)="redirect('login')"><i class="fa-solid fa-circle-user" title="Accedi o Registrati"></i> Accedi o Registrati</button>
+      <!-- Bottone per entrare nel profilo -->
+      <button class="btn btnMenu" *ngIf="login.isAuthenticated()" (click)="redirect('user/profile')"><i class="fa-solid fa-circle-user" title="Profilo"></i> Profilo</button>
+      <!-- Bottone per venditori -->
+      <button class="btn btnMenu" *ngIf="this.login.isAuthenticated() && this.login.userIsSeller()" (click)="redirect('seller')" title="Vendi"><i class="fa-solid fa-sack-dollar"></i> Vendi</button>
+      <button class="btn btnMenu" *ngIf="this.login.isAuthenticated() && this.login.userIsSeller()" (click)="redirect('seller/products')" title="I tuoi prodotti"><i class="fa-solid fa-list"></i> I tuoi prodotti</button>
+      <!-- Bottone per la whishlit -->
+      <button class="btn btnMenu" style="margin-right: 5px;" *ngIf="login.isAuthenticated() && this.login.userIsBuyer()" (click)="redirect('whishlists')"><i class="fa-solid fa-heart" title="Lista dei desideri"></i> Lista dei desideri</button>
+      <!-- Bottone per il carrello -->
+      <button class="btn btnMenu" style="margin-right: 5px;" *ngIf="this.login.isAuthenticated() && this.login.userIsSellerOrBuyer()" (click)="redirect('cart')"><i class="fa-solid fa-cart-shopping" title="Carrello"></i> Carrello</button>
+      <!-- Bottone logout -->
+      <button class="btn btnMenu" *ngIf="login.isAuthenticated()" (click)="logout()"><i class="fa-solid fa-circle-xmark" title="Logout"></i> Logout</button>
+      <!-- Scelta per cambiare la sezione delle carte -->
+      <div class="d-flex dropdown sectionButton" id="sectionOffCanvas">
+        <div class="d-flex" *ngIf="showComponent() && games.size !== 0 && isProductPage()">
+          <button class="btn" data-bs-toggle="collapse" aria-expanded="false" style="color: black; width: auto;" data-bs-target="#categoryCollapse" aria-controls="categoryCollapse">{{ getActiveGame() }}</button>
+          <i class="fa-solid fa-caret-down align-self-center"></i>
+        </div>
+        <div class="collapse" id="categoryCollapse">
+          <div class="card card-body">
+            <div *ngFor="let game of navbarGame" style="display: flex; align-items: center;">
+              <span style="display: flex; align-items: center; height: auto;"><i class="fa-solid fa-circle" style="font-size: 5px;"></i></span>
+              <span (click)="gotToPage($event)" class="secondValue hoverText">{{ game }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,112 @@
+<button type="button" class="btn text-secondary" (click)="goBack()" style="color: var(--text-color);">
+  <i class="fas fa-arrow-left"></i>
+</button>
+
+<div class="container" *ngIf="card?.images.length > 0">
+  <div id="carouselIndicators" class="carousel slide" data-bs-ride="carousel" style="max-width: 300px; margin: auto;">
+
+    <!-- Foto -->
+    <div class="carousel-inner">
+      <div class="carousel-item" *ngFor="let img of card?.images; let i = index" [class.active]="i === 0">
+        <img class="d-block w-100" [src]="img.photo" alt="Foto {{ i + 1 }}" style="height: 400px;">
+      </div>
+    </div>
+
+    <!-- Controlli -->
+    <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-bs-slide="prev" *ngIf="card?.images.length > 1">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselIndicators" role="button" data-bs-slide="next" *ngIf="card?.images.length > 1">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </a>
+  </div>
+
+  <div class="description">
+    <h2 class="mb-3">{{ card.cardName }} ({{ card.cardLanguage }})</h2>
+
+    <p><strong>Tipo: </strong> {{ card.game }} {{ card.type }}</p>
+    <p><strong>Condizione: </strong> {{ card.condition }}</p>
+    <p><strong>Descrizione: </strong> {{ card.stateDescription }}</p>
+    <p><strong>Data rilascio: </strong> {{ card.releaseDate | date:'dd/MM/yyyy' }}</p>
+
+    <div *ngIf="!card.sold" class="d-inline-block">
+      <span class="badge bg-success">Ancora disponibile!</span>
+    </div>
+    <div *ngIf="card.sold" class="d-inline-block">
+      <span class="badge bg-danger">Non disponibile!</span>
+    </div>
+
+
+    <p class="mt-4 display-6">
+      <strong>Prezzo: </strong>
+      <span class="fw-bold text-primary">{{ card.price.amount }} {{ card.price.currency }}</span>
+    </p>
+
+    <div class="d-flex mt-4" *ngIf="login.isAuthenticated() && !login.userIsAdmin()">
+      <div class="btn-group">
+        <button class="btn btn-primary" (click)="buyNow()">
+          Acquista ora
+        </button>
+        <button class="btn btn-primary" style="background-color: #0056b3; border-color: #004994;" (click)="addToCart()">
+          <i class="fas fa-cart-plus"></i> Aggiungi al carrello
+        </button>
+      </div>
+
+      <div ngbDropdown class="d-inline-block " [autoClose]="false">
+        <button class="btn btn-secondary dropdown-toggle ms-3"
+                id="dropdownMenuButton"
+                ngbDropdownToggle
+                (click)="getWishLists()">
+          <i class="fas fa-heart"></i> Aggiungi alla lista
+        </button>
+
+        <div ngbDropdownMenu aria-labelledby="dropdownMenuButton" *ngIf="wishlists && wishlists.length > 0" >
+          <ul class="list-unstyled">
+            <li *ngFor="let w of wishlists">
+              <button class="dropdown-item" (click)="addToWishList(w.id)">
+                {{ w.name }}
+              </button>
+            </li>
+          </ul>
+
+          <!-- Paginazione all'interno del dropdown -->
+          <div class="mx-5" >
+            <ngb-pagination
+              [collectionSize]="totalItemsWishlist"
+              [(page)]="currentPaginationWishlist"
+              [pageSize]="10"
+              (pageChange)="updatePageWishlist()">
+            </ngb-pagination>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+    </div>
+
+    <!-- Admin buttons -->
+    <div class="d-flex" *ngIf="login.userIsAdmin()">
+      <button class="btn btn-warning me-2" (click)="openModalAdmin(card)">
+        <i class="fa-solid fa-pen-to-square"></i> Modifica
+      </button>
+
+      <button class="btn btn-danger" (click)="deleteProduct(card)">
+        <i class="fa-solid fa-trash"></i> Elimina
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="sellerDescription d-flex justify-content-lg-start" style="margin-top: 50px; margin-left: 250px;">
+  <div class="flex-column align-items-center">
+    <h4 class="mt-4 my-5">Seller Details:</h4>
+    <p><strong>Username: </strong><a [routerLink]="'/users/' + card?.username" style="text-decoration: none;">{{ card?.username }}</a></p>
+    <p><strong>Email: </strong><a href="mailto:{{ card?.email }}" style="text-decoration: none;">{{ card?.email }}</a></p>
+    <p><strong>Cell: </strong><a href="tel:{{ card?.cellphone }}" style="text-decoration: none;">{{ card?.cellphone }}</a></p>
+  </div>
+</div>

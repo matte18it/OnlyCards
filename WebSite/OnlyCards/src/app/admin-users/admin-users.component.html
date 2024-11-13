@@ -1,0 +1,100 @@
+<div style="height: 20px"></div>
+
+<div>
+  <div class="container">
+    <div id="titleContainer">
+      <h1>Gestione Utenti</h1>
+      <h6><a href="/support">Hai bisogno di aiuto?</a></h6>
+    </div>
+
+    <div class="contentContainer">
+      <div id="sidebar">
+        <div id="profileInfo">
+          <a href="user/profile">
+            <div class="link-content">
+              <span><i class="fa-solid fa-circle-user"></i> Profilo</span>
+            </div>
+          </a>
+          <a href="user/address" *ngIf="hasRole('ROLE_BUYER') || hasRole('ROLE_SELLER')">
+            <div class="link-content">
+              <span><i class="fa-solid fa-location-dot"></i> Indirizzi</span>
+            </div>
+          </a>
+        </div>
+
+        <div id="adminSection" style="padding-top: 10px;" *ngIf="hasRole('ROLE_ADMIN')">
+          <a href="admin/orders" [ngClass]="{'active': type === 'admin-orders'}">
+            <div class="link-content">
+              <span><i class="fa-solid fa-box-open"></i> Gestione Ordini</span>
+            </div>
+          </a>
+          <a href="admin/users" [ngClass]="{'active': type === 'admin-users'}">
+            <div class="link-content">
+              <span><i class="fa-solid fa-users"></i> Gestione Utenti</span>
+            </div>
+          </a>
+        </div>
+
+        <hr style="border-top: 1px solid #ccc; margin: 10px 0;">
+
+        <div id="otherInfo" style="padding-top: 10px;">
+          <a href="user/settings">
+            <div class="link-content"><span><i class="fa-solid fa-gear"></i> Impostazioni</span></div>
+          </a>
+        </div>
+      </div>
+
+      <div id="content">
+        <!-- Input per la ricerca -->
+        <form [formGroup]="this.form">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" formControlName="username" placeholder="Cerca per nome utente" aria-label="Cerca utente">
+            <input type="text" class="form-control" formControlName="email" placeholder="Cerca per email" aria-label="Cerca email">
+          </div>
+        </form>
+
+        <div class="table-responsive">
+          <div class="container">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th (click)="sort('username')">Nome
+                  <i *ngIf="sortColumn === 'username' && sortDirection === 'asc'" class="fa fa-arrow-up"></i>
+                  <i *ngIf="sortColumn === 'username' && sortDirection === 'desc'" class="fa fa-arrow-down"></i>
+                </th>
+                <th (click)="sort('email')">Email
+                  <i *ngIf="sortColumn === 'email' && sortDirection === 'asc'" class="fa fa-arrow-up"></i>
+                  <i *ngIf="sortColumn === 'email' && sortDirection === 'desc'" class="fa fa-arrow-down"></i>
+                </th>
+                <th>Numero di Telefono</th>
+                <th>Azioni</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let user of users">
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.cellphoneNumber }}</td>
+                <td>
+                  <button class="btn btn-primary" (click)="openEditModal(user)">Modifica</button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="d-flex justify-content-center mt-3">
+            <ngb-pagination
+              [(page)]="currentPagination"
+              [pageSize]="size"
+              [collectionSize]="totalElements"
+              [boundaryLinks]="true" (pageChange)="updatePage()">
+
+            </ngb-pagination>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

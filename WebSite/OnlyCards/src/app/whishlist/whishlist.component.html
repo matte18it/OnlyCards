@@ -1,0 +1,221 @@
+<div class="container-fluid mt-5"  >
+  <div class="row p-3">
+    <header *ngIf="!this.isCapabilty() && this.username==''" class="main-header">
+    <h1>Le tue liste</h1>
+      <div>
+        <button class="btn btn-success " (click)="createNewWishlist(addNewWishlist)">Crea una nuova lista</button>
+
+      </div>
+    </header>
+    <header *ngIf="this.username!=''" class="main-header">
+      <h1>Liste dei desideri pubbliche di {{this.username}}</h1>
+    </header>
+    <div class="col-md-3 col-sm-12 list-of-wishlists p-0 " *ngIf="!this.isCapabilty()">
+      <div class="header-wishlists">
+        <div *ngIf="sort=='new'" class="sorting-wishlists " (click)="changeSortingWishlists('old')">
+          <span class="p-1">recenti</span>
+      <i class="fa-solid fa-arrow-down-short-wide custom-arrow fa-xl"></i>
+        </div>
+        <div *ngIf="sort=='old'" class="sorting-wishlists" (click)="changeSortingWishlists('new')">
+          <span class="p-1">recenti</span>
+          <i class="fa-solid fa-arrow-up-short-wide custom-arrow fa-xl"></i>
+        </div>
+        <div ngbDropdown  *ngIf="username==''" >
+          <button type="button" class="btn btn-primary filter-wishlists" id="dropdownBasic1" ngbDropdownToggle>
+            Seleziona
+          </button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button ngbDropdownItem (click)="changeFilterOption('all')" [ngClass]="{'active':isCreator=='all'}">Tutte</button>
+            <button ngbDropdownItem (click)="changeFilterOption('true')" [ngClass]="{'active':isCreator=='true'}">Create da me</button>
+            <button ngbDropdownItem (click)="changeFilterOption('false')" [ngClass]="{'active':isCreator=='false'}">Condivise con me</button>
+      </div>
+        </div>
+      </div>
+      <div id="list-wishlists"   *ngIf="!noContent;">
+      <ul  *ngFor="let wishlist of whishlists.content let i=index" class="list-group list-group-flush  " >
+        <li class="  wishlist p-3" (click)="changeSelectedWishlist(i)" [ngClass]="{'active': selectedWishlist == i}">
+          {{ wishlist.name }}
+        </li>
+      </ul>
+      <div class="row pt-2">
+        <div class="col-12 d-flex justify-content-center" >
+          <ngb-pagination [collectionSize]="whishlists.totalElements" [pageSize]="whishlists.size"  [(page)]="currentPaginationWishlist" (pageChange)="updatePageWishlist()" ></ngb-pagination>
+        </div>
+
+
+      </div>
+      </div>
+    </div>
+    <div class="list-of-cards"  *ngIf="!noContent; else noContentTemplate" [ngClass]="{'col-md-9':!isCapabilty(), 'col-md-12':isCapabilty()}">
+      <div class="row header-box" >
+        <div class="col-md-9 " >
+          <header class="header-name"  >
+          <h2 >{{ getCurrentWishlistName() }} </h2>
+          <span class="creation-date">
+            Ultima modifica {{getCurrentWishlistLastUpdateDate()}} - 
+            {{ getVisibilityStatus() }}
+            <i [ngClass]="getIconClass()"></i>
+          </span>
+          
+        
+          </header>
+
+        </div>
+        <div class="col col-md-3 share-box">
+        <button class="btn btn-primary share-button p-3" (click)="openSharingOptions()">
+          <span  *ngIf="isOwner(selectedWishlist)">Modifica <i  class="fa-solid fa-pen "></i></span>
+          <span  *ngIf="!isOwner(selectedWishlist)">Utenti  <i  class="fa-solid fa-users  "></i></span>
+
+
+        </button>
+        </div>
+      </div>
+      <div id="list-cards" >
+        <div class="row   p-2">
+          <form [formGroup]="searchForm" (ngSubmit)="makeSearch()" class="form-inline flex-md-row search-form">
+
+          <div class="col col-md-4 search-input">
+            Prodotto
+        <input [ngClass]="{'red-border':showError(this.searchForm,'cardSearch')}" formControlName="cardSearch" class="form-control " type="search" placeholder="Cerca un prodotto" aria-label="Cerca">
+            <small *ngIf="showError(this.searchForm,'cardSearch')" class="font-weight-bold text-danger">Sono ammessi solo lettere, numeri e spazi</small>
+        </div>
+          <div class="col col-md-4 search-input">
+            Venditore
+            <input [ngClass]="{'red-border':showError(this.searchForm,'ownerSearch')}" formControlName="ownerSearch" class="form-control " type="search" placeholder="Cerca un venditore" aria-label="Cerca">
+            <small *ngIf="showError(this.searchForm,'ownerSearch')" class="font-weight-bold text-danger">Sono ammessi solo lettere e numeri</small>
+          </div>
+          <div class="col  col-md-4 align-items-start d-flex  justify-content-end" >
+            <div ngbDropdown  >
+              <button  class="btn search-button  dropdown-toggle" type="button" id="dropdownOrder" ngbDropdownToggle>
+                Ordina per
+              </button>
+              <div ngbDropdownMenu  aria-labelledby="dropdownMenuButton">
+                <button *ngFor="let sort of getSortingOptionValues()"
+                        ngbDropdownItem
+                        (click)="cambiaOrdine(sort)"
+                        [ngClass]="{'active':sort==selectedSortingOption}">
+                  <span>{{ sort}}</span>
+                </button>
+              </div>
+            </div>
+            </div>
+          </form>
+        </div>
+      <div  class="row  " *ngIf="getCurrentWishlistCardsSize()>0; else noCardsTemplate">
+      <div class="col col-md-4 col-lg-4 col-xl-3 col-sm-6 col-12 p-3" *ngFor="let card of getCurrentWishlistCards()" >
+        <div class="card h-100 ">
+          <div class="card-img-top ">
+            <ngb-carousel [showNavigationIndicators]="true" >
+              <ng-template ngbSlide *ngFor="let image of card.images">
+                <div class="carousel-card">
+                  <div class="image-container">
+                    <img src="{{image}}" alt="Product image" class="carousel-card ">
+                  </div>
+                </div>
+              </ng-template>
+            </ngb-carousel>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title"><a class="no-underline" routerLink="/sale-product/{{card.id}}">{{card.name}}</a></h5> 
+            <p class="card-text"><b>Prezzo: </b>{{ card.price.amount }}€</p>
+            <p class="card-text"><b>Lingua: </b>{{ card.language.toLowerCase() }}</p>
+            <p class="card-text"><b>Condizione: </b>{{ card.condition.toLowerCase() }}</p>
+            <p class="card-text"><b>Venditore: </b><a class="no-underline" routerLink="/users/{{card.account.username}}">{{card.account.username}}</a></p> 
+            <p class="card-text"><b>Gioco: </b>{{ card.game.toLowerCase()}}</p>
+
+          </div>
+          <div class="card-footer ">
+            <div class="btn-toolbar " role="button"  aria-label="buttons to delete and show card details">
+                <button  type="button" class="btn btn-warning  add-to-cart"(click)="addToCart(card.id)"  >Aggiungi nel carrello</button> 
+              <div class="btn-group card-button-owner-group" >
+
+                <button type="button" *ngIf="isOwner(selectedWishlist) " class="btn btn-danger" (click)="deleteCardFromWishlist(card.id)">Elimina</button>
+              </div>
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="row ">
+        <div class="col-12 d-flex justify-content-center" *ngIf="collectionSize>currentPage">
+          <ngb-pagination [collectionSize]="collectionSize" [pageSize]="pageSize"  [(page)]="currentPagination" (pageChange)="updatePage()" ></ngb-pagination>
+        </div>
+
+
+      </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<ng-template #noContentTemplate >
+  <div class="no-wish-container col">
+    <span class="hearticon-container">
+    <i class="fa-solid fa-heart-crack fa-9x"></i>
+      </span>
+    <h2 *ngIf="isCreator=='all'">Non ci sono dei desideri... per ora!</h2>
+  
+    <h2 *ngIf="isCreator=='true'">Non ci sono dei desideri create da te</h2>
+    <p *ngIf="isCreator=='true'">
+      Sembra che tu non abbia ancora creato liste dei desideri. Ma non preoccuparti, puoi crearla subito!
+    </p>
+    <h2 *ngIf="isCreator=='false'">Non ci sono dei desideri condivise con te</h2>
+    <p *ngIf="isCreator=='false'">
+      Sembra che nessuno abbia condiviso con te una lista dei desideri. Ma non preoccuparti, chi sa che non arrivi presto una sorpresa!
+    </p>
+  </div>
+</ng-template>
+<ng-template #noCardsTemplate>
+  <div class="no-card-container">
+    <span class="error-card-container">
+    <img src="../../assets/img/errorCard.png" class="error-card-img" alt="no-card-image" >
+      </span>
+    <h2>La lista è vuota... per ora!</h2>
+    <p>
+      Sembra che tu non abbia ancora aggiunto carte a questa lista. Ma non preoccuparti, le carte giuste ti stanno aspettando!
+      <a routerLink="/home" class="text-decoration-none">esplora la nostra collezione</a>
+    </p>
+  </div>
+</ng-template>
+<ng-template #addNewWishlist let-modal>
+  <div class="container">
+    <div class="modal-header">
+      <h4 class="modal-title">Aggiungi una wishlist</h4>
+      <button type="button" class="btn-close " aria-label="Close" (click)="modal.dismiss('')"></button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="newWishlistForm" >
+        <div class="form-group mb-2">
+          <label for="name">Nome della wishlist</label>
+          <input [ngClass]="{'red-border':errorAllNewWishlist()}" [maxlength]="30" type="text" class="form-control " id="name" formControlName="name" placeholder="nome ">
+          <div class="error-container">
+          <small *ngIf="errorNewWishlist('pattern')" class="font-weight-bold text-danger">Sono ammessi solo lettere e numeri</small>
+          <small *ngIf="errorNewWishlist('minlength') || errorNewWishlist('required') " class="font-weight-bold text-danger">Devono essere almeno tre caratteri</small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="wishlistVisibility">Visibilità della wishlist</label>
+          <select class="form-select custom-select" id="wishlistVisibility" formControlName="isPublic">
+            <option [value]="true">Pubblica</option>
+            <option [value]="false">Privata</option>
+          </select>
+        </div>
+        
+        
+
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="modal.close('Add')" [disabled]="newWishlistForm.invalid" >Aggiungi</button>
+      <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('')">Chiudi</button>
+    </div>
+  </div>
+
+
+</ng-template>
+
+

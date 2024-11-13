@@ -1,0 +1,86 @@
+<div class="container">
+<div class="modal-header">
+    <h4 class="modal-title">Modifica ordine</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- Titolo della sezione -->
+          <h3>Dettagli dell'ultima modifica</h3>
+          
+          <!-- Gruppo di liste per i dettagli -->
+          <ul class="list-group">
+            <li class="list-group-item">
+              <strong>Data:</strong> 
+              <!-- Se modifyDate è null, mostra "-" -->
+              {{ order?.modifyDate ? (order?.modifyDate| date:'short') : '-' }}
+            </li>
+            <li class="list-group-item">
+              <strong>Modificato da:</strong> 
+              <!-- Se userLastEdit è null o vuoto, mostra "-" -->
+              {{ order?.userLastEdit ? order?.userLastEdit : '-' }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3 " style="max-height: 70vh; overflow-y: auto;">
+        <div class="col-md-12">
+          <h3 class="mb-4">Prodotti</h3>
+    
+          <!-- Lista delle transazioni -->
+          <div *ngFor="let transaction of order?.transactions" class="mb-3 p-3 border rounded shadow-sm ">
+            <div class="d-flex align-items-center">
+               <!-- Immagine del prodotto con controllo per valore null -->
+        <img [src]="transaction.productPhoto ? transaction.productPhoto : 'assets/img/errorCard.png'" 
+        alt="{{ transaction.productName }}" 
+        class="img-thumbnail me-3" 
+        style="width: 100px; height: 150px; object-fit: cover;">
+              <!-- Dettagli del prodotto -->
+              <div>
+                <h6>{{ transaction.productName }}</h6>
+                <p class="mb-1">
+                  <strong>Price: </strong>
+                  {{ transaction.value.amount }} {{ transaction.value.currency }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3 ">
+        <div class="col-md-12">
+          <h3 class="mb-4">Modifica Status</h3>
+          <form [formGroup]="form">
+            <div class="form-check " *ngFor="let status of getStatusList(); let i = index">
+              <input class="form-check-input"
+                     type="radio" 
+                     [id]="'flexRadioDefault' + i" 
+                     [value]="getKeyValue(status)" 
+                     formControlName="status">
+              <label class="form-check-label" [for]="'flexRadioDefault' + i">
+                {{ status }}
+              </label>
+          
+            </div>
+            <span *ngIf="isNonModifiableStatus()" class="alert alert-info d-block mt-2">
+                Non è possibile modificare lo stato di un ordine annullato o completato.
+              </span>
+              <span *ngIf="this.form.invalid" class="alert alert-danger d-block mt-2">
+                Non è possibile passare dallo stato "spedito" a "In elaborazione", o "annullato"
+              </span>
+              
+          </form>
+          
+          
+        </div>
+  </div>
+  
+  
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="activeModal.dismiss('Close click')">Chiudi</button>
+    <button type="button" class="btn btn-success" [disabled]="this.form.invalid || noChangeInForm()" (click)="editOrder()">Salva</button>
+</div>
+</div>

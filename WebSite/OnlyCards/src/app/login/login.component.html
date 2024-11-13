@@ -1,0 +1,44 @@
+<div id="login" class="animate__animated animate__fadeIn">
+  <div id="internalLogin">
+    <div id="titleContainer">
+      <h2>{{ labelTime }}, bentornato!</h2>
+    </div>
+
+    <!-- Username o Email -->
+    <div id="usernameContainer" (mouseover)="addBounce('usernameLabel')" (mouseout)="removeBounce('usernameLabel')">
+      <label><i class="fa-solid fa-user" id="usernameLabel"></i> Username o Email</label>
+      <input class="form-control" type="text" placeholder="Inserisci il tuo username o email" maxlength="50" minlength="3" id="usernameField">
+    </div>
+
+    <!-- Password -->
+    <div id="passwordContainer" (mouseover)="addBounce('passwordLabel')" (mouseout)="removeBounce('passwordLabel')">
+      <label><i class="fa-solid fa-lock" id="passwordLabel"></i> Password</label>
+      <div class="input-group">
+        <input id="passwordField" class="form-control" type="password" placeholder="Inserisci la tua password" aria-describedby="passwordVisibily" minlength="8" maxlength="30">
+        <button class="input-group-text" id="passwordVisibily" (click)="viewPassword()"><i class="fa-solid fa-eye" id="passwordIcon"></i></button>
+      </div>
+    </div>
+
+    <!-- Bottoni per il login -->
+    <div id="buttonContainer">
+      <button class="btn btn-primary" (click)="send()" id="loginButton">Accedi</button>
+    </div>
+
+    <div id="divideButton">
+      <hr>
+      <span>O</span>
+      <hr>
+    </div>
+
+    <div class="otherLogin">
+      <button class="btn btn-primary" (click)="oauth2Login('google')" id="googleLogin"><i class="fa-brands fa-google"></i> Accedi con Google</button>
+    </div>
+
+
+
+    <!-- Sign Up -->
+    <div id="signUptext">
+      <p>Non hai un account? <span><a href="/sign-up"><strong>Registrati!</strong></a></span></p>
+    </div>
+  </div>
+</div>

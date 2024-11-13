@@ -1,0 +1,247 @@
+#pathOfCard {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+#pathOfCard nav ol li {
+  color: var(--text-color);
+}
+
+#pathOfCard nav ol li+li::before {
+  content: var(--bs-breadcrumb-divider, '/');
+  color: var(--text-color);
+}
+
+#titleContainer {
+  border-bottom: 1px solid gray;
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+}
+
+#titleCard {
+  font-size: 30px;
+}
+
+#cardInfoContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+#imgContainer {
+  width: 25%;
+}
+
+#detailsContainer {
+  width: 30%;
+}
+
+#graphContainer {
+  width: 40%;
+}
+
+#details {
+  margin-top: 1%;
+}
+
+.content p {
+  margin-bottom: 5px;
+}
+
+#sellerCard {
+  margin-top: 5%;
+  border-bottom: 1px solid gray;
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+}
+
+.groupCards {
+  width: 100%;
+}
+
+.groupInformation {
+  width: 100%;
+}
+
+.groupCards li {
+  background-color: transparent;
+  color: var(--text-color);
+  border-color: transparent;
+}
+
+.groupInformation li {
+  background-color: transparent;
+  color: var(--text-color);
+  border-color: transparent;
+}
+
+.inMatrixCard {
+  border-bottom: 1px solid #40454f;
+  border-top: 1px solid #40454f;
+  padding: 10px;
+}
+
+.condition {
+  text-align: center;
+  width: auto;
+  border-radius: 10px;
+  font-weight: bold;
+  display: inline-block;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.buttonDetails {
+  width: 100%;
+}
+
+.buttonDetails button {
+  background-color: var(--button-color);
+  border-color: var(--button-color);
+  color: var(--text-color);
+  width: 100%;
+}
+
+.buttonDetails button:hover {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  color: var(--text-color);
+}
+
+#conditionContent {
+  width: 25%;
+  display: inline-block;
+  text-align: left;
+}
+
+#descriptionContent {
+  width: 65%;
+  display: inline-block;
+  margin-left: 10%;
+  text-align: right;
+}
+
+#innerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+#descriptionContent {
+  width: 65%;
+  display: inline-block;
+  margin-left: 10%;
+  text-align: right;
+}
+
+/* RESPONSIVE */
+@media (min-width: 576px) and (max-width: 991px) {
+  #graphContainer {
+    display: none;
+  }
+
+  #imgContainer {
+    width: 45%;
+  }
+
+  #detailsContainer {
+    width: 50%;
+  }
+
+  #conditionContent,
+  #descriptionContent {
+    width: 100%;
+    text-align: center;
+    margin: 0;
+  }
+
+  #innerContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .groupInformation li {
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
+
+  #sellerName {
+    font-size: 12px;
+  }
+}
+@media (max-width: 575px) {
+  #graphContainer {
+    display: none;
+  }
+
+  #cardInfoContainer {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #imgContainer {
+    text-align: center;
+    width: 100%;
+  }
+
+  #detailsContainer {
+    width: 100%;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  #innerContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  #conditionContent,
+  #descriptionContent {
+    width: 100%;
+    text-align: center;
+    margin-left: 0;
+    margin-top: 5px;
+  }
+
+  .groupInformation li {
+    display: flex;
+    align-items: center;
+  }
+
+  #sellerName {
+    font-size: 12px;
+    width: 45% !important;
+  }
+
+  #priceContent {
+    width: 45% !important;
+  }
+
+  #headerVenditore {
+    width: 50% !important;
+  }
+
+  #headerInformazioni {
+    display: none;
+  }
+
+  #headerPrezzo {
+    width: 50% !important;
+  }
+
+  #outInnerContent {
+    display: none;
+  }
+}

@@ -1,0 +1,24 @@
+.username-text {
+    word-wrap: break-word; 
+    overflow-wrap: break-word; 
+    max-width: 100%; 
+    margin: 0 auto;
+}
+.text-primary{
+    color: var(--text-color);
+}
+.image-container {
+    position: relative;
+    width: 100%;
+    padding-top: 137.5%; /* (825 / 600) * 100% per mantenere il rapporto d'aspetto 4:5 */
+    overflow: hidden;
+  }
+  
+  .image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Assicura che l'immagine copra completamente il contenitore */
+  }

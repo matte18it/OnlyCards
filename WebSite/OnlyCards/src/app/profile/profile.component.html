@@ -1,0 +1,470 @@
+<div style="height: 20px"></div>
+
+<div>
+  <div class="container">
+    <div id="titleContainer">
+      <h1 *ngIf="type === 'profile'">Profilo</h1>
+      <h1 *ngIf="type === 'address'">Indirizzi</h1>
+      <h1 *ngIf="type === 'wallet'">Portafoglio</h1>
+      <h1 *ngIf="type === 'transactions'">Transazioni</h1>
+      <h1 *ngIf="type === 'orders'">Ordini</h1>
+      <h1 *ngIf="type === 'settings'">Impostazioni</h1>
+      <h6><a href="/support" id="help">Hai bisogno di aiuto?</a></h6>
+    </div>
+
+    <div class="contentContainer">
+      <div id="sidebar">
+        <div id="profileInfo">
+          <a href="user/profile" [ngClass]="{'active': type === 'profile'}">
+            <div class="link-content">
+              <span><i class="fa-solid fa-circle-user"></i> Profilo</span>
+            </div>
+          </a>
+          <!-- Sezione "Indirizzi", visibile solo se l'utente ha il ruolo ROLE_BUYER o ROLE_SELLER -->
+          <a href="user/address" [ngClass]="{'active': type === 'address'}" *ngIf="this.login.isAuthenticated() && this.login.userIsSellerOrBuyer()">
+            <div class="link-content">
+              <span><i class="fa-solid fa-location-dot"></i> Indirizzi</span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Sezione "Gestione", visibile solo se l'utente ha il ruolo ROLE_ADMIN -->
+        <div id="adminInfo" style="padding-top: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--seconday-component-color);" *ngIf="this.login.isAuthenticated() && this.login.userIsAdmin()">
+          <a href="admin/orders" [ngClass]="{'active': type === 'admin-orders'}">
+            <div class="link-content">
+              <span><i class="fa-solid fa-box-open"></i> Gestione Ordini</span>
+            </div>
+          </a>
+          <a href="admin/users" [ngClass]="{'active': type === 'admin-users'}">
+            <div class="link-content">
+              <span><i class="fa-solid fa-users"></i> Gestione Utenti</span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Sezione del Portafoglio, visibile solo se l'utente ha il ruolo ROLE_BUYER o ROLE_SELLER -->
+        <div id="walletInfo" style="padding-top: 10px;" *ngIf="this.login.isAuthenticated() && this.login.userIsSellerOrBuyer()">
+          <a href="user/wallet" [ngClass]="{'active': type === 'wallet'}">
+            <div class="link-content">
+              <span><i class="fa-solid fa-wallet"></i> Portafoglio</span>
+            </div>
+          </a>
+          <a href="user/transactions" [ngClass]="{'active': type === 'transactions'}">
+            <div class="link-content">
+              <span><i class="fa-solid fa-money-bill-transfer"></i> Transazioni</span>
+            </div>
+          </a>
+          <a href="user/orders" [ngClass]="{'active': type === 'orders'}">
+            <div class="link-content">
+              <span><i class="fa-solid fa-box"></i> Ordini</span>
+            </div>
+          </a>
+        </div>
+
+        <div id="otherInfo" style="padding-top: 10px;">
+          <a href="user/settings" [ngClass]="{'active': type === 'settings'}"><div class="link-content"><span><i class="fa-solid fa-gear"></i> Impostazioni</span></div></a>
+        </div>
+      </div>
+      <div id="content">
+        <div *ngIf="type === 'profile' && user" id="profileContent">
+          <div id="imageSection">
+            <img id="profileImage" [ngbTooltip]="'Clicca per modificare la foto profilo!'" [src]="urlImage != '' ? urlImage : 'assets/img/profile.png'" alt="Profile Picture" (click)="fileInput.click()" />
+            <input #fileInput type="file" accept="image/*" (change)="updateImage($event)" />
+            <h3 style="margin-top: 5px;"><strong>{{ user.username }}</strong></h3>
+          </div>
+          <div id="infoSection">
+            <p><strong>Username:&nbsp;</strong> {{ user.username }} <span class="icon-container"><i class="fa-solid fa-pen" [ngbTooltip]="'Modifica'" data-bs-toggle="modal" data-bs-target="#profileModal"></i></span></p>
+            <p><strong>Email:&nbsp;</strong> {{ user.email }} <span class="icon-container" *ngIf="!login.isOAuthUser()"><i class="fa-solid fa-pen" [ngbTooltip]="'Modifica'" data-bs-toggle="modal" data-bs-target="#profileModal"></i></span></p>
+            <p><strong>Telefono:&nbsp;</strong> {{ user.cellphoneNumber }} <span class="icon-container"><i class="fa-solid fa-pen" [ngbTooltip]="'Modifica'" data-bs-toggle="modal" data-bs-target="#profileModal"></i></span></p>
+            <p style="margin-bottom: 0;"><strong>Ora corrente:&nbsp;</strong> {{ currentTime }}</p>
+            <button
+            *ngIf="login.userIsSellerOrBuyer()"
+            type="button"
+            class="btn btn-primary"
+            style="margin-top: 10px; background-color: var(--button-color); border:none"
+            (click)="redirectToPublicProfile(user.username)">
+            <strong>Visualizza Profilo Pubblico</strong>
+        </button>          </div>
+        </div>
+        <div *ngIf="type === 'address' && user" id="addressContent">
+          <!-- Indirizzo di Default -->
+          <div class="addressBox" *ngIf="defaultAddress != null">
+            <h4 style="display: flex; align-items: center;">
+              Domicilio
+              <span style="font-size: 15px; cursor: pointer; margin-left: auto;" [ngbTooltip]="'Modifica'">
+                <i class="fa-solid fa-pen-to-square" data-bs-toggle="modal" data-bs-target="#addressModal" (click)="createAddressForm('modify', defaultAddress)"></i>
+              </span>
+            </h4>
+            <p>{{ defaultAddress.name }} {{ defaultAddress.surname }}</p>
+            <p>{{ defaultAddress.street }}</p>
+            <p>{{ defaultAddress.zip }} {{ defaultAddress.city }} {{ defaultAddress.state }}</p>
+            <p style="margin-top: 20px; cursor: pointer;"><i class="fa-solid fa-truck" [ngbTooltip]="'Indirizzo default di spedizione'"></i></p>
+          </div>
+
+          <!-- Altri Indirizzi -->
+          <div class="addressBox" *ngFor="let address of this.user?.addresses">
+            <h4 style="display: flex; align-items: center;">
+              Domicilio
+              <span style="font-size: 15px; cursor: pointer; margin-left: auto;" [ngbTooltip]="'Modifica'">
+                <i class="fa-solid fa-pen-to-square" data-bs-toggle="modal" data-bs-target="#addressModal" (click)="createAddressForm('modify', address)"></i>
+              </span>
+              <span style="font-size: 15px; cursor: pointer; margin-left: 10px;" [ngbTooltip]="'Elimina'">
+                <i class="fa-solid fa-trash" (click)="deleteAddress(address.id)"></i>
+              </span>
+            </h4>
+            <p>{{ address.name }} {{ address.surname }}</p>
+            <p>{{ address.street }}</p>
+            <p>{{ address.zip }} {{ address.city }} {{ address.state }}</p>
+          </div>
+
+          <!-- Pulsante per aggiungere un nuovo indirizzo -->
+          <div class="addressBox" style="justify-content: center; display: flex;">
+            <button type="button" class="btn btn-primary" id="addAddress" style="margin: auto 0;" (click)="createAddressForm('add')" data-bs-toggle="modal" data-bs-target="#addressModal">
+              <strong><i class="fa-solid fa-plus"></i> Aggiungi Indirizzo</strong>
+            </button>
+          </div>
+        </div>
+        <div *ngIf="type === 'settings'" id="settingsContent">
+          <div id="themeSettings">
+            <h4><strong>Impostazioni Tema <i class="fa-solid fa-circle-info" style="font-size: 15px;" [ngbTooltip]="'Clicca sul pokémon per cambiare tema!'"></i></strong></h4>
+            <div class="theme-controls">
+              <img src="assets/img/theme/solgaleoIcon.png" alt="Light Theme" [ngbTooltip]="solgaleoTooltip" style="cursor: pointer;" (click)="setTheme('light')">
+              <div class="progress-bar-container">
+                <div class="progress-bar" [style.width.%]="theme === 0 ? 100 : 0"></div>
+              </div>
+              <img src="assets/img/theme/lunalaIcon.png" alt="Dark Theme" [ngbTooltip]="lunalaTooltip" style="cursor: pointer;" (click)="setTheme('dark')">
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="type === 'wallet'">
+          <div class="container mt-5">
+            <div class="card text-center">
+              <div class="card-body d-flex flex-column align-items-center">
+                <h5 class="text-left w-100">Saldo attuale</h5>
+                <p class="text-center">
+                  <span class="display-4">{{ wallet?.balance | currency: wallet?.currency }}</span>
+                </p>
+                <div class="d-flex justify-content-center">
+                  <button class="btn btn-success mr-2" style="margin: 10px" (click)="openRechargeModal()">
+                    <i class="fas fa-plus"></i> Ricarica
+                  </button>
+                  <button class="btn btn-danger" style="margin: 10px" (click)="openWithdrawModal()">
+                    <i class="fas fa-minus"></i> Prelievo
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Modal ricarica wallet -->
+            <div *ngIf="rechargeModal">
+              <h5>Ricarica portafoglio</h5>
+              <form>
+                <div class="form-group">
+                  <label>Importo da ricaricare</label>
+                  <input type="number" class="form-control" [(ngModel)]="amount" name="amount" min="0.01" required>
+                </div>
+              </form>
+              <button type="button" class="btn btn-secondary" style="margin: 10px; margin-left: 0px;" (click)="closeModal()">Chiudi</button>
+              <button type="button" class="btn btn-success" style="margin: 10px" (click)="rechargeWallet()">Ricarica</button>
+            </div>
+
+            <!-- Modal prelievo wallet -->
+            <div *ngIf="withdrawModal">
+              <h5>Prelievo dal portafoglio</h5>
+              <form>
+                <div class="form-group">
+                  <label>Importo da prelevare</label>
+                  <input type="number" class="form-control" [(ngModel)]="amount" name="amount" min="0.01" required>
+                </div>
+              </form>
+              <button type="button" class="btn btn-secondary" style="margin: 10px; margin-left: 0px;" (click)="closeModal()">Chiudi</button>
+              <button type="button" class="btn btn-success" style="margin: 10px" (click)="withdrawFromWallet()">Preleva</button>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="type === 'transactions'">
+          <div class="container" *ngIf="transactions.length > 0">
+            <div class="row">
+              <div class="col-md-12 mb-3" *ngFor="let t of transactions">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                      <h5 class="card-title mb-0">
+                        <span [ngClass]="t?.type ? 'text-success' : 'text-danger'">
+                          <i [ngClass]="t?.type ? 'fas fa-arrow-up text-success' : 'fas fa-arrow-down text-danger'"></i>
+                          {{ t?.type ? 'Ricarica' : 'Prelievo' }}
+                        </span>
+                      </h5>
+
+                      <p class="mb-2">
+                      <span [ngClass]="t.type ? 'text-success' : 'text-danger'">
+                        {{ t.value.amount | currency:t.value.currency }}
+                      </span>
+                      </p>
+                    </div>
+                    <p class="mb-2">
+                      <span>{{ t.date | date:'short' }}</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Paginazione -->
+            <nav aria-label="Transaction pagination" *ngIf="totalPages > 1">
+              <ul class="pagination justify-content-center">
+                <li class="page-item" [class.disabled]="page === 0">
+                  <a class="page-link" (click)="onPageChange(page - 1)">
+                    <i class="fas fa-chevron-left"></i>
+                  </a>
+                </li>
+
+                <!-- numeri pagina -->
+                <li class="page-item" *ngFor="let p of [].constructor(totalPages); let i = index"
+                    [class.page-active]="page === i"
+                    [class.active]="i === page">
+                  <a class="page-link" (click)="onPageChange(i)">{{ i + 1 }}</a>
+                </li>
+
+                <li class="page-item" [class.disabled]="page === totalPages - 1">
+                  <a class="page-link" (click)="onPageChange(page + 1)">
+                    <i class="fas fa-chevron-right"></i>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+
+          <div *ngIf="transactions.length === 0">
+            <h4 class="text-center" style="margin: 50px;">Non hai ancora effettuato transazioni!</h4>
+          </div>
+        </div>
+
+        <div *ngIf="type === 'orders' && user" id="ordersContent">
+          <!-- Form dei filtri -->
+          <form [formGroup]="filter">
+            <!-- Contenitore flessibile per barra di ricerca e bottoni -->
+            <div id="filterSection" style="display: flex; flex-direction: column; gap: 10px;">
+              <!-- Barra di ricerca e bottoni -->
+              <div style="display: flex; width: 100%; gap: 10px;">
+                <div class="searchBar" style="flex: 1;">
+                  <input type="text" class="form-control" id="nameInput" placeholder="Nome Prodotto" formControlName="productName"/>
+                </div>
+                <div class="buttonGroup" style="flex-shrink: 0;">
+                  <button type="submit" class="btn btnFilter" (click)="loadOrders()" [disabled]="filter.invalid"><strong><i class="fa-solid fa-magnifying-glass"></i></strong></button>
+                  <button type="button" class="btn btnFilter" data-bs-toggle="collapse" data-bs-target="#filterCollapse" aria-expanded="false" aria-controls="collapseContent"><strong><i class="fa-solid fa-filter"></i></strong></button>
+                </div>
+              </div>
+
+              <!-- Sezione di filtri che collassa -->
+              <div class="collapse" id="filterCollapse">
+                <div style="display: flex; flex-wrap: wrap; gap: 3%;">
+                  <div class="mb-3" style="width: 31%;">
+                    <label for="statusComponent" class="form-label">Stato Ordine</label>
+                    <select class="form-select filterComponent" formControlName="status" id="statusComponent">
+                      <option value="" selected>Tutti</option>
+                      <option *ngFor="let status of getListStatus()" [value]="getStatusEnum(status)">{{ status }}</option>
+                    </select>
+                  </div>
+                  <div class="mb-3" style="width: 32%;">
+                    <label for="typeComponent" class="form-label">Tipo Ordine</label>
+                    <select class="form-select filterComponent" formControlName="type" id="typeComponent">
+                      <option value="false">Acquisto</option>
+                      <option value="true">Vendita</option>
+                    </select>
+                  </div>
+                  <div class="mb-3" style="width: 31%;">
+                    <label for="dateComponent" class="form-label">Data Ordine</label>
+                    <input type="date" class="form-control filterComponent" formControlName="date" id="dateComponent" [max]="getToday()"/>
+                  </div>
+                  <div class="mb-3" style="width: 48%;">
+                    <label for="minPriceComponent" class="form-label">Prezzo Minimo</label>
+                    <input type="text" class="form-control" formControlName="minPrice" id="minPriceComponent" placeholder="Inserisci un prezzo"/>
+                  </div>
+                  <div class="mb-3" style="width: 49%;">
+                    <label for="maxPriceComponent" class="form-label">Prezzo Massimo</label>
+                    <input type="text" class="form-control" formControlName="maxPrice" id="maxPriceComponent" placeholder="Inserisci un prezzo"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <!-- Sezione di visualizzazione ordini -->
+          <div *ngIf="orders.length > 0">
+            <div id="orderContainer">
+              <h1>Ordini Effettuati</h1>
+            </div>
+
+            <div class="container" style="padding: 10px;">
+              <div class="card-container">
+                <div class="card" *ngFor="let item of orders; let i = index" style="background: none; border: none; cursor: pointer;">
+                  <ngb-carousel
+                    *ngIf="item.transactions.length > 0"
+                    [interval]="item.transactions.length > 1 ? 5000 : 0"
+                    [showNavigationArrows]="item.transactions.length > 1"
+                    [showNavigationIndicators]="false">
+                    <ng-template ngbSlide *ngFor="let transaction of item.transactions">
+                      <img src="{{ transaction.product.productType.photo }}" class="card-img-top" alt="{{ transaction.product.productType.name }}">
+                      <div class="card-body" style="text-align: center; color: var(--text-color); padding-bottom: 1px;">
+                        <h5>{{ transaction.product.productType.name }}</h5>
+                      </div>
+                    </ng-template>
+                  </ngb-carousel>
+
+                  <div class="card-body" style="text-align: left; color: var(--text-color); padding-top: 1px;">
+                    <p style="margin: 0;"><span><strong>Data ordine: </strong>{{ item.addDate | date: 'dd/MM/yyyy' }}</span></p>
+                    <p style="margin: 0;"><span><strong>Stato ordine: </strong>{{ getStatusValue(item.status) }}</span></p>
+                    <p style="margin: 0;"><span><strong>Totale ordine: </strong>{{ getTotalTransactionValue(item.transactions) }} €</span></p>
+                    <div style="display: flex; justify-content: center;">
+                      <button *ngIf="getStatusValue(item.status) === Status.PENDING" style="background: #dc3545; color: white; border: none; border-radius: 5px; padding: 5px 10px; cursor: pointer; margin-top: 10px;" [ngbTooltip]="'Annulla Ordine'" (click)="deleteOrder(item.id)">Annulla</button>
+                      <button *ngIf="getStatusValue(item.status) === Status.PENDING && filter.get('type')?.value === 'true'" style="background: cornflowerblue; color: white; border: none; border-radius: 5px; padding: 5px 10px; cursor: pointer; margin-left: 10px; margin-top: 10px;" [ngbTooltip]="'Spedisci Ordine'" (click)="shipOrder(item.id)"><i class="fa-solid fa-truck-fast"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="orders.length == 0 && search" style="text-align: center; margin-top: 20px;">
+            <i class="fa-solid fa-circle-exclamation" style="font-size: 70px;"></i>
+            <h3 style="margin-top: 10px;">Non ci sono ordini corrispondenti ai filtri inseriti!</h3>
+          </div>
+
+          <!-- Sezione della paginazione -->
+          <nav *ngIf="numberPage > 1" id="navbarPagination" style="cursor: pointer;">
+            <ul class="pagination justify-content-center" style="margin-top: 20px;">
+              <li class="page-item" [class.disabled]="page === 0">
+                <a class="page-link" (click)="goToPage(page - 1)" tabindex="-1">
+                  <i class="fas fa-chevron-left"></i>
+                </a>
+              </li>
+              <li *ngFor="let p of [].constructor(numberPage); let i = index"
+                  class="page-item"
+                  [class.page-active]="i === page"
+                  [class.active]="i === page">
+                <a class="page-link" (click)="goToPage(i)">{{ i + 1 }}</a>
+              </li>
+              <li class="page-item" [class.disabled]="page === numberPage - 1">
+                <a class="page-link" (click)="goToPage(page + 1)">
+                  <i class="fas fa-chevron-right"></i>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SEZIONE DEI MODAL -->
+<!-- Modal per modificare i dati del profilo utente -->
+<div *ngIf="type === 'profile' && user" class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true" data-bs-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="color: #e4e6eb;">Modifica Informazioni</h5>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formProfile">
+          <div class="form-floating mb-3">
+            <input formControlName="username" type="text" class="form-control" aria-describedby="inputGroup-sizing-default" placeholder="Inserisci uno username" id="floatingUsername">
+            <label for="floatingUsername" class="profileLabel">Username<span style="color: red;">*</span></label>
+          </div>
+          <div class="form-floating mb-3">
+            <input formControlName="email" type="email" class="form-control" aria-describedby="inputGroup-sizing-default" placeholder="Inserisci una email" id="floatingInput" [readOnly]="login.isOAuthUser()">
+            <label for="floatingInput" class="profileLabel">Email<span style="color: red;">*</span></label>
+          </div>
+          <div class="form-floating mb-3">
+            <input formControlName="phoneNumber" type="text" class="form-control" aria-describedby="inputGroup-sizing-default" placeholder="Inserisci un numero di telefono" id="phoneNumberInput">
+            <label for="phoneNumberInput" class="profileLabel">Telefono<span style="color: red;">*</span></label>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cancelEdit()"><strong>Annulla</strong></button>
+            <button type="button" class="btn btn-primary" [disabled]="formProfile.invalid" (click)="updateProfile()"><strong>Salva</strong></button>
+
+            <!-- Pulsante nascosto per chiudere il modal -->
+            <button id="closeProfileModalButton" type="button" class="d-none" data-bs-dismiss="modal"></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal per modificare/aggiungere un indirizzo -->
+<div *ngIf="type === 'address' && user" class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true" data-bs-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="color: #e4e6eb;">{{ addressAction }}</h5>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formAddress">
+          <div class="form-floating mb-3">
+            <input formControlName="name" type="text" class="form-control" aria-describedby="inputGroup-sizing-default" placeholder="Inserisci un nome" id="floatingName">
+            <label for="floatingName" class="profileLabel">Nome<span style="color: red;">*</span></label>
+          </div>
+          <div class="form-floating mb-3">
+            <input formControlName="surname" type="text" class="form-control" aria-describedby="inputGroup-sizing-default" placeholder="Inserisci un cognome" id="floatingSurname">
+            <label for="floatingSurname" class="profileLabel">Cognome<span style="color: red;">*</span></label>
+          </div>
+          <div class="form-floating mb-3">
+            <input formControlName="phoneNumber" type="text" class="form-control" aria-describedby="inputGroup-sizing-default" placeholder="Inserisci un numero di telefono" id="floatingPhoneNumber">
+            <label for="floatingPhoneNumber" class="profileLabel">Numero di Telefono<span style="color: red;">*</span></label>
+          </div>
+          <div class="form-floating mb-3">
+            <input formControlName="street" type="text" class="form-control" aria-describedby="inputGroup-sizing-default" placeholder="Inserisci una via" id="floatingStreet">
+            <label for="floatingStreet" class="profileLabel">Via<span style="color: red;">*</span></label>
+          </div>
+          <div class="form-floating mb-3">
+            <input formControlName="zip" type="text" class="form-control" aria-describedby="inputGroup-sizing-default" placeholder="Inserisci un codice postale" id="floatingZip">
+            <label for="floatingZip" class="profileLabel">CAP<span style="color: red;">*</span></label>
+          </div>
+          <div class="form-floating mb-3">
+            <input formControlName="city" type="text" class="form-control" aria-describedby="inputGroup-sizing-default" placeholder="Inserisci una città" id="floatingCity" list="citiesList">
+            <label for="floatingCity" class="profileLabel">Città<span style="color: red;">*</span></label>
+          </div>
+          <div class="form-floating mb-3">
+            <input formControlName="state" type="text" class="form-control" aria-describedby="inputGroup-sizing-default" placeholder="Inserisci uno stato" id="floatingState" list="stateList">
+            <label for="floatingState" class="profileLabel">Stato<span style="color: red;">*</span></label>
+          </div>
+          <div class="form-check form-switch">
+            <input formControlName="defaultAddress" class="form-check-input" type="checkbox" role="switch" id="defaultAddress">
+            <label class="form-check-label" for="defaultAddress">Indirizzo di default</label>
+          </div>
+          <div class="form-check form-switch">
+            <input formControlName="weekendDelivery" class="form-check-input" type="checkbox" role="switch" id="weekendAddress">
+            <label class="form-check-label" for="weekendAddress">Consegna nei weekend</label>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><strong>Annulla</strong></button>
+            <button type="button" class="btn btn-primary" [disabled]="formAddress.invalid" (click)="addressAction === 'Modifica Indirizzo' ? updateAddress() : addAddress()"><strong>Salva</strong></button>
+
+            <!-- Pulsante nascosto per chiudere il modal -->
+            <button id="closeAddressModalButton" type="button" class="d-none" data-bs-dismiss="modal"></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SEZIONE DATALIST -->
+<!-- Datalist per la selezione dello stato -->
+<datalist id="stateList" *ngIf="states">
+  <option *ngFor="let state of states" [value]="state"></option>
+</datalist>
+<!-- Datalist per la selezione della città -->
+<datalist id="citiesList" *ngIf="cities">
+  <option *ngFor="let city of cities" [value]="city"></option>
+</datalist>
+
+<!-- SEZIONE TEMPLATE -->
+<ng-template #solgaleoTooltip>
+  Solgaleo userà <span style="color: darkorange; font-weight: bold;">Astrocarica</span>
+</ng-template>
+<ng-template #lunalaTooltip>
+  Lunala userà <span style="color: blueviolet; font-weight: bold;">Raggio d'Ombra</span>
+</ng-template>

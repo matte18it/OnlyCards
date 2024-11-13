@@ -1,0 +1,7 @@
+/* Rendo la navbar fissa anche quando scorro la pagina */
+app-navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}

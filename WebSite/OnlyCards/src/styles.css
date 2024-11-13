@@ -1,0 +1,85 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+/* Palette Light Theme */
+[data-theme='light'] {
+  --range-thumb: darkorange;
+  --background-color: #ffffff;
+  --component-color: #f8f9fa;
+  --seconday-component-color: #e9ecef;
+  --text-color: #212529;
+  --button-color: #007bff;
+  --navbar-primary-color: #04223e;
+  --accent-color: #17a2b8;
+  --component-color-navbar: #ffffff;
+  --shadow-color: #333333;
+  --alert-background: #f1f1f1;
+}
+
+/* Palette Dark Theme */
+[data-theme='dark'] {
+  --range-thumb: darkviolet;
+  --background-color: #1d1f27;
+  --component-color: #13161b;
+  --seconday-component-color: #353b48;
+  --text-color: #e4e6eb;
+  --button-color: #384c7c;
+  --navbar-primary-color: #04223e;
+  --accent-color: #23d8fd;
+  --component-color-navbar: #e5e5e5;
+  --shadow-color: #333333;
+  --alert-background: #3E3E3E;
+}
+
+/* Font */
+@font-face {
+  font-family: 'Montserrat';
+  src: url('assets/fonts/Montserrat.ttf') format('truetype');
+}
+
+/* Global Styles */
+* {
+  padding: 0;
+  margin: 0;
+
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Body Styles */
+body {
+  background-color: var(--background-color) !important;
+  color: var(--text-color) !important;
+
+  /* Autocomplete Styles */
+  --mdc-outlined-text-field-focus-outline-color: var(--seconday-component-color);
+  --mdc-outlined-text-field-hover-outline-color: var(--seconday-component-color);
+  --mdc-outlined-text-field-outline-color: var(--seconday-component-color);
+  --mdc-outlined-text-field-error-outline-color: var(--seconday-component-color);
+  --mdc-outlined-text-field-error-focus-outline-color: var(--seconday-component-color);
+  --mdc-outlined-text-field-error-hover-outline-color: var(--seconday-component-color);
+  --mdc-outlined-text-field-input-text-color: var(--text-color);
+  --mdc-outlined-text-field-caret-color: var(--text-color);
+  --mdc-outlined-text-field-error-caret-color: var(--text-color);
+  --mdc-outlined-text-field-input-text-placeholder-color: var(--text-color);
+  --mat-autocomplete-background-color: var(--background-color);
+  --mat-option-label-text-color: var(--text-color);
+  --mat-option-selected-state-label-text-color: var(--text-color);
+}
+
+.mat-mdc-text-field-wrapper {
+  background-color: var(--component-color) !important;
+}
+
+
+.modal-content {
+  background-color: var(--background-color) !important;
+
+  color: #fff !important;
+}
+
+.mat-mdc-option:last-of-type {
+  justify-content: center !important;
+}
+
+.mat-mdc-option:last-of-type .mdc-list-item__primary-text {
+  margin-right: 0 !important;
+}

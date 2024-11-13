@@ -1,0 +1,40 @@
+<div class="support-container">
+  <h1>Supporto</h1>
+
+  <div class="support-item">
+    <h2>Contatta il Servizio Clienti</h2>
+    <p style="margin-bottom: 5px;">
+      Hai bisogno di aiuto? Se hai domande o necessiti di assistenza, puoi contattarci cliccando sul link qui sotto per scrivere una mail al nostro servizio clienti.
+    </p>
+    <a href="help" class="support-link"><i class="fa-solid fa-paper-plane"></i> Scrivi una mail al supporto</a>
+  </div>
+
+  <div class="support-item" *ngIf="login.userIsSeller()">
+    <h2>Notifica l'aggiunta di un nuovo template di carta</h2>
+    <p style="margin-bottom: 5px;">
+      Vuoi segnalare l'aggiunta di un nuovo template di carta? Inviaci una mail utilizzando il link sottostante, e faremo del nostro meglio per aggiornare il sistema al più presto.
+    </p>
+    <a href="support/productType" class="support-link"><i class="fa-solid fa-paper-plane"></i> Segnala un nuovo template di carta</a>
+  </div>
+
+  <div class="support-item">
+    <h2>Guida all'uso del sito</h2>
+    <p>
+      Per utilizzare al meglio il nostro sito, esplora le categorie di carte, aggiungi i prodotti al carrello e procedi al checkout utilizzando il tuo wallet. Assicurati di avere fondi sufficienti nel wallet per completare l'acquisto. Se hai bisogno di assistenza, non esitare a contattarci.
+    </p>
+  </div>
+
+  <div class="support-item">
+    <h2>Problemi con il Pagamento tramite Wallet</h2>
+    <p>
+      Se stai riscontrando difficoltà con il pagamento tramite il wallet del sito, verifica che il tuo saldo sia sufficiente. Se il problema persiste, prova a ricaricare il wallet o contattaci per ulteriore assistenza.
+    </p>
+  </div>
+
+  <div class="support-item">
+    <h2>Tracciamento Ordini</h2>
+    <p>
+      Gli ordini vengono generalmente consegnati entro 3-5 giorni lavorativi. Se hai domande sullo stato del tuo ordine, contattaci e saremo lieti di aiutarti.
+    </p>
+  </div>
+</div>

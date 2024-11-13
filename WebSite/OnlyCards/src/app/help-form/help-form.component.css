@@ -1,0 +1,18 @@
+#titleContainer {
+  border-bottom: 1px solid gray;
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+}
+
+.customComponent {
+  background-color: var(--component-color);
+  color: var(--text-color);
+  border-color: var(--seconday-component-color);
+  box-shadow: none;
+}
+
+.customComponent::placeholder {
+  color: var(--text-color);
+  opacity: 0.6;
+}

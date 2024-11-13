@@ -1,0 +1,89 @@
+
+
+.bottoniRicerca{
+  background-color: var(--component-color);
+  height: 55px;
+
+}
+.ricercaLingua{
+  width: 100%;
+}
+.linguaMenu{
+  width: 100%;
+  min-width: 0;
+  overflow-y: auto;
+  max-height: 250px;
+}
+.bottoniRicercaAvanzata{
+  width: 100%;
+}
+.card , .list-group-item, .ricerca-avanzata, .label-ricerca-avanzata, .linguaMenu{
+  background-color: var(--component-color);
+  color : var(--text-color);
+  
+}
+::placeholder {
+  color: var(--text-color);
+ 
+}
+.bottone-dropdown{
+  color : var(--text-color);
+}
+.ricercaLingua, .bottoniRicerca{
+  color : var(--text-color);
+}
+.bottone-dropdown:hover{
+  background-color: var(--seconday-component-color);
+}
+.dropdown-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.bottoneRicerca{
+  background-color: var(--button-color);
+  color: var(--text-color);
+  border: none;
+  width: 100%;
+}
+.bottoneRicerca:hover{
+  background-color: var(--accent-color);
+
+}
+.bottoneModifica{
+  border: none;
+  width: 100%;
+}
+
+.bottoneAggiunta{
+  border: none;
+  width: 100%;
+}
+
+
+
+@media (max-width: 575.98px) { /* Bootstrap xs breakpoint */
+  .card-img-top {
+    width: auto;  /* Mantiene il rapporto dell'immagine */
+    height: 300px; /* Riduce la lunghezza dell'immagine per dispositivi xs */
+    display: block; /* Assicura che l'immagine sia centrata */
+    margin: 0 auto; /* Centra l'immagine orizzontalmente */
+  }
+}
+.image-container {
+  position: relative;
+  width: 100%;
+  padding-top: 137.5%; /* (825 / 600) * 100% per mantenere il rapporto d'aspetto 4:5 */
+  overflow: hidden;
+}
+
+.image-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Assicura che l'immagine copra completamente il contenitore */
+}
+
+

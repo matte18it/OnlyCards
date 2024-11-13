@@ -1,0 +1,128 @@
+<div class="container">
+  <div class="modal-header">
+    <h4 class="modal-title">Modifica Utente</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="editUserForm">
+      <!-- Dati dell'utente -->
+      <div class="mb-3">
+        <label for="username" class="form-label">Nome</label>
+        <input formControlName="username" type="text" class="form-control" id="username" [ngClass]="{'is-invalid': editUserForm.get('username')?.invalid && editUserForm.get('username')?.touched}" />
+        <div *ngIf="editUserForm.get('username')?.invalid && (editUserForm.get('username')?.dirty || editUserForm.get('username')?.touched)" class="text-danger">
+          <small *ngIf="editUserForm.get('username')?.errors?.['required']">Il nome è obbligatorio.</small>
+          <small *ngIf="editUserForm.get('username')?.errors?.['minlength']">Il nome deve contenere almeno 3 caratteri.</small>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input formControlName="email" type="email" class="form-control" id="email" [ngClass]="{'is-invalid': editUserForm.get('email')?.invalid && editUserForm.get('email')?.touched}" />
+        <div *ngIf="editUserForm.get('email')?.invalid && (editUserForm.get('email')?.dirty || editUserForm.get('email')?.touched)" class="text-danger">
+          <small *ngIf="editUserForm.get('email')?.errors?.['required']">L'email è obbligatoria.</small>
+          <small *ngIf="editUserForm.get('email')?.errors?.['email']">Inserisci un'email valida.</small>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="cellphoneNumber" class="form-label">Numero di Telefono</label>
+        <input formControlName="cellphoneNumber" type="text" class="form-control" id="cellphoneNumber" />
+      </div>
+
+      <!-- Stato dell'utente -->
+      <div class="mb-3">
+        <label class="form-label">Stato Utente</label>
+        <div class="form-check">
+          <input type="radio" class="form-check-input" id="unblockedCheck" formControlName="blocked" [value]="false" />
+          <label class="form-check-label" for="unblockedCheck">Sbloccato</label>
+        </div>
+        <div class="form-check">
+          <input type="radio" class="form-check-input" id="blockedCheck" formControlName="blocked" [value]="true" />
+          <label class="form-check-label" for="blockedCheck">Bloccato</label>
+        </div>
+      </div>
+
+      <!-- Ruoli dell'utente -->
+      <div class="mb-3">
+        <label class="form-label">Ruoli</label>
+
+        <!-- Admin role -->
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="adminCheck" formControlName="admin" />
+          <label class="form-check-label" for="adminCheck">Admin</label>
+        </div>
+
+        <!-- Buyer role -->
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="buyerCheck"
+            formControlName="buyer"
+          />
+          <label class="form-check-label" for="buyerCheck">Buyer</label>
+        </div>
+
+        <!-- Seller role -->
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="sellerCheck"
+            formControlName="seller"
+          />
+          <label class="form-check-label" for="sellerCheck">Seller</label>
+        </div>
+
+        <!-- Messaggio di errore se nessun ruolo è selezionato -->
+        <div *ngIf="editUserForm.errors?.['noRoleSelected']" class="text-danger">
+          <small>Seleziona almeno un ruolo (Admin, Buyer o Seller).</small>
+        </div>
+      </div>
+
+
+
+      <!-- Indirizzi dell'utente (non modificabili) -->
+      <h5 class="mt-4">Indirizzi</h5>
+      <div *ngIf="addresses && addresses.length > 0; else noAddresses">
+        <div *ngFor="let address of addresses" class="mb-4">
+          <div class="mb-2">
+            <span class="address-label">- Nome e Cognome: </span>
+            <span class="address-value">{{ address.name + ' ' + address.surname }}</span>
+          </div>
+          <div class="mb-2">
+            <span class="address-label">- Numero di Telefono: </span>
+            <span class="address-value">{{ address.telephoneNumber }}</span>
+          </div>
+          <div class="mb-2">
+            <span class="address-label">- Indirizzo: </span>
+            <span class="address-value">{{ address.street + ', ' + address.city + ', ' + address.state }}</span>
+          </div>
+          <div class="mb-2">
+            <span class="address-label">- Codice Postale: </span>
+            <span class="address-value">{{ address.zip }}</span>
+          </div>
+          <div class="mb-2">
+            <span class="address-label">- Indirizzo di Default: </span>
+            <span class="address-value">{{ address.defaultAddress ? 'Sì' : 'No' }}</span>
+          </div>
+          <div class="mb-2">
+            <span class="address-label">- Consegna nei Weekend: </span>
+            <span class="address-value">{{ address.weekendDelivery ? 'Sì' : 'No' }}</span>
+          </div>
+          <hr />
+        </div>
+      </div>
+      <ng-template #noAddresses>
+        <p>Nessun indirizzo disponibile per questo utente.</p>
+      </ng-template>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="deleteUser()">Elimina</button>
+    <button type="button" class="btn btn-secondary" (click)="closeModal()">Annulla</button>
+    <button type="button" class="btn btn-success" [disabled]="editUserForm.invalid || editUserForm.errors?.['noRoleSelected']" (click)="saveUser()">Salva</button>
+  </div>
+</div>

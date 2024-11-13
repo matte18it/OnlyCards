@@ -1,0 +1,174 @@
+<div class="container">
+<div class="modal-header">
+  <h4 class="modal-title">{{wishlist.name}}</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body" *ngIf="!isOwner(); else ownerTemplate">
+  <div class="row " >
+  <span class=" p-3 banner">
+    <i class="fa-solid fa-circle-info"></i>
+    Non sei il proprietario della wishlist, per favore contatta il proprietario per modificare la lista
+  </span>
+  </div>
+  <div class="wishlist-container">
+    <ul class="account-list">
+      <li class="account-item" (click)="goToAccountPage(account.id)" *ngFor="let account of wishlist.accounts">
+        <div class="account-info">
+          <p class="username">{{account.username}}</p>
+          <p [ngClass]="{'owner': account.keyOwner === 'owner', 'shared_with': account.keyOwner === 'shared_with'}" class="ownership">{{account.valueOwner}}</p>        </div>
+      </li>
+    </ul>
+  </div>
+
+
+
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="activeModal.close('Close click')">Chiudi</button>
+</div>
+</div>
+
+<ng-template #ownerTemplate>
+<div class="modal-body">
+  <form [formGroup]="nameForm" class=" form d-flex flex-column ">
+  <div class="form-group mb-4">
+    <label for="wishlistName " class="text">Nome della wishlist</label>
+    <input type="text" [ngClass]="{'red-border':errorAllNameForm()}" class="form-control name-form" id="wishlistName" formControlName="name" placeholder="Nome della wishlist">
+    <div class="error-container">
+    <small *ngIf="errorNameForm('pattern')" class="font-weight-bold text-danger ">Sono ammessi solo lettere e numeri</small>
+    <small *ngIf="errorNameForm('minlength') || errorNameForm('required') " class="font-weight-bold text-danger ">Devono essere almeno tre caratteri</small>
+    </div>
+  </div>
+ 
+    <div class="form-group mb-3">
+      <label for="wishlistVisibility" class="text">Visibilità della wishlist</label>
+      <select class="form-select custom-select" id="wishlistVisibility" formControlName="isPublic">
+        <option [value]="true">Pubblica</option>
+        <option [value]="false">Privata</option>
+      </select>
+  </div>
+    <button *ngIf="isOwner()" type="button" class="btn btn-primary "  [disabled]="nameForm.invalid || (nameForm.get('name')?.value==wishlist.name && nameForm.get('isPublic')?.value==wishlist.isPublic)" (click)="changeWishlist()" >Modifica</button>
+</form>
+  <div class="row ">
+    <label  class="text text-info p-2"> <strong>Condivisione</strong></label>
+
+    <button class="btn btn-info"  (click)="showUrl(collapse)" [attr.aria-expanded]="!isCollapsed"
+            aria-controls="showUrlCollapse">
+      <span *ngIf="wishlist.token">Visualizza link di condivisione </span>
+      <span *ngIf="!wishlist.token">Genera link di condivisione </span>
+    </button>
+  </div>
+    <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" class="collapseUrl row">
+      <div class="card card-color ">
+        <div class="card-body">
+          <p >Ecco il link per condividere la wishlist:</p>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" id="wishlistLink" value="http://localhost:4200/whishlists/{{wishlist.token}}" readonly>
+            <div class="input-group-append">
+              <button class="btn btn-primary " type="button" (click)="this.copyUrl()">Copia</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div *ngIf="wishlist.token" class="row deleteLink">
+    <button class="btn btn-danger"
+            (click)="deleteLink()">
+      Elimina link
+    </button>
+  </div>
+
+
+
+
+  <div class="row p-3 text" >
+    Utenti aggiunti {{wishlist.accounts.length}}/15
+
+  </div>
+  <div class="row shared-users">
+  <div class="col col-md-4 p-1" *ngFor="let account of wishlist.accounts; let i=index">
+    <div class="card">
+      <div class="card-body list-accounts" >
+        <a class="account-name p-2" (click)="goToAccountPage(account.id)" >
+          {{account.username}}
+        </a>
+        <button *ngIf="account.id!=login.loadUserId()" class="btn btn-danger " (click)="deleteUser(account.id)" >
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+    <div class="col col-md-4 p-2"  *ngIf="wishlist.accounts.length<15" (click)="addANewUser(modalAddUser)">
+      <div class="card " id="add-card" title="aggiungi un utente">
+        <div class="card-body body-plus ">
+          <i class="fa-solid fa-plus"></i>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col  delete-zone">
+      <label for="delete-button" class="text text-danger p-2"> <strong>Danger zone</strong></label>
+    <button id="delete-button" type="button" ngbAutofocus class="btn btn-danger"
+            (click)="deleteWishlist(confirmDeletion)">Elimina Wishlist</button>
+    </div>
+  </div>
+
+
+</div>
+</ng-template>
+
+<ng-template #modalAddUser let-modal>
+  <div class="container">
+    <div class="modal-header">
+      <h4 class="modal-title">Aggiungi un utente</h4>
+      <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="modal.dismiss('')"></button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="newAccountForm" >
+        <div class="form-group ">
+          <label for="newUsername">Username del nuovo utente</label>
+          <input [ngClass]="{'red-border':errorAllUsernameForm()}" [maxlength]="20" type="text" class="form-control " id="newUsername" formControlName="username" placeholder="username">
+          <div class="error-container">
+          <small *ngIf="errorUsernameForm('pattern')" class="font-weight-bold text-danger ">Sono ammessi solo lettere, numeri ed il trattino basso</small>
+          <small *ngIf="errorUsernameForm('minlength') " class="font-weight-bold text-danger ">Devono essere almeno tre caratteri</small>
+          </div>
+
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="modal.close('Add')" [disabled]="newAccountForm.invalid" >Aggiungi</button>
+      <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('')">Chiudi</button>
+    </div>
+  </div>
+</ng-template>
+<ng-template #confirmDeletion let-modal>
+  <div class="container">
+
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">Eliminazione {{wishlist.name}}</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-describedby="modal-title"
+      (click)="modal.dismiss('')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <p>
+      <strong>Sei sicuro di voler eliminare la wishlist <span class="text-primary">"{{wishlist.name}}"</span> ?</strong>
+    </p>
+    <p>
+     La wishlist verrà eliminata definitivamente.
+      <span class="text-danger"><strong> Questa operazione è irreversibile</strong></span>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('')">Chiudi</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('Delete')">Ok</button>
+  </div>
+  </div>
+</ng-template>

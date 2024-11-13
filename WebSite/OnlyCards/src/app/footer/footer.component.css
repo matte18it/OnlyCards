@@ -1,0 +1,37 @@
+.footer {
+  background-image: linear-gradient(to top, var(--navbar-primary-color), var(--background-color));
+  padding-top: 40px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+a {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+a:hover {
+ color: var(--accent-color);
+}
+
+@media screen and (max-width: 900px) {
+  .container {
+    display: flow;
+  }
+
+  .container img {
+    margin-bottom: 20px;
+    max-width: 300px;
+  }
+
+  .link {
+    width: auto;
+  }
+
+  .contatti {
+    width: auto;
+  }
+}

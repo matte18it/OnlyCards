@@ -1,0 +1,155 @@
+<div style="height: 20px"></div>
+
+<div *ngIf="Array.from(Object.values(this.games)).length > 0">
+  <div class="container">
+    <div id="titleContainer">
+      <h1>Carica Prodotto</h1>
+    </div>
+
+    <div id="addProductContainer" class="container" style="display: flex; flex-direction: row; gap: 5%;">
+      <div id="formContainer">
+        <h3>Dati Prodotto</h3>
+
+        <form [formGroup]="productForm">
+          <div class="mb-3">
+            <label for="gameType">Scegli il gioco<span [ngbTooltip]="'Obbligatorio'" style="color: red;">*</span></label>
+            <select class="form-select customComponent" id="gameType" formControlName="gameType" (change)="getProductTypesSeller(productForm.get('gameType')?.value)">
+              <option value="" selected>-</option>
+              <option *ngFor="let item of Array.from(Object.values(this.games))" [value]="item">{{ item }}</option>
+            </select>
+          </div>
+
+          <div class="mb-3" *ngIf="productForm.get('gameType')?.value">
+            <label for="productTypeName">Nome Prodotto (Inglese)<span [ngbTooltip]="'Obbligatorio'" style="color: red;">*</span></label>
+            <div class="d-flex align-items-center">
+              <mat-form-field appearance="outline" [hideRequiredMarker]="true" subscriptSizing="dynamic" class="flex-grow-1">
+                <input id="productTypeName" type="text" matInput formControlName="productName" [matAutocomplete]="productType" (input)="onProductTypeChange($event)" placeholder="Inserisci nome prodotto">
+
+                <mat-autocomplete #productType="matAutocomplete" hideSingleSelectionIndicator>
+                  <!-- Opzione per la ricerca avanzata -->
+                  <mat-option data-bs-toggle="modal" data-bs-target="#productTypeModal" (click)="advancedSearch(productForm.get('productName')?.value)" [value]="productForm.get('productName')?.value">
+                    <span>Non trovi la carta di tuo interesse? </span>
+                    <span style="color: var(--accent-color);">Clicca qui per una ricerca avanzata!</span>
+                  </mat-option>
+
+                  <!-- Opzioni filtrate -->
+                  <mat-option *ngFor="let item of filteredProductTypes; let i = index" [value]="item.name" (click)="selectProductType(i)">
+                    <img [src]="item.photo" class="autocomplete-img" alt="Product Image">
+                    <span id="cardtypeText">{{ item.name }}</span>
+                  </mat-option>
+
+                  <!-- Opzione per caricare più prodotti -->
+                  <mat-option *ngIf="productTypes.length > 0 && this.showButton" (click)="getMoreProducts(productForm.get('gameType')?.value);" [value]="productForm.get('productName')?.value">
+                    <span style="color: var(--accent-color);">Mostra più risultati!</span>
+                  </mat-option>
+                  <mat-option *ngIf="!this.showButton"></mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+              <span *ngIf="selectedProductType" id="viewImage" [ngbTooltip]="tooltipContent" style="font-size: 1.5em; margin-left: 10px; cursor: pointer;">
+                <i class="fa-solid fa-camera"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="mb-3" style="margin-top: 10px;" *ngIf="productTypes.length > 0">
+            <label for="stateDescription">Descrizione<span [ngbTooltip]="'Obbligatorio'" style="color: red;">*</span></label>
+            <textarea [maxLength]="200" class="form-control customComponent" placeholder="Inserisci la descrizione" formControlName="stateDescription" id="stateDescription" style="height: 100px"></textarea>
+          </div>
+
+          <div class="mb-3" *ngIf="productTypes.length > 0">
+            <label for="condition">Stato Carta<span [ngbTooltip]="'Obbligatorio'" style="color: red;">*</span></label>
+            <select class="form-select customComponent" id="condition" formControlName="condition">
+              <option value="" selected>-</option>
+              <option *ngFor="let item of getConditionArray()" [value]="item">{{ item }}</option>
+            </select>
+          </div>
+
+          <div class="mb-3" *ngIf="productTypes.length > 0">
+            <label for="price">Prezzo Carta<span [ngbTooltip]="'Obbligatorio'" style="color: red;">*</span></label>
+            <div class="input-group">
+              <input type="text" formControlName="price" id="price" class="form-control customComponent" placeholder="Inserisci il prezzo della carta">
+              <span class="input-group-text customComponent">€</span>
+            </div>
+          </div>
+
+          <!-- Sezione per caricare immagini -->
+          <div class="mb-3" *ngIf="productTypes.length > 0">
+            <label for="imageUpload">Carica Immagini (min 1, max 5):</label>
+            <div class="input-group">
+              <!-- Bottone per aprire il file input -->
+              <button type="button" class="btn btn-secondary customComponent" (click)="fileInput.click()" [disabled]="uploadedImages.length >= 5">Sfoglia...</button>
+              <!-- Input disabilitato per mostrare i nomi dei file caricati -->
+              <input type="text" class="form-control customComponent" [value]="getFileNames()" placeholder="Nessun file selezionato" disabled>
+            </div>
+            <!-- Input file nascosto -->
+            <input #fileInput type="file" id="imageUpload" (change)="onImageUpload($event)" accept="image/*" multiple class="d-none" [disabled]="uploadedImages.length >= 5" formControlName="imageComponent">
+            <small *ngIf="uploadedImages.length >= 5" class="text-danger">Hai raggiunto il numero massimo di immagini.</small>
+            <div class="image-preview-container">
+              <div class="image-preview" *ngFor="let image of uploadedImages; let i = index">
+                <img [src]="image.url" alt="Uploaded Image">
+                <button type="button" class="btn btn-sm btn-danger" (click)="removeImage(i)">Rimuovi</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3" style="text-align: right;">
+            <button type="button" class="btn btn-info" [disabled]="productForm.invalid || uploadedImages.length == 0" (click)="saveProduct()"><strong>Salva</strong></button>
+            <button type="button" class="btn btn-danger" style="margin-left: 10px;" (click)="resetForm(true)"><strong>Annulla</strong></button>
+          </div>
+        </form>
+      </div>
+
+      <div id="sampleContainer">
+        <h3>Modello Selezionato</h3>
+        <div id="photoInnerContent">
+          <img *ngIf="selectedProductType" [src]="selectedProductType.photo" alt="Product Image" id="sampleImage">
+          <p *ngIf="!selectedProductType">Non è stato ancora selezionato alcun prodotto.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- SEZIONE DEI MODAL -->
+<!-- Modal per ricerca avanzata -->
+<div class="modal fade" id="productTypeModal" tabindex="-1" aria-labelledby="productTypeModalLabel" aria-hidden="true" data-bs-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="color: #e4e6eb;">Ricerca Avanzata</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeModal" style="color: var(--text-color);"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Messaggio condizionale -->
+        <ng-container *ngIf="advancedSearchPhoto && advancedSearchPhoto.length > 0; else noResults">
+          <span>
+            Scegli una carta tra le seguenti (se non trovi la carta che cerchi
+            <a href="support/productType" style="text-decoration: none; color: var(--accent-color); cursor: pointer;">clicca qui</a>)
+          </span>
+          <!-- Griglia di immagini -->
+          <div class="image-grid">
+            <div class="image-item" *ngFor="let item of advancedSearchPhoto" (click)="selectImage(item)">
+              <img [src]="item.image" [alt]="item.name" class="grid-image" />
+              <span class="image-name">{{ item.name }}</span>
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- Messaggio di fallback quando non ci sono risultati -->
+        <ng-template #noResults>
+          <div class="text-center">
+            <i class="fa-solid fa-heart-crack" style="font-size: 8em; color: var(--text-color);"></i>
+            <p>La ricerca non ha prodotto risultati, <a href="support/productType" style="text-decoration: none; color: var(--accent-color); cursor: pointer;">clicca qui</a> per effettuare una richiesta di inserimento.</p>
+          </div>
+        </ng-template>
+
+        <!-- Pulsante nascosto per chiudere il modal -->
+        <button id="closeAdvancedSearchModal" type="button" class="d-none" data-bs-dismiss="modal"></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SEZIONE TEMPLATE -->
+<ng-template #tooltipContent><img [src]="selectedProductType?.photo" [alt]="selectedProductType?.name" style="width: 180px;"></ng-template>

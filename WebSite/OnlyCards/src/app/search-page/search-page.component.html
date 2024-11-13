@@ -1,0 +1,204 @@
+<div class="container-fluid mt-5">
+    <div class="row">
+      <div class="col-md-8 col-12 d-flex justify-content-between align-items-center">
+        <h1 class="text-left mb-2 p-1">Ricerca Prodotti {{game}}</h1>
+      </div>
+      <div *ngIf="login.loadRoles()?.includes('ADMIN')" class="col-md-4 col-12 d-flex justify-content-between align-items-center">
+        <button class="btn btn-success bottoneAggiunta" (click)="openModalAddProductType()">Aggiungi tipo prodotto</button>
+      </div>
+    </div>
+  <!-- Form di ricerca -->
+  <form  [formGroup]="searchForm" class="mt-4 formRicerca">
+    <div class="row mb-4 ">
+      <!-- Dropdown per selezionare la lingua -->
+      <div    class="col-12 col-md-3 mb-4  ">
+        <div ngbDropdown>
+          <label  for="linguaCarta" class="d-block mb-1">Lingua</label>
+          <button  type="button" class="btn btn-light bottoniRicerca ricercaLingua" id="linguaCarta" ngbDropdownToggle>
+            <span>{{ searchForm.get('lingua')?.value }}</span>
+          </button>
+          <div ngbDropdownMenu aria-labelledby="linguaCarta" class="linguaMenu">
+            <button *ngFor="let lingua of getLanguageValues() "
+                    ngbDropdownItem
+                    (click)="cambiaLingua(lingua)" class="bottone-dropdown">
+              <span>{{lingua }}</span>
+            </button>
+
+          </div>
+        </div>
+      </div>
+      <!-- Dropdown per selezionare il tipo del prodotto -->
+      <div    class="col-12 col-md-3 mb-4  ">
+        <div ngbDropdown>
+          <label  for="tipoProdotto" class="d-block mb-1">Tipo</label>
+          <button  type="button" class="btn btn-light bottoniRicerca ricercaLingua" id="tipoProdotto" ngbDropdownToggle>
+            <span>{{ searchForm.get('tipo')?.value }}</span>
+          </button>
+          <div ngbDropdownMenu aria-labelledby="tipoProdotto" class="linguaMenu">
+            <button *ngFor="let tipo of getTypeValues() "
+                    ngbDropdownItem
+                    (click)="cambiaTipo(tipo)" class="bottone-dropdown">
+              <span>{{tipo }}</span>
+            </button>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-3 mb-4">
+        <label for="minPrezzo" class="mb-1">Prezzo Minimo:</label>
+        <input type="number" id="minPrezzo" class="form-control bottoniRicerca" formControlName="minPrezzo" min="1" >
+
+      </div>
+      <div class="col-12 col-md-3 mb-4">
+        <label for="maxPrezzo" class="mb-1">Prezzo Massimo:</label>
+        <input type="number" id="maxPrezzo" class="form-control bottoniRicerca" formControlName="maxPrezzo"  min="1" >
+      </div>
+      <small *ngIf="searchForm.invalid" class="bg-danger text-white text-center  rounded  ">
+        Il prezzo minimo non può essere maggiore del prezzo massimo.
+      </small>
+      <!-- Campo di ricerca per nome carta -->
+      <div class="col-12 col-md-12 mb-4">
+        <div class="form-group">
+          <label for="nomeCarta" class="mb-1">Nome</label>
+          <input type="text"  class="form-control bottoniRicerca" id="nomeCarta" formControlName="nomeCarta" name="nomeCarta" placeholder="Inserisci nome carta">
+        </div>
+      </div>
+
+    </div>
+    <div class="row  mb-4 ">
+      <div ngbAccordion>
+        <div ngbAccordionItem>
+          <h2 ngbAccordionHeader>
+            <button ngbAccordionButton class="ricerca-avanzata" >🔍 Ricerca Avanzata </button>
+          </h2>
+          <div ngbAccordionCollapse>
+            <div ngbAccordionBody style="background: var(--background-color); color: var(--text-color)">
+              <ng-template >
+                <!-- Caricamento delle feature -->
+                <div class="row mb-4"  >
+                  <div *ngFor="let feature of features" class="form-group col-12 col-md-4 mb-4">
+                    <label [for]="feature.name" >{{ feature.name }}</label>
+                    <select [id]="feature.name" class="form-control label-ricerca-avanzata" [formControlName]="feature.name">
+                      <option value="no selection">-</option>
+                      <option *ngFor="let value of feature.value" [value]="value">{{ value }}</option>
+                    </select>
+                  </div>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Pulsante di ricerca -->
+    <div class="text-center mb-4 d-flex justify-content-end">
+      <button type="submit" class="btn btn-lg bottoneRicerca"  [disabled]="searchForm.invalid"  (click)="cercaCarte()"  (keyup.enter)="cercaCarte()">Cerca</button>
+    </div>
+
+  </form>
+
+
+
+  <div class="row d-flex justify-content-between ">
+
+    <!-- Risultati della Ricerca (solo h2) -->
+    <div class="col-12 col-md-6  d-flex  align-items-center">
+      <h1>{{this.totalElements}} Risultati della Ricerca</h1>
+    </div>
+
+    <!-- Dropdown per ordinamento -->
+    <div ngbDropdown class="col-12 col-md-4 col-xl-3 mb-5 text">
+      <label for="ordinaPer" class="d-block mb-1">Ordinamento</label>
+      <button type="button" class="btn bottoniRicerca ricercaLingua" id="ordinaPer" ngbDropdownToggle>
+        <span>{{ searchForm.get('ordinamento')?.value }}</span>
+      </button>
+      <div ngbDropdownMenu aria-labelledby="ordinaPer" class="linguaMenu">
+        <button *ngFor="let sort of getSortingOptionValues()"
+                ngbDropdownItem
+                (click)="cambiaOrdine(sort)" class="bottone-dropdown">
+          <span>{{ sort}}</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Lista di Carte -->
+  <div class="row">
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 col-xl-2 mb-4" *ngFor="let product of products">
+      <div class="card h-100">
+        <!--  Immagine della carta -->
+        <div class="image-container">
+        <img [src]="product.photo" class="card-img-top " alt="{{ product.name }}">
+        </div>
+        <div class="card-body ">
+          <!-- Nome della carta -->
+          <h5 class="card-title">{{ product.name }}</h5>
+
+
+          <!-- Dettagli della carta -->
+          <ul class="list-group list-group-flush ">
+            <li class="list-group-item">
+              <strong>Lingua:</strong> {{ product.language }}
+            </li>
+            <li class="list-group-item">
+              <strong>A partire da:</strong> {{ product.price.amount }}€
+            </li>
+            <li class="list-group-item">
+              <strong>Tipo:</strong> {{ product.type }}
+            </li>
+            <li *ngFor="let feature of product.features" class="list-group-item">
+              <strong>{{feature.name}}:</strong> {{ feature.value }}
+            </li>
+          </ul>
+        </div>
+        <div class="card-footer">
+          <div class="row">
+            <div class="col">
+              <!-- Bottone Dettagli -->
+              <a href="cards/{{ game }}/card/{{ product.id }}" class="btn btn-primary bottoneRicerca  ">Dettagli</a>
+            </div>
+            <div *ngIf="login.loadRoles()?.includes('ADMIN')" class="col">
+              <button  class="btn btn-warning bottoneModifica" (click)="modifyProductType(product)">Modifica</button>
+            </div>
+            <div *ngIf="login.loadRoles()?.includes('ADMIN')" class="col pt-2">
+              <button  class="btn btn-danger  bottoneModifica" (click)="deleteProductType(product)">Elimina</button>
+            </div>
+      </div>
+        </div>
+
+    </div>
+  </div>
+  </div>
+  <div class="container my-4">
+    <nav *ngIf="totalPages > 1" aria-label="Page navigation" class="d-flex justify-content-center">
+      <ul class="pagination pagination-lg">
+        <li class="page-item" [class.disabled]="page === 1">
+          <button class="page-link" (click)="changePage(page - 1)" aria-label="Previous" [disabled]="page === 0">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+          </button>
+        </li>
+        <li *ngFor="let num of pages" class="page-item" [class.active]="num === page+1">
+          <button class="page-link" (click)="changePage(num)" [disabled]="num === page+1">
+            {{ num }}
+          </button>
+        </li>
+        <li class="page-item" [class.disabled]="page === totalPages">
+          <button class="page-link" (click)="changePage(page + 1)" aria-label="Next" [disabled]="page === totalPages">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+
+
+
+
+

@@ -1,0 +1,121 @@
+<div style="height: 20px"></div>
+
+<div>
+  <!-- Questa sezione contiene le info della carta -->
+  <section id="cardInfo" class="container" *ngIf="cardType">
+    <div id="pathOfCard" class="container">
+      <nav style="--bs-breadcrumb-divider: '/';" aria-label="cardPath">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="" style="color: var(--accent-color);"><i class="fa-solid fa-house"></i></a></li>
+          <li class="breadcrumb-item"><a href="/{{ gameType }}" style="color: var(--accent-color); text-decoration: none;">{{ gameName }}</a></li>
+          <li *ngIf="setName" class="breadcrumb-item" aria-current="page"><a href="cards/{{ gameType }}/{{ setName }}" style="color: var(--accent-color); text-decoration: none;">{{ setName }}</a></li>
+          <li class="breadcrumb-item active" aria-current="page">{{ cardType.name }}</li>
+        </ol>
+      </nav>
+    </div>
+
+    <div class="container" *ngIf="cardType">
+      <div id="titleContainer">
+        <h1>{{ cardType.name }}</h1>
+      </div>
+
+      <div id="cardInfoContainer">
+        <div id="imgContainer">
+          <img src="{{ cardType.photo }}" alt="{{ cardType.name }}" class="img-fluid rounded" style="cursor: pointer;" #tiltElement>
+        </div>
+        <div id="detailsContainer">
+          <h3>Dettagli Carta:</h3>
+          <div id="details">
+            <div class="row">
+              <div class="content">
+                <p><strong>Nome: </strong>{{ cardType.name }}</p>
+                <p><strong>Carte Vendute: </strong>{{ cardType.numSell }}</p>
+                <p *ngFor="let item of cardType.features"><strong>{{ getFeaturesName(item.name.toLowerCase()) }}: </strong>{{ item.value }}</p>
+                <p>
+                  <strong>Prezzo Minimo Storico: </strong>{{ cardType.price.amount }}
+                  <ng-container *ngIf="cardType.price.currency === 'EUR'; else null">€</ng-container>
+                </p>
+                <h5 *ngIf="cardInfo.length > 35" style="color: darkgreen; margin-top: 3%;">
+                  <strong><i class="fa-solid fa-face-smile"></i> DISPONIBILE</strong>
+                </h5>
+                <h5 *ngIf="cardInfo.length > 10 && cardInfo.length <= 35" style="color: darkkhaki; margin-top: 3%;">
+                  <strong><i class="fa-solid fa-face-flushed"></i> QUASI ESAURITO</strong>
+                </h5>
+                <h5 *ngIf="cardInfo.length > 0 && cardInfo.length <= 10" style="color: darkorange; margin-top: 3%;">
+                  <strong><i class="fa-solid fa-face-frown-open"></i> ULTIMI PEZZI</strong>
+                </h5>
+                <h5 *ngIf="cardInfo.length == 0" style="color: darkred; margin-top: 3%;">
+                  <strong><i class="fa-solid fa-face-sad-cry"></i> NON DISPONIBILE</strong>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contiene il grafico del prezzo medio giornaliero -->
+        <div id="graphContainer">
+          <h3>Grafico Prezzo Medio <i [ngbTooltip]="'Grafico che mostra la media giornaliera dei prezzi delle carte in vendita'" style="font-size: 15px; vertical-align: middle;" class="fa-solid fa-circle-info"></i></h3>
+          <canvas #medieGiornaliereCanvas id="medieGiornaliere" style="cursor: pointer;"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" *ngIf="cardInfo.length > 0">
+      <div id="sellerCard">
+        <h1>Offerte Disponibili</h1>
+      </div>
+      <div id="containerCard">
+        <div class="container-fluid">
+          <ul class="list-group list-group-horizontal groupCards" style="text-align: center; margin-top: 10px;" id="headerText">
+            <li class="list-group-item" style="width: 25%;" id="headerVenditore"><h5><strong>Venditore</strong></h5></li>
+            <li class="list-group-item" style="width: 50%;" id="headerInformazioni"><h5><strong>Informazioni sul prodotto</strong></h5></li>
+            <li class="list-group-item" style="width: 25%;" id="headerPrezzo"><h5><strong>Prezzo</strong></h5></li>
+          </ul>
+          <div *ngFor="let singleCard of cardInfo" class="inMatrixCard">
+            <ul class="list-group list-group-horizontal groupInformation">
+              <li class="list-group-item" id="sellerName" style="width: 25%; border-right: 1px solid #40454f;" ><span [ngbTooltip]="'Nome Venditore'"><a style="text-decoration: none; color: var(--text-color);" [routerLink]="'/users/' + singleCard.account.username">{{ singleCard.account.username }}</a></span></li>
+              <li class="list-group-item" style="width: 50%; border-right: 1px solid #40454f;" id="outInnerContent">
+                <div id="innerContent">
+                  <div id="conditionContent">
+                    <span *ngIf="singleCard.condition == Condition.MINT" [ngbTooltip]="getConditionString(Condition.MINT)"><div class="condition" style="background-color: dodgerblue;">MT</div></span>
+                    <span *ngIf="singleCard.condition == Condition.NEAR_MINT" [ngbTooltip]="getConditionString(Condition.NEAR_MINT)"><div class="condition" style="background-color: forestgreen;">NM</div></span>
+                    <span *ngIf="singleCard.condition == Condition.EXCELLENT" [ngbTooltip]="getConditionString(Condition.EXCELLENT)"><div class="condition" style="background-color: darkolivegreen;">EX</div></span>
+                    <span *ngIf="singleCard.condition == Condition.GOOD" [ngbTooltip]="getConditionString(Condition.GOOD)"><div class="condition" style="background-color: darkgoldenrod;">GD</div></span>
+                    <span *ngIf="singleCard.condition == Condition.LIGHT_PLAYED" [ngbTooltip]="getConditionString(Condition.LIGHT_PLAYED)"><div class="condition" style="background-color: darkorange;">LP</div></span>
+                    <span *ngIf="singleCard.condition == Condition.PLAYED" [ngbTooltip]="getConditionString(Condition.PLAYED)"><div class="condition" style="background-color: hotpink;">PL</div></span>
+                    <span *ngIf="singleCard.condition == Condition.POOR" [ngbTooltip]="getConditionString(Condition.POOR)"><div class="condition" style="background-color: darkred;">PO</div></span>
+
+                    <span *ngIf="language.has(cardType.language.toLowerCase())" [ngClass]="getCssClass(language.get(cardType.language.toLowerCase()))" [ngbTooltip]="'Lingua Carta: ' + getLanguageName(language.get(cardType.language.toLowerCase()))" style="margin-left: 5%;"></span>
+                  </div>
+                  <div id="descriptionContent">
+                    <span><span [ngbTooltip]="'Descrizione'">{{ singleCard.stateDescription }}</span></span>
+                  </div>
+                </div>
+              </li>
+
+              <li class="list-group-item" style="width: 25%;" id="priceContent">
+                <div style="width: 50%; display: inline-block; text-align: left;">
+                  <span [ngbTooltip]="'Prezzo'">
+                    {{ singleCard.price.amount }}
+                    <ng-container *ngIf="cardType.price.currency === 'EUR'; else null">€</ng-container>
+                  </span>
+                </div>
+                <div style="width: 40%; margin-left: 10%; display: inline-block; text-align: right;">
+                  <span style="font-size: 18px; cursor: pointer;" [ngbTooltip]="'Visualizza Offerta'">
+                    <a [routerLink]="['/sale-product', singleCard.id]" style="color: var(--text-color); text-decoration: none;">
+                      <i class="fa-solid fa-eye"></i>
+                    </a>
+                  </span>
+                </div>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="buttonDetails" *ngIf="cardInfo.length == (cardForPage * (page + 1))">
+        <button class="btn-primary btn" (click)="loadMore()"><strong><i class="fa-solid fa-plus"></i> Mostra più risultati</strong></button>
+      </div>
+    </div>
+  </section>
+</div>

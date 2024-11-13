@@ -1,0 +1,60 @@
+<div style="height: 20px"></div>
+
+<div>
+  <!-- Contenuto quando non ci sono prodotti -->
+  <div *ngIf="products.length === 0" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; height: 100vh; padding: 0 20px;">
+    <i class="fa-solid fa-circle-info" style="font-size: 5rem; color: var(--text-color); margin-bottom: 10px;"></i>
+    <h2>Non ci sono prodotti disponibili, <a style="text-decoration: none; color: var(--accent-color); cursor: pointer;" href="/seller">clicca qui</a> per inserirne uno!</h2>
+  </div>
+
+  <!-- Contenuto quando ci sono prodotti -->
+  <div class="container" *ngIf="products.length > 0">
+    <!-- Sezione del titolo -->
+    <div id="titleContainer">
+      <h1>Prodotti Caricati</h1>
+    </div>
+
+    <!-- Sezione delle carte -->
+    <div class="container" style="padding: 10px;">
+      <div class="card-container">
+        <div class="card" *ngFor="let item of products; let i = index" style="background: none; border: none; cursor: pointer;">
+          <ngb-carousel
+            *ngIf="item.images.length > 0"
+            [interval]="item.images.length > 1 ? 5000 : 0"
+            [showNavigationArrows]="item.images.length > 1"
+            [showNavigationIndicators]="item.images.length > 1">
+            <ng-template ngbSlide *ngFor="let image of item.images">
+              <img src="{{ image.photo }}" alt="{{ item.productType.name }}" class="card-img-top" [routerLink]="['/sale-product', item.id]">
+            </ng-template>
+          </ngb-carousel>
+          <div class="card-body" style="text-align: center; color: var(--text-color);">
+            <h5>{{ item.productType.name }} <i class="fa-solid fa-pen-to-square" (click)="modifyProduct(item.id)" *ngIf="!item.sold"></i></h5>
+            <button *ngIf="!item.sold" (click)="deleteProduct(item.id)" style="background: #dc3545; color: white; border: none; border-radius: 5px; padding: 5px 10px; cursor: pointer;" [ngbTooltip]="'Elimina Ordine'">Elimina</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sezione della paginazione -->
+    <nav *ngIf="numberPage > 1" id="navbarPagination" style="cursor: pointer;">
+      <ul class="pagination justify-content-center" style="margin-top: 20px;">
+        <li class="page-item" [class.disabled]="page === 0">
+          <a class="page-link" (click)="goToPage(page - 1)" tabindex="-1">
+            <i class="fas fa-chevron-left"></i>
+          </a>
+        </li>
+        <li *ngFor="let p of [].constructor(numberPage); let i = index"
+            class="page-item"
+            [class.page-active]="i === page"
+            [class.active]="i === page">
+          <a class="page-link" (click)="goToPage(i)">{{ i + 1 }}</a>
+        </li>
+        <li class="page-item" [class.disabled]="page === numberPage - 1">
+          <a class="page-link" (click)="goToPage(page + 1)">
+            <i class="fas fa-chevron-right"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

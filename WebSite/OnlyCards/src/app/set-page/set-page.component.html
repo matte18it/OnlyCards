@@ -1,0 +1,52 @@
+<div style="height: 20px"></div>
+
+<div  *ngIf="cardType.length !== 0">
+  <section id="titleSection" class="container">
+    <!-- Sezione del titolo -->
+    <div class="container">
+      <div id="pathOfCard" class="container">
+        <nav style="--bs-breadcrumb-divider: '/';" aria-label="cardPath">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="" style="color: var(--accent-color);"><i class="fa-solid fa-house"></i></a></li>
+            <li class="breadcrumb-item"><a href="/{{ gameType }}" style="color: var(--accent-color); text-decoration: none;">{{ gameName }}</a></li>
+            <li class="breadcrumb-item" aria-current="page">{{ set }}</li>
+          </ol>
+        </nav>
+      </div>
+
+      <div id="titleContainer">
+        <h1>{{ set }}</h1><h6 style="margin-left: 1%;"><strong>({{ gameName }})</strong></h6>
+      </div>
+    </div>
+
+    <!-- Sezione delle carte -->
+    <div class="container" style="padding: 10px;">
+      <div class="card-container">
+        <div (click)="goToInfoPage(i)" class="card" *ngFor="let item of cardType; let i = index" style="cursor: pointer; background: none; border: none;">
+          <img src="{{ item.photo }}" class="card-img-top" alt="{{ item.name }}">
+          <div class="card-body" style="text-align: center; color: var(--text-color);">
+            <h5>{{ item.name }}</h5>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sezione della paginazione -->
+      <nav id="navbarPagination" *ngIf="numberOfPages > 1" style="color: #e4e6eb;">
+        <ul class="pagination d-flex justify-content-center" style="cursor: pointer;">
+          <li class="page-item">
+            <span class="page-link" aria-hidden="true" (click)="previousPage()">&laquo;</span>
+          </li>
+          <li class="page-item" *ngFor="let page of getPagesToDisplay()">
+            <span class="page-link" [ngClass]="{ 'page-active': page === currentPage }" (click)="goToPage(page)">
+              {{ page }}
+            </span>
+          </li>
+          <li class="page-item">
+            <span class="page-link" aria-hidden="true" (click)="nextPage()">&raquo;</span>
+          </li>
+        </ul>
+      </nav>
+
+    </div>
+  </section>
+</div>

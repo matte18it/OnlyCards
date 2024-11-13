@@ -1,0 +1,143 @@
+nav {
+  background-color: var(--navbar-primary-color);
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.findComponent {
+  background-color: var(--component-color-navbar);
+  color: #000000;
+  border-color: var(--component-color-navbar);
+}
+
+.findButton {
+  background-color: var(--accent-color);
+  color: var(--navbar-primary-color);
+}
+
+.findButton:hover, .findButton:active {
+  background-color: var(--accent-color);
+  color: var(--navbar-primary-color);
+}
+
+#chooseCard {
+  background-color: var(--accent-color);
+  color: var(--navbar-primary-color);
+}
+
+#logoContainer {
+  width: 30%;
+}
+
+.containerForm {
+  width: 50%;
+}
+
+.containerForm form {
+  width: 100%;
+}
+
+#iconContainer button i {
+  font-size: 24px;
+  color: var(--component-color-navbar);
+}
+
+#iconContainer button {
+  cursor: pointer;
+  border-color: var(--navbar-primary-color);
+}
+
+#iconContainer button:hover i {
+  transition: color 0.5s ease;
+  color: var(--accent-color);
+}
+
+.sectionButton {
+  width: auto;
+}
+
+.sectionButton button {
+  color: white;
+  border-color: var(--navbar-primary-color);
+  white-space: nowrap;
+}
+
+#offCanvasButton {
+  background-color: var(--accent-color);
+  color: var(--navbar-primary-color);
+  border-color: var(--accent-color);
+  margin-right: 10px;
+}
+
+/* Rimuove il focus ring di bootstrap dall'input di ricerca */
+.form-control:focus {
+  box-shadow: none !important;
+}
+
+#offcanvasMenu .btn {
+  font-size: 18px;
+  width: 100%;
+  text-align: start;
+  border-color: transparent;
+}
+
+#offcanvasContainer {
+  flex-direction: column;
+}
+
+#offcanvasContainer .btnMenu:hover {
+  color: var(--accent-color);
+}
+
+.hoverText {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#categoryCollapse {
+  cursor: pointer;
+}
+
+.hoverText:hover {
+  color: var(--accent-color);
+}
+
+/* --- RESPONSIVE --- */
+@media screen and (max-width: 991px) {
+  #iconContainer {
+    display: none !important;
+  }
+  #sectionOffCanvas {
+    display: none !important;
+  }
+  #researchOffCanvas {
+    display: none !important;
+  }
+}
+
+@media screen and (min-width: 301px) and (max-width: 550px) {
+  #sectionNavbar {
+    display: none !important;
+  }
+  #sectionOffCanvas {
+    display: block !important;
+  }
+  #researchOffCanvas {
+    display: none !important;
+  }
+}
+
+@media screen and (min-width: 0px) and (max-width: 300px) {
+  #sectionNavbar {
+    display: none !important;
+  }
+  #sectionOffCanvas {
+    display: block !important;
+  }
+  #researchNavbar {
+    display: none !important;
+  }
+  #researchOffCanvas {
+    display: block !important;
+  }
+}
+

@@ -1,0 +1,237 @@
+<div class=" custom-modal  " >
+<div class="modal-header">
+  <h4 class="modal-title" *ngIf="!productType">Aggiungi un nuovo tipo di prodotto</h4>
+  <h4 class="modal-title" *ngIf="productType">Modifica il tipo di prodotto</h4>
+
+</div>
+<div class="modal-body full">
+  <form [formGroup]="form" >
+    <div class="form-group">
+      <label for="cardName">Nome</label>
+      <input type="text"
+             formControlName="name"
+             class="form-control "
+             id="cardName"
+             aria-describedby="cardName"
+             placeholder="Inserisci nome"
+             maxlength="50"
+             [ngClass]="{'is-invalid':form.get('name')?.invalid && form.get('name')?.dirty}"  >
+      <ng-container *ngFor="let validation of validations.name">
+        <div *ngIf="form.get('name')?.hasError(validation.type) &&  form?.get('name')?.dirty"  role="alert" >
+          <i class="fa-solid fa-circle-info text-danger"></i>
+          <small class="text-danger">{{ validation.message }}</small>
+        </div>
+      </ng-container>
+    </div>
+    <div class="form-group pt-2">
+      <label for="language">Lingua</label>
+      <input
+        type="text"
+        formControlName="language"
+        [ngbTypeahead]="searchLanguages"
+        (focus)="focusLanguage$.next($any($event).target.value)"
+        (click)="clickLanguage$.next($any($event).target.value)"
+        #languageValue="ngbTypeahead"
+        class="form-control "
+        id="language"
+        aria-describedby="language"
+        placeholder="Inserisci lingua"
+        maxlength="50"
+        [ngClass]="{'is-invalid':this.form.get('language')?.invalid && this.form.get('language')?.dirty}"  >
+      <ng-container *ngFor="let validation of validations.language">
+        <div *ngIf="this.form.get('language')?.hasError(validation.type) &&  this.form.get('language')?.dirty"  role="alert" >
+          <i class="fa-solid fa-circle-info text-danger"></i>
+          <small class="text-danger">{{ validation.message }}</small>
+        </div>
+      </ng-container>
+    </div>
+    <div class="form-group pt-2">
+      <label for="language">Gioco</label>
+      <input
+        type="text"
+        formControlName="game"
+        [defaultValue]="productType?.game"
+        [ngbTypeahead]="searchGames"
+        (focus)="focusGame$.next($any($event).target.value)"
+        (click)="clickGame$.next($any($event).target.value)"
+        #gameValue="ngbTypeahead"
+        class="form-control "
+        id="game"
+        aria-describedby="game"
+        placeholder="Inserisci gioco"
+        maxlength="50"
+        [ngClass]="{'is-invalid':this.form.get('game')?.invalid && this.form.get('game')?.dirty}"  >
+      <ng-container *ngFor="let validation of validations.game">
+        <div *ngIf="this.form.get('game')?.hasError(validation.type) &&  this.form.get('game')?.dirty"  role="alert" >
+          <i class="fa-solid fa-circle-info text-danger"></i>
+          <small class="text-danger">{{ validation.message }}</small>
+        </div>
+      </ng-container>
+    </div>
+    <div class="form-group pt-2">
+      <label for="language">Tipo prodotto</label>
+      <input
+        type="text"
+        formControlName="type"
+        [ngbTypeahead]="searchTypes"
+        (focus)="focusTypes$.next($any($event).target.value)"
+        (click)="clickTypes$.next($any($event).target.value)"
+        #typeValue="ngbTypeahead"
+        class="form-control "
+        id="type"
+        aria-describedby="type"
+        placeholder="Inserisci tipo"
+        maxlength="50"
+        [ngClass]="{'is-invalid':this.form.get('type')?.invalid && this.form.get('type')?.dirty}"  >
+      <ng-container *ngFor="let validation of validations.type">
+        <div *ngIf="this.form.get('type')?.hasError(validation.type) &&  this.form.get('type')?.dirty"  role="alert" >
+          <i class="fa-solid fa-circle-info text-danger"></i>
+          <small class="text-danger">{{ validation.message }}</small>
+        </div>
+      </ng-container>
+    </div>
+    <label class="mt-2">Foto</label>
+    <div class="form-group pt-2">
+      <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+        <li [ngbNavItem]="1">
+          <button ngbNavLink (click)="clearUrl()">File</button>
+          <ng-template ngbNavContent>
+            <input type="file" (change)="changeFile($event)" class="form-control " id="photo" aria-describedby="photo" placeholder="Inserisci foto" [ngClass]="{'is-invalid':form.get('photo')?.invalid && form.get('photo')?.dirty}"   accept="image/png, image/jpeg" >
+            <ng-container *ngFor="let validation of validations.photo">
+              <div *ngIf="form.get('photo')?.hasError(validation.type) &&  form?.get('photo')?.dirty"  role="alert" >
+                <i class="fa-solid fa-circle-info text-danger"></i>
+                <small class="text-danger">{{ validation.message }}</small>
+              </div>
+            </ng-container>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+          <button ngbNavLink (click)="clearFile()">Url</button>
+          <ng-template ngbNavContent>
+            <input type="text" formControlName="photoUrl" class="form-control " id="photo" aria-describedby="photoUrl" placeholder="Inserisci url della foto" [ngClass]="{'is-invalid':form.get('photoUrl')?.invalid && form.get('photoUrl')?.touched}"   >
+            <ng-container *ngFor="let validation of validations.photoUrl">
+              <div *ngIf="form.get('photoUrl')?.hasError(validation.type) &&  form?.get('photoUrl')?.touched"  role="alert" >
+                <i class="fa-solid fa-circle-info text-danger"></i>
+                <small class="text-danger">{{ validation.message }}</small>
+              </div>
+            </ng-container>
+          </ng-template>
+        </li>
+        </ul>
+        <div [ngbNavOutlet]="nav" class="mt-2"></div>
+     
+
+    </div>
+
+  </form>
+    <ng-container  class="divider">
+    <hr>
+    <h3>Caratteristiche</h3>
+    <div class="pt-2 ">
+      <button type="button" class="btn bottoneAggiunta" (click)="openModalNewFeauture(feature)">Aggiungi caratteristiche</button>
+    </div>
+    <div class="pt-3">
+      <label>Caratteristiche inserite</label>
+      <li class="list-group pt-4" >
+        <div *ngFor="let featureVal of getFeaturesArray().controls; let i=index" >
+          <ul class="list-group-item   bottoneModifica" (click)="openModalModifyFeature(i, feature)" *ngIf="savedFeatures[i]">
+            <div class="row justify-content-between ">
+              <div class="col col-6  ">
+                <div class="d-flex flex-row">
+                <div class="fw-bold pe-3">{{featureVal.get('name')?.value}}:</div>
+                <div>
+                  {{featureVal.get('value')?.value}}
+                </div>
+                </div>
+            </div>
+              <div class="col col-6">
+                <div class="d-flex flex-row justify-content-end ">
+                  <button type="button" class="btn btn-danger" (click)="deleteFeature(i)"><i class="fa-solid fa-trash "></i></button>
+
+                </div>
+
+            </div>
+          </div>
+      </ul>
+    </div>
+      </li>
+
+</div>
+
+    </ng-container>
+
+
+</div>
+<div class="modal-footer align-items-baseline justify-content-start">
+  <button type="button" class="btn btn-danger" (click)="activeModal.dismiss('Close click')">Chiudi</button>
+  <button *ngIf="productType==null" type="button" class="btn btn-success" [disabled]="form.invalid || this.photoOrUrlIsPresent()" (click)="saveProductType()">Salva</button>
+  <button *ngIf="productType!=null" type="button" class="btn btn-success" [disabled]="form.invalid" (click)="modifyProductType()">Salva</button>
+</div>
+
+</div>
+<ng-template #feature let-modal >
+  <div class="modal-header">
+    <h4 *ngIf="!modify" class="modal-title">Aggiungi una nuova caratteristica alla carta</h4>
+    <h4 *ngIf="modify" class="modal-title">Modifica la caratteristica</h4>
+
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form2">
+      <div formArrayName="features">
+        <div [formGroupName]="selectedFeature">
+          <div class="form-group">
+            <label for="featureName">Nome</label>
+            <input
+              type="text"
+              formControlName="name"
+              [ngbTypeahead]="searchFeatureName"
+              (focus)="focusName$.next($any($event).target.value)"
+              (click)="clickName$.next($any($event).target.value)"
+              #instanceName="ngbTypeahead"
+              class="form-control "
+              id="featureName"
+              aria-describedby="featureName"
+              placeholder="Inserisci nome"
+              maxlength="50"
+              [ngClass]="{'is-invalid':this.getFromFromArrayFeature(selectedFeature).get('name')?.invalid && this.getFromFromArrayFeature(selectedFeature).get('name')?.dirty}"  >
+            <ng-container *ngFor="let validation of validations['features.name']">
+              <div *ngIf="getFromFromArrayFeature(selectedFeature).get('name')?.hasError(validation.type) &&  getFromFromArrayFeature(selectedFeature).get('name')?.dirty"  role="alert" >
+                <i class="fa-solid fa-circle-info text-danger"></i>
+                <small class="text-danger">{{ validation.message }}</small>
+              </div>
+            </ng-container>
+          </div>
+          <div class="form-group">
+            <label for="featureValue">Valore</label>
+            <input
+              type="text"
+              formControlName="value"
+              class="form-control "
+              id="featureValue"
+              aria-describedby="featureValue"
+              placeholder="Inserisci valore"
+              [ngbTypeahead]="searchFeatureValue"
+              (focus)="focusValue$.next($any($event).target.value)"
+              (click)="clickValue$.next($any($event).target.value)"
+              #instanceValue="ngbTypeahead"
+              maxlength="100"
+              [ngClass]="{'is-invalid':getFromFromArrayFeature(selectedFeature).get('value')?.invalid && getFromFromArrayFeature(selectedFeature).get('value')?.dirty}"  >
+            <ng-container *ngFor="let validation of validations['features.value']">
+              <div *ngIf="getFromFromArrayFeature(selectedFeature).get('value')?.hasError(validation.type) &&  getFromFromArrayFeature(selectedFeature).get('value')?.dirty"  role="alert" >
+                <i class="fa-solid fa-circle-info text-danger"></i>
+                <small class="text-danger">{{ validation.message }}</small>
+              </div>
+            </ng-container>
+          </div>
+      </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer justify-content-between">
+    <button  *ngIf="!modify" type="button" class="btn btn-success" [disabled]="getFromFromArrayFeature(selectedFeature).invalid" (click)="saveNewFeature(modal)">Salva</button>
+    <button  *ngIf="modify" type="button" class="btn btn-success" [disabled]="getFromFromArrayFeature(selectedFeature).invalid" (click)="modifyFeature(modal)">Modifica</button>
+    <button *ngIf="!modify" type="button" class="btn btn-danger" (click)="closeAddNewFeature(modal)">Chiudi</button>
+    <button *ngIf="modify" type="button" class="btn btn-danger" (click)="closeModifyFeauture(modal)">Chiudi</button>
+
+  </div>
+</ng-template>

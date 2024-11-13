@@ -1,0 +1,101 @@
+<div *ngIf="this.isAuthenticated">
+
+  <div *ngIf="this.cartCards?.length == 0"
+       class="d-flex flex-column justify-content-center align-items-center text-center min-vh-100">
+    <h2>Il tuo carrello OnlyCards è vuoto</h2>
+    <p>
+      Esplora la nostra collezione di carte e aggiungile al tuo carrello!
+      <a [routerLink]="['/home-page']" class="text-decoration-none">Vai alla home</a>
+    </p>
+  </div>
+
+  <div *ngIf="cartCards?.length > 0">
+    <div class="d-flex justify-content-end px-3 py-2">
+      <button class="btn btn-secondary btn-sm rounded-start-pill rounded-end-0" (click)="setView('LIST')">
+        <i class="fa-solid fa-list"></i>
+      </button>
+      <button class="btn btn-secondary btn-sm rounded-start-0 rounded-end-pill" (click)="setView('GRID')">
+        <i class="fa-solid fa-border-all"></i>
+      </button>
+    </div>
+
+
+    <div *ngIf="this.viewMode=='LIST'" class="list-view container">
+      <div *ngFor="let card of cartCards" class="card">
+        <div class="card-content">
+            <div class="image-column">
+              <input type="checkbox" class="card-checkbox" checked (change)="updateTotal(card, $event)">
+              <img [routerLink]="['/sale-product/'+card.id]" [src]="card.images[0].photo" class="img-fluid" style="width: 200px; height: auto; padding: 5px;" alt="Immagine prodotto">
+            </div>
+
+          <div class="details-column">
+            <h3 class="mb-3">{{ card.cardName }} ({{ card.cardLanguage }})</h3>
+            <p>{{ card.game }} {{ card.type }}</p>
+            <p>Condizione: {{ card.condition }}</p>
+            <p>{{ card.stateDescription }}</p>
+            <div *ngIf="card.sold" class="d-inline-block">
+              <span class="badge bg-danger">Non disponibile!</span>
+            </div>
+            <div *ngIf="!card.sold" class="d-inline-block">
+              <span class="badge bg-success">Ancora disponibile!</span>
+            </div>
+          </div>
+
+          <div class="price-column">
+            <h5><strong>{{ getPrice(card.price.amount, card.price.currency) }}</strong></h5>
+            <button class="btn btn-sm btn-outline-secondary" (click)="removeProduct(card.id)">
+              Rimuovi <i class="fa fa-trash-o"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="this.viewMode=='GRID'" class="grid-view">
+      <div *ngFor="let card of cartCards" class="card">
+        <div class="card-content">
+          <div class="image-column">
+            <input type="checkbox" class="card-checkbox" checked (change)="updateTotal(card, $event)">
+            <img [routerLink]="['/sale-product/' + card.id]" [src]="card.images[0].photo" alt="Immagine prodotto" class="img-fluid" style="width: 200px; height: auto; padding: 5px;">
+          </div>
+
+          <div class="details-column">
+            <h3 class="mb-3">{{ card.cardName }} ({{ card.cardLanguage }})</h3>
+            <p>{{ card.game }} {{ card.type }}</p>
+            <p>Condizione: {{ card.condition }}</p>
+            <p>{{ card.stateDescription }}</p>
+            <div *ngIf="card.sold" class="d-inline-block">
+              <span class="badge bg-danger">Non disponibile!</span>
+            </div>
+            <div *ngIf="!card.sold" class="d-inline-block">
+              <span class="badge bg-success">Ancora disponibile!</span>
+            </div>
+          </div>
+
+          <div class="price-column">
+            <h5><strong>{{ getPrice(card.price.amount, card.price.currency) }}</strong></h5>
+            <button class="btn btn-sm btn-outline-secondary" (click)="removeProduct(card.id)">
+              Rimuovi <i class="fa fa-trash-o"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="px-5 py-1">Totale: {{ getTotalPrice() }}</p>
+    <div class="d-flex justify-content-center">
+      <button class="btn btn-primary mx-5 my-2" (click)="checkout()"> Procedi all'ordine </button>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="!this.isAuthenticated">
+  <div class="d-flex flex-column justify-content-start align-items-center text-center min-vh-100 container p-5">
+    <div class="notAuthenticated shadow p-4">
+      <p class="card-text"> Per poter utilizzare il carrello è necessario effettuare il login. </p>
+      <button routerLink="/login" class="btn btn-primary mx-1"> Accedi </button>
+      <button routerLink="/sign-up" class="btn btn-primary mx-1"> Registrati </button>
+    </div>
+  </div>
+</div>

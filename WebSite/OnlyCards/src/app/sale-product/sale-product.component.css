@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.carousel {
+  display: flex;
+}
+
+.description {
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (max-width: 770px) {
+  .carousel {
+    display: none;
+  }
+
+  .description {
+    width: 100%;
+    align-items: center;
+  }
+
+  .sellerDescription {
+    width: 100%;
+    align-items: center;
+  }
+
+}
+
+
