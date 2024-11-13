@@ -1,0 +1,555 @@
+<resources>
+    <string name="app_name" translatable="false">OnlyCards</string>
+    <string name="app_url" translatable="false">https://onlycards.com</string>
+
+    <!-- Admin Account (pagina iniziale) -->
+    <string name="admin_area_title">Administrative Area</string>
+    <string name="add_product_type">Add Product Type</string>
+
+    <!-- Admin Add Product -->
+    <string name="save_product_type">Save Product Type</string>
+    <string name="feature_name">Feature name</string>
+    <string name="feature_value">Feature value</string>
+    <string name="add_feature">Add feature</string>
+    <string name="add_new_feature">Add new feature</string>
+    <string name="delete">Delete</string>
+    <string name="image_is_required">Image is required</string>
+    <string name="select_image">Select Image</string>
+    <string name="change_image">Change Image</string>
+    <string name="name">Name</string>
+    <string name="language">Language</string>
+    <string name="game">Game</string>
+    <string name="type">Product Type</string>
+    <string name="product_name_error_short">Name too short, must be at least 3 characters long</string>
+    <string name="product_name_error_invalid">The name contains invalid characters</string>
+    <string name="product_language_error_short">Language too short, must be at least 2 characters long</string>
+    <string name="product_language_error_invalid">The language contains invalid characters</string>
+    <string name="product_game_error_short">The game must be at least 3 characters long</string>
+    <string name="product_type_error_short">The product type must be at least 3 characters long</string>
+    <string name="product_type_error_invalid">The type contains invalid characters</string>
+    <string name="feature_name_error">Name too short</string>
+    <string name="feature_name_invalid">The name contains invalid characters</string>
+    <string name="feature_name_exists">The name already exists</string>
+    <string name="feature_value_error">Value too short</string>
+    <string name="feature_value_invalid">The value contains invalid characters</string>
+    <string name="product_type_add_success">Product Type added successfully!</string>
+    <string name="product_type_add_error">Error adding the Product Type. Please try again later.</string>
+    <string name="add">Add</string>
+    <string name="cancel">Cancel</string>
+    <string name="back">Back</string>
+
+    <!-- Admin Edit Order -->
+    <string name="error">Error: %1$s</string>
+    <string name="modify_order">Modify Order</string>
+    <string name="last_modified_details">Last modification details</string>
+    <string name="order_date">Date: %1$s</string>
+    <string name="modified_by">Modified by: %1$s</string>
+    <string name="products">Products</string>
+    <string name="modify_status">Modify Status</string>
+    <string name="status_pending">Pending</string>
+    <string name="status_shipped">Shipped</string>
+    <string name="status_delivered">Delivered</string>
+    <string name="status_cancelled">Cancelled</string>
+    <string name="save">Save</string>
+    <string name="invalid_transition_title">Invalid Transition</string>
+    <string name="invalid_transition_message">It is not possible to change the order status to the selected one.</string>
+    <string name="product_image">Product Image</string>
+    <string name="price">Price: %1$s %2$s</string>
+    <string name="order_update_success">Update successful!</string>
+
+
+    <!-- Admin Edit Product -->
+    <string name="edit_product_title">Edit Product</string>
+    <string name="condition_label">Condition</string>
+    <string name="description_label">Product description</string>
+    <string name="description_error">The description must be at least 10 characters long</string>
+    <string name="price_label">Price</string>
+    <string name="price_error">The price must be a valid number</string>
+    <string name="currency_label">Currency</string>
+    <string name="add_image">Add image</string>
+    <string name="remove_image">Remove</string>
+    <string name="delete_image">Delete</string>
+    <string name="image_limit_reached">You have reached the limit of %1$d images</string>
+    <string name="save_changes">Save changes</string>
+    <string name="save_success">Changes saved successfully!</string>
+    <string name="save_error">Error while saving. Please try again later.</string>
+
+    <!-- Admin Edit User -->
+    <string name="edit_user">Edit User</string>
+    <string name="username_label">Username</string>
+    <string name="email_label">Email</string>
+    <string name="phone_label">Phone Number</string>
+    <string name="user_status">User Status</string>
+    <string name="unblocked_status">Unblocked</string>
+    <string name="blocked_status">Blocked</string>
+    <string name="user_roles">Roles</string>
+    <string name="admin_role">Admin</string>
+    <string name="buyer_role">Buyer</string>
+    <string name="seller_role">Seller</string>
+    <string name="roles_error">Select at least one role.</string>
+    <string name="addresses_label">Addresses</string>
+    <string name="delete_user_success">User deleted successfully!</string>
+    <string name="save_user_success">Changes saved successfully!</string>
+    <string name="operation_failed">Operation failed: %1$s</string>
+    <string name="delete_user">Delete</string>
+    <string name="save_user">Save</string>
+    <string name="username_error">Username must be at least 3 characters long</string>
+    <string name="email_error">Enter a valid email</string>
+    <string name="default_address">Default Address</string>
+    <string name="weekend_delivery">Weekend Delivery</string>
+
+    <!-- Admin Orders -->
+    <string name="search_by_buyer">Search by Buyer</string>
+    <string name="search_by_seller">Search by Seller</string>
+    <string name="edit_order">Edit Order</string>
+
+    <!-- Admin Users -->
+    <string name="search_by_username">Search by username</string>
+    <string name="search_by_email">Search by email</string>
+    <string name="phone_not_available">N/A</string>
+    <string name="edit">Edit</string>
+    <string name="first_page">First page</string>
+    <string name="previous_page">Previous page</string>
+    <string name="next_page">Next page</string>
+    <string name="last_page">Last page</string>
+
+    <!-- Login -->
+    <string name="welcome_back">welcome back</string>
+    <string name="username_or_email">Username or Email</string>
+    <string name="toggle_password_visibility">Show/Hide password</string>
+    <string name="login">Login</string>
+    <string name="or">Or</string>
+    <string name="login_with_google">Login with Google</string>
+    <string name="dont_have_account">Don\'t have an account?</string>
+    <string name="register_now">Register now!</string>
+    <string name="generic_login_error">Generic error during login.</string>
+
+    <!-- Rregister -->
+    <string name="registration_success">Registration successful!</string>
+    <string name="registration_error">Error during registration.</string>
+    <string name="good_morning">Good morning</string>
+    <string name="good_afternoon">Good afternoon</string>
+    <string name="good_evening">Good evening</string>
+    <string name="welcome">Welcome</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="hide_password">Hide password</string>
+    <string name="show_password">Show password</string>
+    <string name="invalid_email">Invalid email</string>
+    <string name="invalid_phone">Invalid phone number</string>
+    <string name="register">Register</string>
+    <string name="already_have_account">Already have an account?</string>
+    <string name="login_now">Log in!</string>
+    <string name="name_length_requirement">Length between 3 and 20 characters</string>
+    <string name="password_min_length">At least 8 characters</string>
+    <string name="password_lowercase">At least one lowercase letter</string>
+    <string name="password_uppercase">At least one uppercase letter</string>
+    <string name="password_number">At least one number</string>
+    <string name="password_special_char">At least one special character</string>
+
+    <!-- HomePage -->
+    <string name="last_add">Last Add</string>
+    <string name="last_add_tooltip">This section contains the latest published products (sorted by date).</string>
+    <string name="best_sellers">Best Sellers</string>
+    <string name="best_sellers_tooltip">This section provides information on the best-selling cards in the store.</string>
+    <string name="best_price">Best Price</string>
+    <string name="best_price_tooltip">This section provides information on the cards put up for sale at the best price.</string>
+    <string name="no_product_available">No product available</string>
+    <string name="loaded_date">Loaded on:</string>
+    <string name="number_sales">Number of sales:</string>
+
+    <!-- Bottom Navigation -->
+    <string name="cart_label">Cart</string>
+    <string name="orders_label">Orders</string>
+    <string name="users_label">Users</string>
+
+    <!-- Search Product Types -->
+    <string name="search_text">Search product</string>
+    <string name="search_from">from</string>
+    <string name="search_delete">Delete</string>
+    <string name="search_filter">Filter</string>
+    <string name="search_language">Language</string>
+    <string name="search_type">Types</string>
+    <string name="search_price">Price</string>
+    <string name="search_beyond">and beyond</string>
+    <string name="search_order">Order</string>
+    <string name="search_show_result">Show Results</string>
+    <string name="search_games">Games</string>
+
+    <!-- ProductType Details -->
+    <string name="product_type_page_title">Card Details</string>
+    <string name="product_type_page_name">Name:</string>
+    <string name="product_type_page_cards_sold">Cards Sold:</string>
+    <string name="product_type_page_membership_set">Membership set:</string>
+    <string name="product_type_card_number">Card Number:</string>
+    <string name="product_type_card_rarity">Rarity:</string>
+    <string name="product_type_card_type">Type:</string>
+    <string name="product_type_card_min_price">Historical Minimum Price:</string>
+    <string name="product_type_card_available">AVAILABLE</string>
+    <string name="product_type_card_almost_sold_out">ALMOST SOLD OUT</string>
+    <string name="product_type_card_last_pieces">LAST PIECES</string>
+    <string name="product_type_card_not_available">NOT AVAILABLE</string>
+    <string name="product_type_graph_title">Average Price Chart</string>
+    <string name="product_type_graph_tooltip">Graph showing the daily average prices of cards on sale</string>
+    <string name="product_type_offers">Offers Available</string>
+    <string name="product_type_set_error">No cards related to the selected set were found</string>
+
+    <!-- Product Sale -->
+    <string name="product_title">Product Details</string>
+    <string name="product_type">Type:</string>
+    <string name="product_condition">Condition:</string>
+    <string name="product_description">Description:</string>
+    <string name="product_release_date">Release Date:</string>
+    <string name="product_available">Available</string>
+    <string name="product_not_available">Not Available</string>
+    <string name="product_price">Price:</string>
+    <string name="product_seller">Seller Details</string>
+    <string name="product_seller_username">Username:</string>
+    <string name="product_seller_email">Email:</string>
+    <string name="product_seller_phone">Phone:</string>
+    <string name="product_buy_now">Buy Now</string>
+    <string name="product_add_to_cart">Add to cart</string>
+    <string name="product_add_to_wishlist">Add to wishlist</string>
+    <string name="product_admin_modify">Modify</string>
+    <string name="product_admin_delete">Delete</string>
+    <string name="product_error">Purchase error</string>
+    <string name="product_cart">Product added to cart</string>
+    <string name="product_cart_error">Error adding to cart</string>
+    <string name="product_choose_wishlist_title">Choose the wishlist</string>
+    <string name="product_wishlist_close">Close</string>
+    <string name="product_no_wishlist">No wishlist available</string>
+    <string name="product_wishlist_added">Product added to wishlist</string>
+    <string name="product_wishlist_error">Error adding to wishlist</string>
+    <string name="product_bought">Product purchased successfully</string>
+
+    <!-- Profile -->
+    <string name="user_area">User Area</string>
+    <string name="user_seller_area">Seller Area</string>
+    <string name="user_profile">Profile</string>
+    <string name="user_address">Addresses</string>
+    <string name="user_wallet">Wallet</string>
+    <string name="user_transactions">Transactions</string>
+    <string name="user_orders">Orders</string>
+    <string name="user_help">Support</string>
+    <string name="user_logout">Logout</string>
+    <string name="user_image_profile_success">Image uploaded successfully</string>
+    <string name="user_image_profile_error">Image upload error</string>
+    <string name="user_title">User Details</string>
+    <string name="user_username">Username:</string>
+    <string name="user_email">Email:</string>
+    <string name="user_phone">Phone:</string>
+    <string name="user_current_date">Current Date:</string>
+    <string name="user_modify_photo">Click on the photo to edit it</string>
+    <string name="user_modify_informations">Edit Information</string>
+    <string name="user_modify_close">Close</string>
+    <string name="user_modify_save">Save</string>
+    <string name="user_label_username">Username</string>
+    <string name="user_label_email">Email</string>
+    <string name="user_label_phone">Phone</string>
+    <string name="user_modify_error">Error in the data entered</string>
+    <string name="user_modify_success">Data saved successfully</string>
+    <string name="user_loading_error">Error loading data</string>
+    <string name="user_seller_sell">Sell</string>
+    <string name="user_seller_uploaded">Uploaded</string>
+    <string name="user_seller_request">Product Request</string>
+
+    <!-- Addresses -->
+    <string name="address_title">User Addresses</string>
+    <string name="address_domicile">Domicile</string>
+    <string name="address_add">Add Address</string>
+    <string name="address_modify">Modify Address</string>
+    <string name="address_default">Default Address</string>
+    <string name="address_close">Close</string>
+    <string name="address_save">Save</string>
+    <string name="address_label_name">Name</string>
+    <string name="address_label_surname">Surname</string>
+    <string name="address_label_phone">Phone</string>
+    <string name="address_label_street">Street</string>
+    <string name="address_label_cap">CAP</string>
+    <string name="address_label_city">City</string>
+    <string name="address_label_state">State</string>
+    <string name="address_label_default">Default Address</string>
+    <string name="address_label_weekend">Weekend Delivery</string>
+    <string name="address_label_error">Error in the data entered</string>
+    <string name="address_label_success">Data saved successfully</string>
+    <string name="address_label_save_error">Error saving data</string>
+    <string name="address_delete_success">Address deleted successfully</string>
+    <string name="address_delete_error">Error deleting address</string>
+    <string name="address_no_found">No address found</string>
+
+    <!-- Support -->
+    <string name="support_title">Support</string>
+    <string name="support_object">Object</string>
+    <string name="support_message">Description</string>
+    <string name="support_send">Send</string>
+    <string name="support_cancel">Cancel</string>
+    <string name="support_sent_success">Request sent successfully</string>
+    <string name="support_sent_error">Error sending request</string>
+
+    <!-- Orders -->
+    <string name="orders_title">Orders Placed</string>
+    <string name="orders_filter">Filters</string>
+    <string name="orders_filter_name">ProductName</string>
+    <string name="orders_filter_status">Order Status</string>
+    <string name="orders_filter_pending">Pending</string>
+    <string name="orders_filter_shipped">Shipped</string>
+    <string name="orders_filter_delivered">Delivered</string>
+    <string name="orders_filter_canceled">Cancelled</string>
+    <string name="orders_filter_all">All</string>
+    <string name="orders_filter_type">Order Type</string>
+    <string name="orders_filter_buy">Buy</string>
+    <string name="orders_filter_sell">Sell</string>
+    <string name="orders_filter_date">Date</string>
+    <string name="orders_filter_max_price">Max Price</string>
+    <string name="orders_filter_min_price">Min Price</string>
+    <string name="orders_filter_show">Show Results</string>
+    <string name="orders_filter_error">No orders found</string>
+    <string name="orders_status">Status:</string>
+    <string name="orders_date">Date:</string>
+    <string name="orders_total">Total:</string>
+    <string name="orders_cancel">Cancel</string>
+    <string name="orders_cancel_error">Error cancelling order</string>
+    <string name="orders_cancel_success">Order cancelled successfully</string>
+    <string name="orders_shipped_success">Order shipped successfully</string>
+    <string name="orders_shipped_error">Error shipping order</string>
+
+    <!-- Error -->
+    <string name="network_error">Network Error</string>
+    <string name="end_of_stream_error">End of Stream</string>
+    <string name="unexpected_error">Unexpected Error</string>
+    <string name="set_error">"Unable to retrieve product information in the set"</string>
+    <string name="login_error">Please, login to continue</string>
+    <string name="send_request_error">Error sending request</string>
+    <string name="profile_error">Unable to retrieve user information</string>
+    <string name="profile_update_error">Error updating user information</string>
+    <string name="profile_update_image">Error updating image</string>
+    <string name="addresses_error">Unable to retrieve address information</string>
+    <string name="addresses_add_error">Error adding address</string>
+    <string name="addresses_modify_error">Error modifying address</string>
+    <string name="addresses_delete_error">Error deleting address</string>
+    <string name="http_error">Error retrieving data</string>
+    <string name="orders_error">Error retrieving order information</string>
+    <string name="orders_empty">No orders available</string>
+    <string name="orders_delete_error">Error deleting order</string>
+    <string name="uploaded_products_error">Error retrieving uploaded products</string>
+    <string name="uploaded_products_empty">No products available</string>
+    <string name="uploaded_products_delete_error">Error deleting product</string>
+    <string name="search_error">"Error loading products, please try again later"</string>
+    <string name="search_no_result">"No products matching the search criteria were found"</string>
+    <string name="product_type_conflict_error">You cannot delete a product type that is linked to products.</string>
+    <string name="product_type_delete_error">Error while deleting the product type.</string>
+    <string name="product_type_delete_forbidden">You do not have permission to delete this product type.</string>
+    <string name="product_type_not_found">The product type was not found.</string>
+    <string name="connection_error_retry">Connection error. Please try again later.</string>
+    <string name="product_not_found">The product was not found.</string>
+    <string name="product_in_use_error">The product cannot be deleted because it has been sold.</string>
+    <string name="product_delete_error">Error deleting the product. Please try again later.</string>
+    <string name="wallet_error">Error retrieving wallet information</string>
+    <string name="wallet_recharge_error">Error recharging the wallet</string>
+    <string name="wallet_withdraw_error">Error withdrawing from the wallet</string>
+    <string name="transactions_error">Error retrieving transaction information</string>
+    <string name="transactions_empty">No transactions available</string>
+
+    <!-- Success -->
+    <string name="product_type_delete_success">Product deleted successfully</string>
+    <string name="product_delete_success">Product deleted successfully</string>
+
+    <!-- Request Product -->
+    <string name="request_product_title">Request Product</string>
+    <string name="request_product_game">Game</string>
+    <string name="request_product_name">Product Name</string>
+    <string name="request_product_note">Notes (optional)</string>
+    <string name="request_product_reset">Cancel</string>
+    <string name="request_product_send_success">Request sent successfully</string>
+    <string name="request_product_send_error">Error sending request</string>
+    <string name="request_product_send">Send</string>
+    <string name="request_product_image_title">Product Image</string>
+    <string name="request_product_image_load">Load Image</string>
+    <string name="request_product_image_details">Loaded Image</string>
+    <string name="request_product_error">Error sending request</string>
+
+    <!-- Uploaded Product -->
+    <string name="uploaded_products_title">Uploaded Products</string>
+    <string name="uploaded_products_no_products">No products loaded</string>
+    <string name="uploaded_products_no_product">Product not found</string>
+    <string name="uploaded_products_release_data">Date:</string>
+    <string name="uploaded_products_price">Price:</string>
+    <string name="uploaded_products_cancel">Cancel</string>
+    <string name="uploaded_products_cancel_error">Error cancelling product</string>
+    <string name="uploaded_products_cancel_success">Product cancelled successfully</string>
+    <string name="uploaded_products_modify_label">Modify</string>
+    <string name="uploaded_products_single_error">Error retrieving product information</string>
+    <string name="uploaded_products_modify_title">Modify Product</string>
+    <string name="uploaded_products_condition_label">Condition</string>
+    <string name="uploaded_products_description_label">Description</string>
+    <string name="uploaded_products_price_label">Price</string>
+    <string name="uploaded_products_image_label">Images (min 1, max 5)</string>
+    <string name="uploaded_products_modify_save">Save</string>
+    <string name="uploaded_products_modify_cancel">Cancel</string>
+    <string name="uploaded_products_modify_error">Error modifying product</string>
+    <string name="uploaded_products_modify_success">Product modified successfully</string>
+    <string name="uploaded_products_add_image">Add Image</string>
+    <string name="uploaded_products_image_delete_success">Image deleted successfully</string>
+    <string name="uploaded_products_image_delete_error">Error deleting image</string>
+    <string name="uploaded_products_image_delete_error_unique">You cannot delete the only saved image</string>
+
+    <!-- Profile -->
+    <string name="profile_show_wishlist">Show wishlists of </string>
+    <string name="profile_sell_product">Products for sale</string>
+    <string name="profile_language">Language:</string>
+    <string name="profile_not_found">User not found</string>
+    <string name="profile_not_found_explanation">The user you are looking for does not exist or has been removed</string>
+    <string name="profile_no_sell">No products for sale</string>
+    <string name="profile_error_product">Error retrieving user products</string>
+
+    <!-- Wishlist -->
+    <string name="wishlists_error">Error retrieving wishlists</string>
+    <string name="wishlists_error_limit">Wishlist limit reached</string>
+    <string name="wishlists_error_name">Wishlist name already exists</string>
+    <string name="wishlists_error_create">Error creating wishlist</string>
+    <string name="wishlists_sort_date_desc">Creation date: In descending order</string>
+    <string name="wishlists_sort_date_asc">Creation date: In ascending order</string>
+    <string name="wishlists_filter_all">All</string>
+    <string name="wishlists_filter_created_by_me">Created by me</string>
+    <string name="wishlists_filter_created_by_others">Shared with me</string>
+    <string name="wishlists_of">Wishlist of</string>
+    <string name="wishlists_no_desire">You have no wishes yet.</string>
+    <string name="wishlists_start_to_explore">Start exploring and create a list!</string>
+    <string name="wishlists_user_no_wishlist">The user has no wishlist.</string>
+    <string name="wishlists_dont_be_boring">Contact him to ask him not to be so boring!</string>
+    <string name="wishlists_sorting_by">Sort by</string>
+    <string name="wishlists_filter_by">Filter by</string>
+    <string name="wishlists_create">Create a wishlist</string>
+    <string name="wishlists_private">Private</string>
+    <string name="wishlists_public">Public</string>
+    <string name="wishlists_ask_name">Enter the name of your wishlist</string>
+    <string name="wishlists_name">Name</string>
+    <string name="wishlists_ask_visibility">Enter the visibility of the wishlist</string>
+    <string name="wishlists_select_visibility">Select visibility</string>
+    <string name="wishlists_name_validation">The name must be between 3 and 30 characters without special characters.</string>
+    <string name="wishlists_confirm">Confirm</string>
+    <string name="wishlists_cancel">Cancel</string>
+
+    <!-- Wishlists Detail -->
+    <string name="no_wishlist_found">Wishlist not found</string>
+    <string name="loading">Loading…</string>
+    <string name="wishlist_not_found">Wishlist not found</string>
+    <string name="wishlist_not_found_explanation">The wishlist you\'re looking for does not exist or you don\'t have permission to view it.</string>
+    <string name="wishlist_empty">Your list is empty!</string>
+    <string name="wishlist_empty_explanation">You haven\'t added any products yet. Start exploring and add your favorite products!</string>
+    <string name="wishlist_no_products">No products in this wishlist</string>
+    <string name="wishlist_no_products_explanation">Why not ask the owner to add products to the wishlist?</string>
+
+    <!-- Single wishlist -->
+    <string name="wishlist_product_error">Error retrieving wishlist products</string>
+    <string name="wishlist_error">Error retrieving wishlist data</string>
+    <string name="wishlist_product_delete_error">Error deleting product from wishlist</string>
+    <string name="wishlist_edit_error">Error editing wishlist</string>
+    <string name="wishlist_delete_error">Error deleting wishlist</string>
+    <string name="wishlist_user_already_in">User already present in the wishlist</string>
+    <string name="wishlist_limit_user">Maximum user limit reached</string>
+    <string name="wishlist_user_not_foud">User not found</string>
+    <string name="wishlist_user_added">User added successfully</string>
+    <string name="wishlist_user_deleted">User successfully removed</string>
+    <string name="wishlist_token_already_in">Token already present in wishlist</string>
+    <string name="wishlist_not_found_reload">Wishlist not found, please reload page</string>
+    <string name="wishlist_error_generating_token">Error generating token</string>
+    <string name="token_generated">Token generated successfully</string>
+    <string name="wishlist_error_deleting_token">Error deleting token</string>
+    <string name="token_deleted">Token deleted successfully</string>
+    <string name="wishlist_error_data">Error retrieving wishlist data</string>
+    <string name="wishlist_insert_new_name">Enter the new name of your wishlist</string>
+    <string name="danger_zone">Danger zone</string>
+    <string name="delete_wishlist">Delete Wishlist</string>
+    <string name="popolarity">Popularity</string>
+    <string name="price_asc">Price Ascending</string>
+    <string name="price_desc">Price Descending</string>
+    <string name="find_by">Search by</string>
+    <string name="find_by_name">Search by name</string>
+    <string name="insert_name_product">Enter the product name</string>
+    <string name="find_by_owner">Find by owner</string>
+    <string name="insert_name_owner">Enter the name of the owner</string>
+    <string name="find">Search</string>
+    <string name="info" translatable="false">Info</string>
+    <string name="wishlist_shared_with_user"> and shared with selected users</string>
+    <string name="wishlist_shared_with_token"> and shared via token</string>
+    <string name="wishlist_last_edit">Last edited:</string>
+    <string name="wishlist_sharing_url">Sharing URL</string>
+    <string name="wishlist_generate_token">Generate Token</string>
+    <string name="copy">Copy</string>
+    <string name="wishlist_users">Wishlist users</string>
+    <string name="wishlist_owner">Wishlist owner</string>
+    <string name="add_new_user">Add a new user</string>
+    <string name="username_validation">Only letters, numbers, underscores (min. 3, max. 20 characters)</string>
+
+    <!-- Sell Component -->
+    <string name="sell_title">Load Product</string>
+    <string name="sell_no_data">Unable to load information</string>
+    <string name="sell_error">Error retrieving products</string>
+    <string name="sell_game_label">Game</string>
+    <string name="sell_productType_name">Product Name (English)</string>
+    <string name="sell_close">Close</string>
+    <string name="sell_productType_selected">Selected Model</string>
+    <string name="sell_productType_advanced_research1">Can\'t find the card you\'re interested in?</string>
+    <string name="sell_productType_advanced_research2">Click here for an advanced search!</string>
+    <string name="sell_advanced_research_error">Error in advanced search</string>
+    <string name="sell_advanced_research_title">Advanced Search</string>
+    <string name="sell_advanced_research_no_data1">Your search produced no results,</string>
+    <string name="sell_advanced_research_no_data2">click here to make an insertion request.</string>
+    <string name="sell_advanced_research_empty">No results found</string>
+    <string name="sell_advanced_research_save_error">Error saving the model</string>
+    <string name="sell_advanced_research_save_success">Model saved successfully</string>
+    <string name="sell_advanced_research_saving">Saving…</string>
+    <string name="sell_products_description_label">Description</string>
+    <string name="sell_products_price_label">Price</string>
+    <string name="sell_products_image_label">Images (min 1, max 5)</string>
+    <string name="sell_products_condition_label">Condition</string>
+    <string name="sell_products_load_images">Load Images</string>
+    <string name="sell_products_save">Save</string>
+    <string name="sell_products_cancel">Cancel</string>
+    <string name="sell_products_save_success">Product saved successfully</string>
+    <string name="sell_products_save_error">Error saving the product</string>
+    <string name="sell_show_product">Show More Products</string>
+    <string name="sell_show_product_error">No more products available</string>
+
+    <!-- Wallet -->
+    <string name="wallet_no_found">No wallet found</string>
+    <string name="wallet_title">Wallet</string>
+    <string name="wallet_balance">Current Balance</string>
+    <string name="wallet_receipt">Receipt</string>
+    <string name="wallet_expense">Expense</string>
+    <string name="wallet_recharge">Recharge</string>
+    <string name="wallet_withdraw">Withdraw</string>
+    <string name="wallet_recharge_amount">Amount to recharge</string>
+    <string name="wallet_withdraw_amount">Amount to withdraw</string>
+    <string name="wallet_recharge_success">Wallet recharged successfully</string>
+    <string name="wallet_withdraw_success">Withdrawal from the wallet successful</string>
+    <string name="wallet_close">Close</string>
+
+    <!-- Transaction -->
+    <string name="transaction_no_found">No transactions found</string>
+    <string name="transaction_title">Transactions</string>
+    <string name="transaction_all">All</string>
+    <string name="transaction_recharge">Recharge</string>
+    <string name="transaction_withdraw">Withdraw</string>
+    <string name="transaction_withdraw_single">Withdrawal</string>
+    <string name="transaction_recharge_single">Recharge</string>
+
+    <!-- Cart -->
+    <string name="checkout_button">Checkout</string>
+    <string name="empty_cart_message">Your cart is empty. Add some items to get started!</string>
+    <string name="go_to_homepage">Go to Homepage</string>
+    <string name="product_language">Language: %1$s</string>
+    <string name="remove_button">Remove</string>
+    <string name="summary_title">Product summary</string>
+    <string name="confirm_purchase">Confirm purchase</string>
+    <string name="cart_error_message">Error</string>
+    <string name="cart_remove_success">Product removed from cart</string>
+    <string name="cart_remove_error">Error removing product from cart</string>
+    <string name="order_confirm_error">Error during order confirmation</string>
+    <string name="confirm_order_success">Order confirmed successfully</string>
+    <string name="confirm_order_error">Error confirming order</string>
+    <string name="user_public_profile_show">"View Public Profile"</string>
+</resources>
