@@ -1,5 +1,5 @@
 # 🃏OnlyCards🃏
-La traccia è disponibile qua: [Traccia Progetto Enterprise Applications](https://github.com/matte18it/OnlyCards/blob/main/File/EA%20-%20Progetto%20formativo%202023_2024.pdf)
+La traccia è disponibile qua: [Traccia Progetto Enterprise Applications](https://github.com/matte18it/OnlyCards/blob/main/EA%20-%20Progetto%20formativo%202023_2024.pdf)
 
 L'app Android e il sito web per la compravendita di prodotti offrono un marketplace completo in cui gli utenti possono acquistare e vendere vari tipi di prodotti (carte, buste di espansione, ecc.). La piattaforma permette di esplorare i prodotti disponibili, visualizzarne i dettagli e procedere direttamente all’acquisto. I tipi di utenti disponibili sulla piattaforma sono i seguenti:
 <ul>
@@ -42,5 +42,5 @@ Guarda la demo dell'app Android di OnlyCards, progettata in Kotlin con Jetpack C
 </div>
 
 # 💾 Database 💾
-![Modello ER](https://github.com/matte18it/OnlyCards/blob/main/File/ModelloER.png)
+![Modello ER](https://github.com/matte18it/OnlyCards/blob/main/ModelloER.png)
 Il database è configurato in un container Docker. Per creare il container, basta scaricare tutti i file presenti nella cartella "Database", posizionarli in una cartella, aprire un terminale all'interno di quella cartella ed eseguire il seguente comando: <strong>`docker compose up --build -d`</strong>. Il database sarà quindi popolato e pronto all'uso!
