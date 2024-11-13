@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Conferma Ordine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #04223e;
+            padding: 20px;
+            text-align: center;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .header img {
+            height: 90px;
+            width: auto;
+        }
+
+        .content {
+            background-color: #ffffff;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 5px;
+            max-width: 600px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .contentInner {
+            padding: 20px;
+        }
+
+        h1 {
+            color: #04223e;
+            font-size: 24px;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .order-details {
+            margin-top: 20px;
+        }
+
+        .order-details ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .order-details ul li {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .order-details ul li strong {
+            font-weight: bold;
+        }
+
+        .footer {
+            background-color: #04223e;
+            padding: 20px;
+            text-align: center;
+            color: #ffffff;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        .footer img {
+            height: 60px;
+            width: auto;
+        }
+
+        @media (max-width: 600px) {
+            .content {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <img src="cid:logo" alt="OnlyCards Logo">
+</div>
+
+<div class="content">
+    <div class="contentInner">
+        <h1>Ciao $username,</h1>
+        <p>Grazie per il tuo ordine! Siamo lieti di confermare il tuo acquisto. Ecco i dettagli dei prodotti che hai acquistato:</p>
+
+        <div class="order-details">
+            <ul>
+                #foreach ($product in $products)
+                    <li>
+                        <span><strong>Prodotto:</strong> $product.getName()</span>
+                        <span><strong>Prezzo:</strong> $product.getPrice().getAmount() $product.getPrice().getCurrency()</span>
+                    </li>
+                #end
+            </ul>
+        </div>
+
+        <p>Data dell'ordine: $timestamp</p>
+    </div>
+</div>
+
+<div class="footer">
+    <div>
+        <img src="cid:logo" alt="OnlyCards Logo">
+    </div>
+    <p>Grazie per aver scelto OnlyCards!</p>
+    <p>©2024 OnlyCards. Tutti i diritti riservati.</p>
+</div>
+
+<span style="display: none;" id="timestamp">[$timestamp]</span>
+
+</body>
+</html>

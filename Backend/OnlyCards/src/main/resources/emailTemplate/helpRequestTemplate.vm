@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Richiesta di Supporto</title>
+    <style>
+        body[data-theme='dark'] {
+            background-color: #1d1f27;
+            color: #e4e6eb;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            box-shadow: 0 2px 4px rgba(51, 51, 51, 0.7) !important;
+            background-color: #04223e;
+            padding: 20px;
+            text-align: center;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .header img {
+            height: 90px;
+            width: auto;
+        }
+
+        .content {
+            background-color: #1d1f27;
+            color: #e4e6eb;
+            margin: 0;
+            border-radius: 5px;
+        }
+
+        .contentInner {
+            padding: 20px;
+        }
+
+        .content h1, .content p {
+            color: #e4e6eb;
+        }
+
+        .footer {
+            background: linear-gradient(to top, #04223e, #1d1f27);
+            padding: 10px 0;
+            text-align: center;
+            color: #e4e6eb;
+            margin: 0;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+
+        .footer .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer .logo {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .footer .logo img {
+            height: 100px;
+            width: auto;
+        }
+
+        .footer p {
+            margin: 5px 0;
+            color: #e4e6eb;
+        }
+    </style>
+</head>
+<body>
+
+<div class="content">
+    <div class="header">
+        <img src="cid:logo" alt="OnlyCards Logo">
+    </div>
+    <div class="contentInner">
+        <h1>Ciao $usernameAdmin,</h1>
+        <p>Hai ricevuto una nuova richiesta di supporto da parte dell'utente <strong>$username</strong>.</p>
+        <p><strong>Oggetto:</strong> $object</p>
+        <p><strong>Descrizione del problema:</strong> $description</p>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="logo">
+                <img src="cid:logo" alt="OnlyCards Logo">
+            </div>
+        </div>
+        <p class="text-center">©2024 OnlyCards. Tutti i diritti riservati.</p>
+    </footer>
+</div>
+
+<span style="display: none;" id="timestamp">[$timestamp]</span>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Success</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <!-- custom css -->
+    <link rel="stylesheet" th:href="@{/static/css/style.css}">
+
+  
+</head>
+<body>
+    <nav class="navbar">
+        <img th:src="@{/static/img/logo.png}" alt="Icon" class="icon" >
+    </nav>
+<div class="container">
+   
+    <div class="card ">
+        <h1>Login Successful <span class="success-icon">&#10004;</span></h1>
+        <p >Welcome, <span th:text="${user}">User</span>!</p>
+        <p >Now you can close this popup.</p>
+        <button id="closeButton" class="hide-on-mobile">Close</button>
+    </div>
+</div>
+<!-- Custom JS to close the window -->
+<script>
+    document.getElementById('closeButton').onclick = function () {
+        window.close();
+    };
+</script>
+<script th:inline="javascript">
+    const user_id = /*[[${userId}]]*/ '';
+    const front_ends = /*[[${frontEnds}]]*/ '';
+    const roles = /*[[${roles}]]*/ '';
+
+    window.opener.postMessage({
+        event: 'userData',
+        userId: user_id,
+        roles: roles,
+    }, front_ends);
+</script>
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+

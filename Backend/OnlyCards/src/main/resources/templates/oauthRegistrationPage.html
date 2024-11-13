@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Success</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <!-- custom css -->
+    <link rel="stylesheet" th:href="@{/static/css/style.css}">
+</head>
+
+<body>
+    <nav class="navbar">
+        <img th:src="@{/static/img/logo.png}" alt="Icon" class="icon" >
+    </nav>
+    
+    <nav class="navbar">
+        <img th:src="@{/static/img/logo.png}" alt="Icon" class="icon" >
+    </nav>
+    
+    <div class="container">
+        <div class="card">
+            <h1>Hello</h1>
+            Email: <span class="wrap-text" th:text="${email}"></span>
+            
+            <!-- Form with Validation -->
+            <form id="usernameForm">
+                <div class="form-group">
+                    <label for="username">Enter your new username</label>
+                    
+                    <!-- Input with client-side validation -->
+                    <input type="text" class="form-control" id="username" 
+                           placeholder="Username" required
+                           minlength="3" maxlength="20" 
+                           pattern="^[a-zA-Z0-9_]*$" 
+                           title="Only letters, numbers, and underscores are allowed. Min: 3, Max: 20 characters">
+                           <small class="form-text text-muted">
+                            Your username must be 3-20 characters long and can only contain letters, numbers, and underscores.
+                        </small>
+                    <!-- Error message for username conflict -->
+                    <div id="error-message-conflict" class="text-danger mt-2" style="display: none;">
+                        Username already in use. Please try another one.
+                    </div>
+                     <!-- Error message for an error -->
+                    <div id="error-message" class="text-danger mt-2" style="display: none;">
+                        An error occurred. Please try again later.
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success btn-lg mt-3 form-button">Register</button>
+            </form>
+
+            <script>
+                const usernameInput = document.getElementById("username");
+                const submitButton = document.querySelector("button[type='submit']");
+
+                // Function to check if the form is valid
+                function validateForm() {
+                    if (usernameInput.checkValidity()) {
+                        submitButton.disabled = false; // Enable the button if valid
+                    } else {
+                        submitButton.disabled = true; // Disable the button if not valid
+                    }
+                }
+
+                // Listen for input event on the username field
+                usernameInput.addEventListener("input", validateForm);
+
+                document.getElementById("usernameForm").addEventListener("submit", function(event) {
+                    event.preventDefault(); // Prevent default form submission
+
+                    const username = document.getElementById("username").value;
+                    const newUrl = window.location.pathname.replace('/login/', '/users').replace('success', '');
+
+                    // Send the data as JSON
+                    fetch(newUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ username: username })
+                    })
+                    .then(response => {
+                        if (response.status === 409) {
+                            // If the status is 409 (Conflict), show specific error message for username conflict
+                            document.getElementById("error-message-conflict").style.display = "block";
+                            throw new Error("Username already in use.");
+                        } else if (!response.ok) {
+                            // Handle all other HTTP errors
+                            document.getElementById("error-message").style.display = "block";
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                         window.location.reload();  // Reload the page on success
+                    });
+                });
+
+                // Run validation on page load
+                validateForm();
+            </script>
+        </div>
+    </div>
+  
+
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
