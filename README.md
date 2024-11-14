@@ -44,3 +44,12 @@ Guarda la demo dell'app Android di OnlyCards, progettata in Kotlin con Jetpack C
 # 💾 Database 💾
 ![Modello ER](https://github.com/matte18it/OnlyCards/blob/main/ModelloER.png)
 Il database è configurato in un container Docker. Per creare il container, basta scaricare tutti i file presenti nella cartella "Database", posizionarli in una cartella, aprire un terminale all'interno di quella cartella ed eseguire il seguente comando: <strong>`docker compose up --build -d`</strong>. Il database sarà quindi popolato e pronto all'uso!
+
+# ❗️DISCLAIMER❗️
+Questo progetto, valutato con voto 30/30, è stato sviluppato come parte del corso "Enterprise Applications" presso il Dipartimento di Matematica e Informatica (DeMaCS) dell'Università della Calabria. Essendo un lavoro universitario, potrebbe contenere qualche errore o imprecisione. Accogliamo con piacere qualsiasi feedback e suggerimento per migliorare! Il progetto è stato sviluppato dagli studenti:
+<ul>
+  <li>Matteo Canino</li>
+  <li>Pierfrancesco Napoli</li>
+  <li>Alessio Sturniolo</li>
+  <li>Francesco Morrone</li>
+</ul>
